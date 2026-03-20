@@ -5,7 +5,7 @@ import { IonMenu, IonHeader, IonApp, IonToolbar, IonTitle, IonButtons, IonConten
   selector: 'app-bar',
   templateUrl: './app-bar.component.html',
   styleUrls: ['./app-bar.component.scss'],
-  imports: [IonContent, IonButtons, IonTitle, IonToolbar, IonApp, IonMenu, IonHeader, IonMenuButton],
+  imports: [],
 })
 export class AppBarComponent  implements OnInit {
 

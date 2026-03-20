@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { AppFrameComponent } from './app-frame.component';
+import { AppFrameMobileComponent } from './app-frame-mobile.component';
 
-describe('AppFrameComponent', () => {
-  let component: AppFrameComponent;
-  let fixture: ComponentFixture<AppFrameComponent>;
+describe('AppFrameMobileComponent', () => {
+  let component: AppFrameMobileComponent;
+  let fixture: ComponentFixture<AppFrameMobileComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AppFrameComponent ],
+      declarations: [ AppFrameMobileComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AppFrameComponent);
+    fixture = TestBed.createComponent(AppFrameMobileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
