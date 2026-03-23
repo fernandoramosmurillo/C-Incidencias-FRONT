@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: false,
+  aplicationName : 'C-Incidencias',
+  logoUrl : '/assets/images/LogoPrincipal-removebg-preview.png'
 };

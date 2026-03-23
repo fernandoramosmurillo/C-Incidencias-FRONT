@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from '@env/environment';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonMenuButton, IonMenu, IonRouterOutlet } from "@ionic/angular/standalone";
 
 @Component({
@@ -9,7 +10,7 @@ import { IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonMenuButton,
 })
 export class AppFrameMobileComponent  implements OnInit {
 
-  constructor() { }
+  env = environment
 
   ngOnInit() {}
 

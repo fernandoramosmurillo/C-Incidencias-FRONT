@@ -1,5 +1,7 @@
+import { environment } from '@env/environment';
 import { Component, OnInit } from '@angular/core';
 import { IonMenu, IonHeader, IonApp, IonToolbar, IonTitle, IonButtons, IonContent, IonMenuButton } from "@ionic/angular/standalone";
+
 
 @Component({
   selector: 'app-bar',
@@ -9,7 +11,7 @@ import { IonMenu, IonHeader, IonApp, IonToolbar, IonTitle, IonButtons, IonConten
 })
 export class AppBarComponent  implements OnInit {
 
-  constructor() { }
+  environment = environment
 
   ngOnInit() {}
 
