@@ -1,8 +1,18 @@
 img {
-  width: 130px;
+  width: 140px;
+  height: 60px;
+  border-right: white 1px solid;
+  padding-right: 20px;
+  margin-right: 40px;
 }
 
 ion-header{
-  padding-left: 20px;
+  padding: 0px 50px;
+  height: 120%;
   background-color: #091323;
+}
+
+ion-button{
+  height: 40px;
+  min-width: 100px;
 }
