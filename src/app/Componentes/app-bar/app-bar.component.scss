@@ -6,13 +6,15 @@ img {
   margin-right: 40px;
 }
 
-ion-header{
+ion-toolbar {
   padding: 0px 50px;
   height: 120%;
-  background-color: #091323;
+  --background: #091323;
 }
 
 ion-button{
   height: 40px;
   min-width: 100px;
+  --background: #2a3a53;
+  color: white;
 }

@@ -1,4 +1,11 @@
-<ion-header class="ion-display-flex ion-align-items-center">
-  <img [src]=environment.logoUrl alt="Logo">
-  <ion-button routerLink="/perfil">Home</ion-button>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <img [src]="environment.logoUrl" alt="Logo" />
+      <ion-button>
+        <ion-icon slot="start" name="home"></ion-icon>
+        Home
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
