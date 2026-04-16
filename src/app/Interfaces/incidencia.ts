@@ -1,0 +1,46 @@
+import { DocumentReference, GeoPoint, Timestamp } from '@angular/fire/firestore';
+
+// Opciones fijas para el estado (así no te equivocas al escribir)
+export enum EstadosIncidencia {
+  ABIERTA = 'ABIERTA',
+  ASIGNADA = 'ASIGNADA',
+  PENDIENTE = 'PENDIENTE',
+  SOLUCIONADA = 'SOLUCIONADA',
+  RECHAZADA = 'RECHAZADA'
+}
+
+// Opciones fijas para la prioridad
+export enum Prioridades {
+  MINIMO = 'MINIMO',
+  BAJA = 'BAJA',
+  MEDIA = 'MEDIA',
+  ALTA = 'ALTA',
+  MUY_ALTA = 'MUY_ALTA',
+  URGENTE = 'URGENTE'
+}
+
+// Estructura principal de la Incidencia
+export interface Incidencia {
+  idIncidencia: string;
+  titulo: string;
+  descripcion: string;
+
+  ubicacion: GeoPoint;      // Coordenadas del mapa (GPS)
+  imagenUrl: string;       // Link a la foto de la incidencia
+
+  fechaCreacion: Timestamp; // Cuándo se creó
+  fechaCierre?: Timestamp;  // Cuándo se arregló (puede estar vacío)
+
+  // Enlaces a otros documentos (como si fueran IDs)
+  usuarioCiudadano: DocumentReference;
+  valoracion?: DocumentReference;
+
+  // Mapa de técnicos (Ej: "Fontanero": referenciaAlUsuario)
+  listaOperarios: { [key: string]: DocumentReference };
+
+  // Lista de enlaces a los mensajes del chat
+  comentarios: DocumentReference[];
+
+  prioridad: Prioridades;
+  estadoIncidencia: EstadosIncidencia;
+}
