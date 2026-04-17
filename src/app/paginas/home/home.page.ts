@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { IncidenciaService } from './../../Services/incidenciaService';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonCol, IonGrid, IonRow, IonText, IonCardContent, IonCardHeader, IonCard, IonCardTitle, IonCardSubtitle, IonImg } from '@ionic/angular/standalone';
@@ -8,13 +9,17 @@ import { IonContent, IonHeader, IonCol, IonGrid, IonRow, IonText, IonCardContent
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonImg, IonCardSubtitle, IonCardTitle, IonCard, IonCardHeader, IonCardContent, IonText, IonRow, IonGrid, IonCol, IonContent, IonHeader, CommonModule, FormsModule]
+  imports: [IonImg, IonRow, IonGrid, IonCol, IonContent, CommonModule, FormsModule]
 })
-export class HomePage implements OnInit {
+export class HomePage {
 
-  constructor() { }
+  incidenciaService: IncidenciaService = inject(IncidenciaService);
 
-  ngOnInit() {
+  ionViewWillEnter() {
+    this.incidenciaService.cargarDatos();
   }
 
+  ionViewWillLeave() {
+    this.incidenciaService.cerrarSuscripcion();
+  }
 }

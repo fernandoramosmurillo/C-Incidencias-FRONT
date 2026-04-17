@@ -12,14 +12,13 @@ export class IncidenciaService {
 
   incidencias: Incidencia[] = [];
 
-  cargarDatos(): Subscription {
-    return (this.suscripcionIncidencias =
-      this.HttpService.obtenerDatos<Incidencia>('incidencias').subscribe(
-        (data: Incidencia[]) => {
-          this.incidencias = data;
-          console.log('Datos cargados con éxito');
-        },
-      ));
+  cargarDatos(): void {
+    this.suscripcionIncidencias = this.HttpService.obtenerDatos<Incidencia>(
+      'incidencias',
+    ).subscribe((data: Incidencia[]) => {
+      this.incidencias = data;
+      console.log('Datos cargados con éxito');
+    });
   }
 
   // Cuando el componente se destruye, cerramos la suscripción
