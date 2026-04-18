@@ -35,8 +35,8 @@ export interface Incidencia {
   usuarioCiudadano: DocumentReference;
   valoracion?: DocumentReference;
 
-  // Mapa de técnicos (Ej: "Fontanero": referenciaAlUsuario)
-  listaOperarios: { [key: string]: DocumentReference };
+  // Lista de operarios asignados (puede ser más de uno, por eso es un array)
+  listaOperarios: DocumentReference[];
 
   // Lista de enlaces a los mensajes del chat
   comentarios: DocumentReference[];
