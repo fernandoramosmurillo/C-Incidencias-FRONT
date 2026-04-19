@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
 import { Incidencia } from '../Interfaces/incidencia';
 import { HttpService } from './http-service';
-import { inject, Injectable, signal } from '@angular/core';
+import { effect, inject, Injectable, signal, untracked } from '@angular/core';
 import { UsuarioService } from './usuarioService';
 
 @Injectable({
@@ -15,21 +15,37 @@ export class IncidenciaService {
 
   incidencias = signal<Incidencia[]>([]);
 
+  constructor() {
+    effect(() => {
+      const listaIncidencias = this.incidencias();
+      const listaUsuarios = this.usuarioService.usuarios();
+
+      if (listaIncidencias.length > 0 && listaUsuarios.length > 0) {
+        // Evitamos que se vuelva a ejecutar el efecto al actualizar las incidencias con los usuarios asignados
+        untracked(() => {
+          this.asignarModelos();
+        });
+      }
+    }, { allowSignalWrites: true });
+  }
+
   cargarDatos(): void {
     this.suscripcionIncidencias = this.HttpService.obtenerDatos<Incidencia>(
       'incidencias',
     ).subscribe((data: Incidencia[]) => {
       this.incidencias.set(data);
-      this.asignarModelos();
     });
   }
 
   asignarModelos() {
+    const usuarioMap = new Map(this.usuarioService.usuarios().map(usuario => [usuario.idUsuario, usuario]));
+
     this.incidencias.update(lista => {
       lista.forEach(incidencia => {
-        const usuario = this.usuarioService.usuarios().find(usuario => usuario.idUsuario === incidencia.usuarioCiudadano.idUsuario);
-          if (usuario) incidencia.usuarioCiudadano = usuario;
-        });
+        //Asignacion de usuarios
+        const usuario = usuarioMap.get(incidencia.usuarioCiudadano.idUsuario);
+        if (usuario) incidencia.usuarioCiudadano = usuario;
+      });
       return [...lista];
     });
   }
