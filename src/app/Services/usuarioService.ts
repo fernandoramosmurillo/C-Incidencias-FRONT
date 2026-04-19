@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { HttpService } from './http-service';
-import { inject, Injectable } from '@angular/core';
+import {inject, Injectable, signal } from '@angular/core';
 import { Usuario } from '../Interfaces/usuario';
 
 @Injectable({
@@ -10,13 +10,13 @@ export class UsuarioService {
   private suscripcionUsuarios?: Subscription;
   HttpService: HttpService = inject(HttpService);
 
-  usuarios:Usuario[] = [];
+  usuarios = signal<Usuario[]>([]);
 
   cargarDatos(): void {
     this.suscripcionUsuarios = this.HttpService.obtenerDatos<Usuario>(
       'usuarios',
     ).subscribe((data:Usuario[]) => {
-      this.usuarios = data;
+      this.usuarios.set(data);
       console.log('Datos cargados con éxito');
     });
   }

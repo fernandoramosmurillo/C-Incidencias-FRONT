@@ -2,6 +2,8 @@
  * Estructura simple para tipado de datos.
  */
 
+import { Timestamp } from "firebase/firestore";
+
 export enum RolesUsuario {
   ADMINISTRADOR = 'ADMINISTRADOR',
   OPERARIO = 'OPERARIO',
@@ -26,9 +28,9 @@ export interface Usuario {
   clave: string;
 
   // Fechas (Timestamp de Firestore)
-  fechaNacimiento: any;
-  fechaCreacion: any;
-  fechaEliminacion: any | null;
+  fechaNacimiento: Timestamp | null;
+  fechaCreacion: Timestamp | null;
+  fechaEliminacion: Timestamp | null;
 
   // Perfil y Permisos
   rolUsuario: RolesUsuario;
