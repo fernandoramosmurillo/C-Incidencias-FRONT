@@ -32,13 +32,11 @@ export class IncidenciaListCardComponent implements OnInit {
   incidenciaService: IncidenciaService = inject(IncidenciaService);
   usuarioService: UsuarioService = inject(UsuarioService);
 
-  ngOnInit() {
-    this.incidenciaService.cargarDatos();
-    this.usuarioService.cargarDatos();
-  }
-
-  ngOnDestroy() {
-    this.incidenciaService.cerrarSuscripcion();
-    this.usuarioService.cerrarSuscripcion();
+  async ngOnInit() {
+    await Promise.all([
+      this.incidenciaService.cargarDatos(),
+      this.usuarioService.cargarDatos(),
+    ]);
+    this.incidenciaService.asignarModelos();
   }
 }

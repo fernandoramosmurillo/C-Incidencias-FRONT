@@ -1,18 +1,14 @@
-import { Usuario } from '../Interfaces/usuario';
-import { Injectable, computed } from '@angular/core';
-import { BaseService } from './BaseService';
+import { computed, Injectable } from "@angular/core";
+import { Usuario } from "../Interfaces/usuario";
+import { BaseService } from "./BaseService";
 
 @Injectable({
   providedIn: 'root',
 })
-// Ahora UsuarioService es un BaseService de tipo Usuario
 export class UsuarioService extends BaseService<Usuario> {
   protected override endpoint = 'usuarios';
 
-  cargarDatosCiudadanos() {
-    this.HttpService.obtenerCiudadanosHttp().subscribe((data: Usuario[]) => {
-      this.datos.set(data); // Llenamos la señal del padre
-
-    });
+  filtrarCiudadanos(usuarios: Usuario[]): Usuario[] {
+    return usuarios.filter(u => u.rolUsuario === 'CIUDADANO');
   }
 }

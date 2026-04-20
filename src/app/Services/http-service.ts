@@ -1,42 +1,61 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Usuario } from '../Interfaces/usuario';
+import { Injectable } from '@angular/core';
+import { CapacitorHttp, HttpResponse } from '@capacitor/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpService {
-
-  http: HttpClient = inject(HttpClient);
   private readonly BASE_URL = 'http://localhost:8080/api';
 
-  obtenerDatos<T>(endpoint: string): Observable<T[]> {
-    return this.http.get<T[]>(`${this.BASE_URL}/${endpoint}`);
+  async obtenerDatos<T>(endpoint: string): Promise<T[]> {
+    const options = {
+      url: `${this.BASE_URL}/${endpoint}`,
+    };
+    const response: HttpResponse = await CapacitorHttp.get(options);
+    return response.data as T[];
   }
 
-  obtenerDato<T>(endpoint: string, id: string): Observable<T> {
-    return this.http.get<T>(`${this.BASE_URL}/${endpoint}/${id}`);
+  async obtenerDato<T>(endpoint: string, id: string): Promise<T> {
+    const options = {
+      url: `${this.BASE_URL}/${endpoint}/${id}`,
+    };
+    const response: HttpResponse = await CapacitorHttp.get(options);
+    return response.data as T;
   }
 
-  añadirDato<T>(endpoint: string, dato: T): Observable<T> {
-    return this.http.post<T>(`${this.BASE_URL}/${endpoint}`, dato);
+  async añadirDato<T>(endpoint: string, dato: T): Promise<T> {
+    const options = {
+      url: `${this.BASE_URL}/${endpoint}`,
+      data: dato,
+      headers: { 'Content-Type': 'application/json' },
+    };
+    const response: HttpResponse = await CapacitorHttp.post(options);
+    return response.data as T;
   }
 
-  modificarDato<T>(endpoint: string, id: string, dato: T): Observable<T> {
-    return this.http.put<T>(`${this.BASE_URL}/${endpoint}/${id}`, dato);
+  async modificarDato<T>(endpoint: string, id: string, dato: T): Promise<T> {
+    const options = {
+      url: `${this.BASE_URL}/${endpoint}/${id}`,
+      data: dato,
+      headers: { 'Content-Type': 'application/json' },
+    };
+    const response: HttpResponse = await CapacitorHttp.put(options);
+    return response.data as T;
   }
 
-  eliminarDato(endpoint: string, id: string): Observable<any> {
-    return this.http.delete(`${this.BASE_URL}/${endpoint}/${id}`);
+  async eliminarDato(endpoint: string, id: string): Promise<any> {
+    const options = {
+      url: `${this.BASE_URL}/${endpoint}/${id}`,
+    };
+    const response: HttpResponse = await CapacitorHttp.delete(options);
+    return response.data;
   }
 
-  cambiarEstado<T>(endpoint: string, id: string, nuevoEstado: string): Observable<T> {
-    return this.http.put<T>(`${this.BASE_URL}/${endpoint}/${id}/estado/${nuevoEstado}`,null);
-  }
-
-  obtenerCiudadanosHttp() {
-    return this.obtenerDatos<Usuario>('usuarios?rol=CIUDADANO');
+  async cambiarEstado<T>(endpoint: string, id: string, nuevoEstado: string): Promise<T> {
+    const options = {
+      url: `${this.BASE_URL}/${endpoint}/${id}/estado/${nuevoEstado}`,
+    };
+    const response: HttpResponse = await CapacitorHttp.put(options);
+    return response.data as T;
   }
 }
-

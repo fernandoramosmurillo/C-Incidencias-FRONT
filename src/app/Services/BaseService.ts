@@ -7,26 +7,22 @@ import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 })
 export abstract class BaseService<T> {
   private suscripcion?: Subscription;
-  protected HttpService: HttpService = inject(HttpService);
+  protected httpService: HttpService = inject(HttpService);
 
   datos: WritableSignal<T[]> = signal<T[]>([]);
 
   // Necesitaremos saber la URL del endpoint (ej: 'incidencias' o 'usuarios')
   protected abstract endpoint: string;
 
-  cargarDatos(): void {
-    this.suscripcion = this.HttpService.obtenerDatos<T>(
-      this.endpoint,
-    ).subscribe((data: T[]) => {
-      this.datos.set(data);
+  cargarDatos(): Promise<void> {
+    return this.httpService.obtenerDatos<T>(this.endpoint).then((respuesta) => {
+      this.datos.set(respuesta);
     });
   }
 
-  // Cuando el componente se destruye, cerramos la suscripción
-  cerrarSuscripcion(): void {
-    if (this.suscripcion) {
-      this.suscripcion.unsubscribe();
-      console.log('Suscripción cerrada manualmente');
-    }
+  protected extraerId(referencia: any): string {
+    if (typeof referencia === 'string')
+      return referencia.split('/').pop() || '';
+    return referencia?.idUsuario || '';
   }
 }
