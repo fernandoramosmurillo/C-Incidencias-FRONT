@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Usuario } from '../Interfaces/usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,10 @@ export class HttpService {
 
   cambiarEstado<T>(endpoint: string, id: string, nuevoEstado: string): Observable<T> {
     return this.http.put<T>(`${this.BASE_URL}/${endpoint}/${id}/estado/${nuevoEstado}`,null);
+  }
+
+  obtenerCiudadanosHttp() {
+    return this.obtenerDatos<Usuario>('usuarios?rol=CIUDADANO');
   }
 }
 

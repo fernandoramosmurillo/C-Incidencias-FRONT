@@ -1,31 +1,18 @@
-import { Subscription } from 'rxjs';
-import { HttpService } from './http-service';
-import {inject, Injectable, signal } from '@angular/core';
 import { Usuario } from '../Interfaces/usuario';
+import { Injectable, computed } from '@angular/core';
+import { BaseService } from './BaseService';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UsuarioService {
-  private suscripcionUsuarios?: Subscription;
-  HttpService: HttpService = inject(HttpService);
+// Ahora UsuarioService es un BaseService de tipo Usuario
+export class UsuarioService extends BaseService<Usuario> {
+  protected override endpoint = 'usuarios';
 
-  usuarios = signal<Usuario[]>([]);
+  cargarDatosCiudadanos() {
+    this.HttpService.obtenerCiudadanosHttp().subscribe((data: Usuario[]) => {
+      this.datos.set(data); // Llenamos la señal del padre
 
-  cargarDatos(): void {
-    this.suscripcionUsuarios = this.HttpService.obtenerDatos<Usuario>(
-      'usuarios',
-    ).subscribe((data:Usuario[]) => {
-      this.usuarios.set(data);
-      console.log('Datos cargados con éxito');
     });
-  }
-
-  // Cuando el componente se destruye, cerramos la suscripción
-  cerrarSuscripcion(): void {
-    if (this.suscripcionUsuarios) {
-      this.suscripcionUsuarios.unsubscribe();
-      console.log('Suscripción cerrada manualmente');
-    }
   }
 }

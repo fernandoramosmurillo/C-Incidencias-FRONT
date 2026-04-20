@@ -1,6 +1,6 @@
 <ion-grid>
   <ion-row>
-    @for (item of incidenciaService.incidencias; track $index) {
+    @for (item of incidenciaService.datos(); track $index) {
       <ion-col size="6" size-md="4" size-lg="2">
         <ion-card>
           <ion-card-header>

@@ -1,5 +1,6 @@
 import { DocumentReference, GeoPoint, Timestamp } from '@angular/fire/firestore';
 import { Usuario } from './usuario';
+import { Ciudadano } from './ciudadano';
 
 // Opciones fijas para el estado (así no te equivocas al escribir)
 export enum EstadosIncidencia {
@@ -33,7 +34,7 @@ export interface Incidencia {
   fechaCierre?: Timestamp;  // Cuándo se arregló (puede estar vacío)
 
   // Enlaces a otros documentos (como si fueran IDs)
-  usuarioCiudadano: Usuario;
+  usuarioCiudadano: Ciudadano;
   valoracion?: any;
 
   // Lista de operarios asignados (puede ser más de uno, por eso es un array)

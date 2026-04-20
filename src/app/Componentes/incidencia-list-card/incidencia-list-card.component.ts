@@ -10,6 +10,7 @@ import {
   IonGrid,
   IonRow,
 } from '@ionic/angular/standalone';
+import { UsuarioService } from 'src/app/Services/usuarioService';
 
 @Component({
   selector: 'incidencia-list-card',
@@ -27,14 +28,17 @@ import {
   ],
   styleUrls: ['./incidencia-list-card.component.scss'],
 })
-export class IncidenciaListCardComponent {
+export class IncidenciaListCardComponent implements OnInit {
   incidenciaService: IncidenciaService = inject(IncidenciaService);
+  usuarioService: UsuarioService = inject(UsuarioService);
 
   ngOnInit() {
     this.incidenciaService.cargarDatos();
+    this.usuarioService.cargarDatos();
   }
 
   ngOnDestroy() {
     this.incidenciaService.cerrarSuscripcion();
+    this.usuarioService.cerrarSuscripcion();
   }
 }
