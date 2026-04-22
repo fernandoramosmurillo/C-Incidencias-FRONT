@@ -2,17 +2,7 @@
   <ion-row>
     @for (item of incidenciaService.datos(); track $index) {
       <ion-col size="6" size-md="4" size-lg="2">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>{{item.titulo}}</ion-card-title>
-            <ion-card-subtitle>{{item.usuarioCiudadano.nombre}}</ion-card-subtitle>
-          </ion-card-header>
-
-          <ion-card-content>
-            Here's a small text description for the card content. Nothing more,
-            nothing less.
-          </ion-card-content>
-        </ion-card>
+        <incidencia-card [incidencia]="item"></incidencia-card>
       </ion-col>
     }
   </ion-row>

@@ -11,6 +11,7 @@ import {
   IonRow,
 } from '@ionic/angular/standalone';
 import { UsuarioService } from 'src/app/Services/usuarioService';
+import { IncidenciaCardComponent } from "./incidencia-card/incidencia-card.component";
 
 @Component({
   selector: 'incidencia-list-card',
@@ -25,7 +26,8 @@ import { UsuarioService } from 'src/app/Services/usuarioService';
     IonCardHeader,
     IonCard,
     IonCard,
-  ],
+    IncidenciaCardComponent
+],
   styleUrls: ['./incidencia-list-card.component.scss'],
 })
 export class IncidenciaListCardComponent implements OnInit {
