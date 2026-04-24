@@ -1,6 +1,4 @@
 .logo {
-  width: 140px;
-  height: 60px;
   border-right: white 1px solid;
   padding-right: 20px;
   margin-right: 40px;
@@ -9,13 +7,12 @@
 ion-toolbar {
   padding: 0px 50px;
   height: auto;
-  --background: #091323;
+  --background: var( --color-app-bar);
 }
 
 ion-button{
   height: 40px;
   min-width: 100px;
-  --background: #2a3a53;
   color: white;
   margin-right: 30px;
 }

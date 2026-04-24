@@ -1,10 +1,8 @@
-import { Component, computed, inject, OnInit, Signal } from '@angular/core';
+import { PantallaObserverService } from './../../Services/pantalla-observer-service';
+import { Component, inject } from '@angular/core';
 import { IonApp } from "@ionic/angular/standalone";
 import { AppFrameMobileComponent } from "./app-frame-mobile-component/app-frame-mobile.component";
 import { AppFrameDesktopComponentComponent } from "./app-frame-desktop-component/app-frame-desktop-component.component";
-import { toSignal } from '@angular/core/rxjs-interop'; // <--- Importa
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'app-frame-component',
@@ -13,10 +11,5 @@ import { map } from 'rxjs';
   imports: [IonApp, AppFrameMobileComponent, AppFrameDesktopComponentComponent],
 })
 export class AppFrameComponent {
-  breakpointObserver = inject(BreakpointObserver);
-
-  pantallaEnanaSignal: Signal<any> = toSignal(this.breakpointObserver.observe('(max-width: 1024px)').pipe(
-    map(result => result.matches)),{initialValue : false});
-
-  pantallaGrandeSignal: Signal<any> = computed(() => !this.pantallaEnanaSignal());
+  observerService = inject(PantallaObserverService)
 }
