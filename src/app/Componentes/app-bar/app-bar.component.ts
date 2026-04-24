@@ -1,6 +1,6 @@
 import { environment } from '@env/environment';
 import { Component, OnInit } from '@angular/core';
-import { IonMenu, IonHeader, IonApp, IonToolbar, IonTitle, IonButtons, IonContent, IonMenuButton, IonButton, IonIcon, IonAvatar } from "@ionic/angular/standalone";
+import { IonMenu, IonHeader, IonApp, IonToolbar, IonTitle, IonButtons, IonContent, IonMenuButton, IonButton, IonIcon, IonAvatar, IonLabel } from "@ionic/angular/standalone";
 import { AvatarButtonComponent } from "../avatar-button/avatar-button.component";
 
 
@@ -8,7 +8,7 @@ import { AvatarButtonComponent } from "../avatar-button/avatar-button.component"
   selector: 'app-bar',
   templateUrl: './app-bar.component.html',
   styleUrls: ['./app-bar.component.scss'],
-  imports: [IonAvatar, IonIcon, IonButton, IonHeader, IonToolbar, IonButtons, AvatarButtonComponent],
+  imports: [IonLabel, IonAvatar, IonIcon, IonButton, IonHeader, IonToolbar, IonButtons, AvatarButtonComponent],
 })
 export class AppBarComponent  implements OnInit {
 

@@ -4,7 +4,7 @@ import { IonApp, IonRouterOutlet, IonHeader, IonContent, Platform } from '@ionic
 import { AppBarComponent } from "./Componentes/app-bar/app-bar.component";
 import { AppFrameComponent } from "./Componentes/app-frame/app-frame.component";
 import { addIcons } from 'ionicons';
-import { home} from 'ionicons/icons'
+import { create, home} from 'ionicons/icons'
 import { RouterOutlet } from "@angular/router";
 
 @Component({
@@ -15,7 +15,8 @@ import { RouterOutlet } from "@angular/router";
 export class AppComponent {
   constructor() {
     addIcons({
-      home
+      home,
+      create
     });
   }
 }

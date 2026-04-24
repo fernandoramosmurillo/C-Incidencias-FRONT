@@ -1,3 +1,18 @@
 ion-card-header {
   --background: var(--color-app-bar);
 }
+
+ion-label {
+  color: white;
+  margin-left: 15%;
+  width: 100%;
+}
+
+h1{
+  font-size: clamp(1.2rem, 1.5vw, 7rem) !important;
+}
+
+h2 {
+  font-size: clamp(0.5rem, 1vw, 4rem) !important;
+  color: black;
+}
