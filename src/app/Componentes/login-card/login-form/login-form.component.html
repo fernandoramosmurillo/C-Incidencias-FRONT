@@ -1,3 +1,30 @@
-<p>
-  login-form works!
-</p>
+<ion-list lines="none">
+  <ion-item>
+    <ion-input
+      type="email"
+      fill="solid"
+      label="Email"
+      labelPlacement="floating"
+      helperText="Enter a valid email"
+      errorText="Invalid email"
+      
+      email
+    ></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input
+      type="password"
+      fill="solid"
+      label="Password"
+      labelPlacement="floating"
+      ngModel
+    ></ion-input>
+  </ion-item>
+
+  <div class="ion-padding">
+    <ion-button expand="block" type="submit">
+      Log in
+    </ion-button>
+  </div>
+</ion-list>
