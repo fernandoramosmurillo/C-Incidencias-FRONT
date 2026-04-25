@@ -1,3 +1,9 @@
+ion-card {
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2) !important;
+  border-radius: 20px !important;
+  margin: 5% 0px;
+}
+
 ion-card-header {
   --background: var(--color-app-bar);
 }
@@ -20,4 +26,8 @@ h2 {
 
 login-form {
   width: 100%;
+}
+
+.contenidoFormulario{
+  padding: 3% !important;
 }
