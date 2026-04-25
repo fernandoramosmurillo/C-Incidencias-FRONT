@@ -1,38 +1,42 @@
-<ion-list lines="none">
-  <ion-item>
-    <ion-input
-      color="secondary"
-      type="email"
-      fill="solid"
-      labelPlacement="floating"
-      helperText="Introduce un email"
-      errorText="El email es invalido"
-      [(ngModel)]="usuario.correoElectronico"
-      email
-      mode="ios"
-      ><div slot="label">
-        Email
-      </div></ion-input
-    >
-  </ion-item>
+<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+  <ion-list lines="none">
+    <ion-item>
+      <ion-input
+        color="secondary"
+        type="email"
+        placeholder="ejemplo@correo.com"
+        fill="solid"
+        labelPlacement="floating"
+        helperText="Introduce un email"
+        [errorText]="obtenerMensajeError('email')"
+        mode="ios"
+        formControlName="email"
+        ><div slot="label">Email</div></ion-input
+      >
+    </ion-item>
 
-  <ion-item>
-    <ion-input
-      color="secondary"
-      type="password"
-      fill="solid"
-      labelPlacement="floating"
-      helperText="Introduce una contraseña"
-      errorText="La contraseña es invalida"
-      [(ngModel)]="usuario.clave"
-      mode="ios"
-      ><div slot="label">
-        Contraseña
-      </div></ion-input
-    >
-  </ion-item>
+    <ion-item>
+      <ion-input
+        color="secondary"
+        type="password"
+        fill="solid"
+        labelPlacement="floating"
+        helperText="Introduce una contraseña"
+        [errorText]="obtenerMensajeError('password')"
+        mode="ios"
+        formControlName="password"
+        ><div slot="label">Contraseña</div></ion-input
+      >
+    </ion-item>
 
-  <div class="ion-padding">
-    <ion-button expand="block" type="submit"> Log in </ion-button>
-  </div>
-</ion-list>
+    <ion-item>
+      <ion-checkbox justify="start" labelPlacement="end"
+        >Recordarme</ion-checkbox
+      >
+    </ion-item>
+
+    <div style="padding: 2%;">
+      <ion-button expand="block" type="submit">Iniciar sesión</ion-button>
+    </div>
+  </ion-list>
+</form>
