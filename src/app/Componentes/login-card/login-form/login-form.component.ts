@@ -1,15 +1,18 @@
 import { Component } from '@angular/core';
-import { IonInput, IonGrid, IonItem, IonLabel, IonCol, IonRow, IonList, IonText, IonButton, IonCheckbox, IonCard, IonCardContent } from "@ionic/angular/standalone";
+import { IonInput, IonGrid, IonItem, IonLabel, IonCol, IonRow, IonList, IonText, IonButton, IonCheckbox, IonCard, IonCardContent, IonItemDivider, IonIcon } from "@ionic/angular/standalone";
 import { RolesUsuario, TiposAcceso, Usuario } from 'src/app/Interfaces/usuario';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss'],
-  imports: [IonCardContent, IonCard, IonCheckbox, IonButton, IonText, IonList, IonRow, IonCol, IonLabel, IonItem, IonGrid, IonInput, FormsModule, ReactiveFormsModule],
+  imports: [IonIcon, IonItemDivider, IonCardContent, IonCard, IonCheckbox, IonButton, IonText, IonList, IonRow, IonCol, IonLabel, IonItem, IonGrid, IonInput, FormsModule, ReactiveFormsModule],
 })
 export class LoginFormComponent {
+
+  public env = environment;
 
   usuario: Usuario = {
     estado: '',

@@ -1,4 +1,4 @@
-ion-input{
+ion-input {
   --highlight-color-valid: var(--color-app-bar) !important;
 }
 
@@ -10,17 +10,33 @@ ion-list {
   margin: 6% 3% 2%;
 }
 
-ion-item{
+//Aplica en caso de que no tenga la clase continuar-button dentro
+ion-item:not(:has(.continuar-boton)) {
   margin: 4% 0px;
 }
 
-ion-checkbox{
- --checkbox-background-checked: var(--color-app-bar) !important;
- --border-color-checked : var(--color-app-bar) !important;
+ion-checkbox {
+  --checkbox-background-checked: var(--color-app-bar) !important;
+  --border-color-checked: var(--color-app-bar) !important;
 }
 
-ion-button{
+ion-button {
   --background: var(--color-app-bar);
   --background-activated: #081226; /* Un tono un pelín más oscuro al pulsar */
 }
 
+.o-divisor {
+  width: 12vw;
+  border-bottom: 1px solid rgb(148, 147, 147);
+  margin: 0px 2%;
+}
+
+ion-item .continuar-boton {
+  width: 100%;
+  height: 2vw;
+  margin-bottom: 2%;
+}
+
+.bloque-continuar-o ion-item:first-child {
+  margin-top: 1vw;
+}

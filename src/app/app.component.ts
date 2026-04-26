@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { IonApp } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { create, home} from 'ionicons/icons'
+import { create, home, logoAndroid, logoApple, logoGoogle} from 'ionicons/icons'
 import { RouterOutlet } from "@angular/router";
 import { ReactiveFormsModule } from '@angular/forms';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +12,14 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [IonApp, RouterOutlet, ReactiveFormsModule],
 })
 export class AppComponent {
+
   constructor() {
     addIcons({
       home,
-      create
+      create,
+      logoGoogle,
+      logoApple,
+      logoAndroid
     });
   }
 }
