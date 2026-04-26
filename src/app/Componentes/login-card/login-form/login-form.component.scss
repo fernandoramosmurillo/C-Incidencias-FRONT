@@ -1,0 +1,26 @@
+ion-input{
+  --highlight-color-valid: var(--color-app-bar) !important;
+}
+
+ion-list {
+  margin-top: 7%;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 10px;
+  margin: 6% 3% 2%;
+}
+
+ion-item{
+  margin: 4% 0px;
+}
+
+ion-checkbox{
+ --checkbox-background-checked: var(--color-app-bar) !important;
+ --border-color-checked : var(--color-app-bar) !important;
+}
+
+ion-button{
+  --background: var(--color-app-bar);
+  --background-activated: #081226; /* Un tono un pelín más oscuro al pulsar */
+}
+

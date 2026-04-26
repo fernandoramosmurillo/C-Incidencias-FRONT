@@ -1,21 +1,32 @@
 .logo {
-  width: 140px;
-  height: 60px;
   border-right: white 1px solid;
-  padding-right: 20px;
-  margin-right: 40px;
+  padding-right: 5%;
+  margin-right: 3vw;
 }
 
 ion-toolbar {
-  padding: 0px 50px;
+  padding: 0px 3%;
   height: auto;
-  --background: #091323;
+  --background: var( --color-app-bar);
 }
 
 ion-button{
-  height: 40px;
-  min-width: 100px;
-  --background: #2a3a53;
   color: white;
-  margin-right: 30px;
+  margin-right: 2%;
+  width: auto;
+}
+
+ion-label{
+  font-size: clamp(0.5rem, 0.6vw, 4rem);
+  padding-left: 4%;
+  width: auto;
+  white-space: nowrap
+}
+
+ion-icon {
+  font-size: clamp(0.9rem, 1vw, 5.2rem);
+}
+
+ion-icon[name="create"] {
+  transform: scale(1.7);
 }

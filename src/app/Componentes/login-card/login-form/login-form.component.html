@@ -1,0 +1,42 @@
+<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+  <ion-list lines="none">
+    <ion-item>
+      <ion-input
+        color="secondary"
+        type="email"
+        placeholder="ejemplo@correo.com"
+        fill="solid"
+        labelPlacement="floating"
+        helperText="Introduce un email"
+        [errorText]="obtenerMensajeError('email')"
+        mode="ios"
+        formControlName="email"
+        ><div slot="label">Email</div></ion-input
+      >
+    </ion-item>
+
+    <ion-item>
+      <ion-input
+        color="secondary"
+        type="password"
+        fill="solid"
+        labelPlacement="floating"
+        helperText="Introduce una contraseña"
+        [errorText]="obtenerMensajeError('password')"
+        mode="ios"
+        formControlName="password"
+        ><div slot="label">Contraseña</div></ion-input
+      >
+    </ion-item>
+
+    <ion-item>
+      <ion-checkbox justify="start" labelPlacement="end"
+        >Recordarme</ion-checkbox
+      >
+    </ion-item>
+
+    <div style="padding: 2%;">
+      <ion-button expand="block" type="submit">Iniciar sesión</ion-button>
+    </div>
+  </ion-list>
+</form>

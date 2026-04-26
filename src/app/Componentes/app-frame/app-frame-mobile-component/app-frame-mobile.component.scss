@@ -3,7 +3,7 @@ ion-title, ion-menu-button{
 }
 
 ion-menu::part(backdrop) {
-  background-color: #091323;
+  background-color: var( --color-app-bar);
 }
 
 ion-menu::part(container) {
@@ -11,13 +11,14 @@ ion-menu::part(container) {
 }
 
 .header-menu-bar{
-  --background: #091323;
+  --background: var( --color-app-bar)
 }
 
 .collapsed-header-menu-bar{
-  --background: #2a3a53;
+  --background: #2f4362;
 }
 
 .logo{
-  width: 130px;
+  width: 50%;
+  height: auto
 }

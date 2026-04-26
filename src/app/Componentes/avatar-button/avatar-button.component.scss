@@ -1,9 +1,16 @@
 ion-avatar {
-  width: 40px;
-  height: 40px;
+  width: auto;
+  height: auto;
 }
 
-.boton-perfil {
-  width: 40px;
-  height: 40px;
+ion-button {
+  width: 32px;
+  height: 32px;
+}
+
+img {
+  /* La imagen SIEMPRE debe llenar el avatar al 100% */
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover; /* Para que no se deforme la cara */
 }
