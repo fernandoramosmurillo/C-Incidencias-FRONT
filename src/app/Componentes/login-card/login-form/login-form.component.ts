@@ -14,33 +14,23 @@ export class LoginFormComponent {
 
   public env = environment;
 
-  usuario: Usuario = {
-    estado: '',
-    idUsuario: '',
-    nombre: '',
-    apellidos: '',
-    correoElectronico: '',
-    clave: '',
-    fechaNacimiento: null,
-    fechaCreacion: null,
-    fechaEliminacion: null,
-    fotoPerfilUrl: null,
-    bloqueado: false,
-    recibirNotificaciones: false,
-    notificacionesRecibidas: [],
-    rolUsuario: RolesUsuario.CIUDADANO,
-    tipoAcceso: TiposAcceso.CORREO_CONTRASEÑA
-  };
-
   loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[a-zA-Z])(?=.*\\d).{8,}$')])
+    correoElectronico: new FormControl('', [Validators.required, Validators.email]),
+    clave: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[a-zA-Z])(?=.*\\d).{8,}$')])
   })
 
 
   onLogin() {
     if (this.loginForm.valid) {
-      // TODO OK: Ir a la siguiente pantalla
+
+      const datosFormulario = this.loginForm.value;
+
+      const datosUsuario: Partial<Usuario> = {
+        correoElectronico: datosFormulario.correoElectronico!,
+        clave: datosFormulario.clave!,
+      };
+
+      console.log("Datos", datosUsuario);
     } else {
       // ERROR: Forzar a que la interfaz se pinte de rojo para avisar al usuario
       this.loginForm.markAllAsTouched();
