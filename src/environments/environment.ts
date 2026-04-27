@@ -7,7 +7,7 @@ export const environment = {
   aplicationName : 'C-Incidencias',
   logoUrl : '/assets/images/LogoPrincipal-removebg-preview.png',
 
-  reCAPTCHA_SITE_KEY: '6LcNzrssAAAAAIzBMOXnfSEYe1QHHEIglxeri67p'
+  reCAPTCHA_SITE_KEY: '6LcNzrssAAAAAIzBMOXnfSEYe1QHHEIglxeri67p',
 };
 /*
  * For easier debugging in development mode, you can import the following file
