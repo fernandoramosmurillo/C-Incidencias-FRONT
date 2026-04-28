@@ -1,0 +1,28 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title class="ion-display-flex ion-align-items-center">
+      <img
+        class="logo"
+        [src]="env.logoUrl"
+        alt="Logo"
+      />
+      <ion-label>
+        <h1>Log in</h1>
+      </ion-label>
+    </ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-grid class="contenidoFormulario">
+      <ion-row>
+        <ion-col
+          class="ion-display-flex ion-flex-column ion-align-items-center"
+          style="margin-top: 6%"
+        >
+          <h2 style="margin-top: 2% !important">Inicia sesión para continuar</h2>
+          <login-form/>
+        </ion-col >
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
