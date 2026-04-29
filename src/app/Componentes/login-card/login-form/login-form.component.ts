@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IonInput, IonGrid, IonItem, IonLabel, IonCol, IonRow, IonList, IonText, IonButton, IonCheckbox, IonCard, IonCardContent, IonItemDivider, IonIcon } from "@ionic/angular/standalone";
 import { RolesUsuario, TiposAcceso, Usuario } from 'src/app/Interfaces/usuario';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { environment } from '@env/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'login-form',

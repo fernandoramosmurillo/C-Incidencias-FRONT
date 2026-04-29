@@ -1,28 +1,85 @@
-<ion-card>
-  <ion-card-header>
-    <ion-card-title class="ion-display-flex ion-align-items-center">
-      <img
-        class="logo"
-        [src]="env.logoUrl"
-        alt="Logo"
-      />
-      <ion-label>
-        <h1>Log in</h1>
-      </ion-label>
-    </ion-card-title>
-  </ion-card-header>
+<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+  <ion-list lines="none">
+    <ion-item>
+      <ion-input
+        color="secondary"
+        type="email"
+        placeholder="ejemplo@correo.com"
+        fill="solid"
+        labelPlacement="floating"
+        helperText="Introduce un email"
+        [errorText]="obtenerMensajeError('email')"
+        mode="ios"
+        formControlName="correoElectronico"
+        ><div slot="label">Email</div></ion-input
+      >
+    </ion-item>
 
-  <ion-card-content>
-    <ion-grid class="contenidoFormulario">
-      <ion-row>
-        <ion-col
-          class="ion-display-flex ion-flex-column ion-align-items-center"
-          style="margin-top: 6%"
+    <ion-item>
+      <ion-input
+        color="secondary"
+        type="password"
+        fill="solid"
+        labelPlacement="floating"
+        helperText="Introduce una contraseña"
+        [errorText]="obtenerMensajeError('clave')"
+        mode="ios"
+        formControlName="clave"
+        ><div slot="label">Contraseña</div></ion-input
+      >
+    </ion-item>
+
+    <ion-item>
+      <ion-checkbox justify="start" labelPlacement="end"
+        >Recordarme</ion-checkbox
+      >
+    </ion-item>
+
+    <div class="ion-display-flex ion-flex-column ion-align-items-center">
+      <ion-button
+        expand="block"
+        type="submit"
+        style="width: 80%; margin-bottom: 5%"
+        >Iniciar sesión</ion-button
+      >
+      <div class="ion-display-flex ion-align-items-center">
+        <div class="o-divisor"></div>
+
+        <ion-label color="medium"> O </ion-label>
+
+        <div class="o-divisor"></div>
+      </div>
+    </div>
+
+    <div class="bloque-continuar-o">
+      <ion-item>
+        <ion-button
+          fill="solid"
+          color="success"
+          class="continuar-boton"
         >
-          <h2 style="margin-top: 2% !important">Inicia sesión para continuar</h2>
-          <login-form/>
-        </ion-col >
-      </ion-row>
-    </ion-grid>
-  </ion-card-content>
-</ion-card>
+          <ion-icon slot="start" name="logo-apple"></ion-icon>
+          <ion-label>Continuar con Apple</ion-label>
+        </ion-button>
+      </ion-item>
+
+      <ion-item>
+        <ion-button
+          fill="solid"
+          color="warning"
+          class="continuar-boton"
+        >
+          <ion-icon slot="start" name="logo-google"></ion-icon>
+          <ion-label>Continuar con Google</ion-label>
+        </ion-button>
+      </ion-item>
+
+      <ion-item>
+        <ion-button fill="solid" color="primary" class="continuar-boton">
+          <ion-icon slot="start" name="logo-android"></ion-icon>
+          <ion-label>Acceder con Android</ion-label>
+        </ion-button>
+      </ion-item>
+    </div>
+  </ion-list>
+</form>

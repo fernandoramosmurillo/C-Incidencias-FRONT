@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { IonInput, IonGrid, IonItem, IonLabel, IonCol, IonRow, IonList, IonText, IonButton, IonCheckbox, IonCard, IonCardContent, IonItemDivider, IonIcon, IonCardHeader, IonCardTitle } from "@ionic/angular/standalone";
-import { Usuario } from 'src/app/Interfaces/usuario';
+import { IonInput, IonGrid, IonItem, IonLabel, IonCol, IonRow, IonList, IonText, IonButton, IonCheckbox, IonCard, IonCardContent, IonItemDivider, IonIcon } from "@ionic/angular/standalone";
+import { RolesUsuario, TiposAcceso, Usuario } from 'src/app/Interfaces/usuario';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { environment } from '@env/environment';
 
 @Component({
-  selector: 'login-form',
+  selector: 'register-form',
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss'],
-  imports: [IonCardTitle, IonCardHeader, IonIcon, IonItemDivider, IonCardContent, IonCard, IonCheckbox, IonButton, IonText, IonList, IonRow, IonCol, IonLabel, IonItem, IonGrid, IonInput, FormsModule, ReactiveFormsModule],
+  imports: [IonIcon, IonItemDivider, IonCardContent, IonCard, IonCheckbox, IonButton, IonText, IonList, IonRow, IonCol, IonLabel, IonItem, IonGrid, IonInput, FormsModule, ReactiveFormsModule],
 })
 export class LoginFormComponent {
 
