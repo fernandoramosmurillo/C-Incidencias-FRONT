@@ -1,13 +1,13 @@
 <ion-card>
   <ion-card-header>
     <ion-card-title class="ion-display-flex ion-align-items-center">
-      <img
-        class="logo"
-        [src]="environment.logoUrl"
-        alt="Logo"
-      />
+      <img class="logo" [src]="environment.logoUrl" alt="Logo" />
       <ion-label>
-        <h1 class="titulo-form">{{titulo}}</h1>
+        @if (router.url.includes("register")) {
+          <h1 class="titulo-form">Registrarse</h1>
+        } @else if (router.url.includes("login")) {
+          <h1 class="titulo-form">Iniciar sesión</h1>
+        }
       </ion-label>
     </ion-card-title>
   </ion-card-header>
@@ -19,13 +19,19 @@
           class="ion-display-flex ion-flex-column ion-align-items-center"
           style="margin-top: 6%"
         >
-          <h2 style="margin-top: 2% !important">Inicia sesión para continuar</h2>
-          <login-form/>
-        </ion-col >
+          @if (router.url.includes("register")) {
+            <h2 style="margin-top: 2% !important">Registrate para continuar</h2>
+          } @else if (router.url.includes("login")) {
+            <h2 style="margin-top: 2% !important">Inicia sesión para continuar</h2>
+          }
+          <router-outlet />
+        </ion-col>
       </ion-row>
-      <ion-row style="margin-top: 6%;">
+      <ion-row style="margin-top: 6%">
         <ion-col class="ion-text-center">
-         <a routerLink="/register">¿No tienes cuenta?. Registrate aquí</a>
+          @if (router.url.includes("login")) {
+            <a routerLink="/register">¿No tienes cuenta?. Registrate aquí</a>
+          }
         </ion-col>
       </ion-row>
     </ion-grid>

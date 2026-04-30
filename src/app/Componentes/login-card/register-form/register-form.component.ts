@@ -5,48 +5,61 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { environment } from '@env/environment';
 
 @Component({
-  selector: 'register-form',
+  selector: 'register-form', // Cambiado a register-form
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss'],
+  standalone: true,
   imports: [IonIcon, IonItemDivider, IonCardContent, IonCard, IonCheckbox, IonButton, IonText, IonList, IonRow, IonCol, IonLabel, IonItem, IonGrid, IonInput, FormsModule, ReactiveFormsModule],
 })
-export class LoginFormComponent {
+export class RegisterFormComponent {
 
   public env = environment;
 
-  loginForm = new FormGroup({
+  // FormGroup ajustado con todos los campos del registro
+  registerForm = new FormGroup({
+    nombre: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    apellidos: new FormControl('', [Validators.required, Validators.minLength(2)]),
     correoElectronico: new FormControl('', [Validators.required, Validators.email]),
-    clave: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[a-zA-Z])(?=.*\\d).{8,}$')])
-  })
+    clave: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[a-zA-Z])(?=.*\\d).{8,}$')]),
+    recibirNotificaciones: new FormControl(false)
+  });
 
+  onRegister() {
+    if (this.registerForm.valid) {
+      const datosFormulario = this.registerForm.value;
 
-  onLogin() {
-    if (this.loginForm.valid) {
-
-      const datosFormulario = this.loginForm.value;
-
+      // Mapeo a la interfaz Usuario (Partial)
       const datosUsuario: Partial<Usuario> = {
+        nombre: datosFormulario.nombre!,
+        apellidos: datosFormulario.apellidos!,
         correoElectronico: datosFormulario.correoElectronico!,
         clave: datosFormulario.clave!,
+        recibirNotificaciones: datosFormulario.recibirNotificaciones || false,
+        // Valores por defecto de tu interfaz
+        rolUsuario: RolesUsuario.CIUDADANO,
+        tipoAcceso: TiposAcceso.CORREO_CONTRASEÑA,
+        estado: 'ACTIVO',
+        bloqueado: false
       };
 
-      console.log("Datos", datosUsuario);
+      console.log("Registrando Usuario:", datosUsuario);
     } else {
-      // ERROR: Forzar a que la interfaz se pinte de rojo para avisar al usuario
-      this.loginForm.markAllAsTouched();
+      this.registerForm.markAllAsTouched();
     }
   }
 
   obtenerMensajeError(nombreControl: string): string {
-    const control = this.loginForm.get(nombreControl);
+    const control = this.registerForm.get(nombreControl);
 
     if (control && control.touched && control.errors) {
       if (control.hasError('required')) return 'Este campo es obligatorio';
       if (control.hasError('email')) return 'El formato del email no es válido';
-      if (control.hasError('minlength')) return 'Debe tener al menos 8 caracteres';
-      if (control.hasError('pattern')) return 'Debe contener al menos 1 numero y letras';
+      if (control.hasError('minlength')) {
+        const min = control.errors['minlength'].requiredLength;
+        return `Mínimo ${min} caracteres`;
+      }
+      if (control.hasError('pattern')) return 'Debe contener al menos 1 número y letras';
     }
-
-    return ''; // Si no hay errores, devolvemos vacío
+    return '';
   }
 }

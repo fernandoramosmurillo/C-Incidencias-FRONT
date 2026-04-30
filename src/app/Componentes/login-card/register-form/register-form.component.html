@@ -1,5 +1,39 @@
-<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+<form [formGroup]="registerForm" (ngSubmit)="onRegister()">
   <ion-list lines="none">
+
+    <!-- Campo Nombre -->
+    <ion-item>
+      <ion-input
+        color="secondary"
+        type="text"
+        placeholder="Tu nombre"
+        fill="solid"
+        labelPlacement="floating"
+        helperText="Introduce tu nombre"
+        [errorText]="obtenerMensajeError('nombre')"
+        mode="ios"
+        formControlName="nombre">
+        <div slot="label">Nombre</div>
+      </ion-input>
+    </ion-item>
+
+    <!-- Campo Apellidos -->
+    <ion-item>
+      <ion-input
+        color="secondary"
+        type="text"
+        placeholder="Tus apellidos"
+        fill="solid"
+        labelPlacement="floating"
+        helperText="Introduce tus apellidos"
+        [errorText]="obtenerMensajeError('apellidos')"
+        mode="ios"
+        formControlName="apellidos">
+        <div slot="label">Apellidos</div>
+      </ion-input>
+    </ion-item>
+
+    <!-- Campo Email -->
     <ion-item>
       <ion-input
         color="secondary"
@@ -7,77 +41,71 @@
         placeholder="ejemplo@correo.com"
         fill="solid"
         labelPlacement="floating"
-        helperText="Introduce un email"
-        [errorText]="obtenerMensajeError('email')"
+        helperText="El email que usarás para acceder"
+        [errorText]="obtenerMensajeError('correoElectronico')"
         mode="ios"
-        formControlName="correoElectronico"
-        ><div slot="label">Email</div></ion-input
-      >
+        formControlName="correoElectronico">
+        <div slot="label">Email</div>
+      </ion-input>
     </ion-item>
 
+    <!-- Campo Contraseña -->
     <ion-item>
       <ion-input
         color="secondary"
         type="password"
         fill="solid"
         labelPlacement="floating"
-        helperText="Introduce una contraseña"
+        helperText="Mínimo 8 caracteres, letras y números"
         [errorText]="obtenerMensajeError('clave')"
         mode="ios"
-        formControlName="clave"
-        ><div slot="label">Contraseña</div></ion-input
-      >
+        formControlName="clave">
+        <div slot="label">Contraseña</div>
+      </ion-input>
     </ion-item>
 
+    <!-- Checkbox de Notificaciones -->
     <ion-item>
-      <ion-checkbox justify="start" labelPlacement="end"
-        >Recordarme</ion-checkbox
-      >
+      <ion-checkbox justify="start" labelPlacement="end" formControlName="recibirNotificaciones">
+        Deseo recibir notificaciones
+      </ion-checkbox>
     </ion-item>
 
     <div class="ion-display-flex ion-flex-column ion-align-items-center">
       <ion-button
         expand="block"
         type="submit"
-        style="width: 80%; margin-bottom: 5%"
-        >Iniciar sesión</ion-button
-      >
+        style="width: 80%; margin-bottom: 5%">
+        Crear cuenta
+      </ion-button>
+
       <div class="ion-display-flex ion-align-items-center">
         <div class="o-divisor"></div>
-
         <ion-label color="medium"> O </ion-label>
-
         <div class="o-divisor"></div>
       </div>
     </div>
 
+    <!-- Opciones Sociales -->
     <div class="bloque-continuar-o">
       <ion-item>
-        <ion-button
-          fill="solid"
-          color="success"
-          class="continuar-boton"
-        >
+        <ion-button fill="solid" color="success" class="continuar-boton">
           <ion-icon slot="start" name="logo-apple"></ion-icon>
-          <ion-label>Continuar con Apple</ion-label>
+          <ion-label>Registrarse con Apple</ion-label>
         </ion-button>
       </ion-item>
 
       <ion-item>
-        <ion-button
-          fill="solid"
-          color="warning"
-          class="continuar-boton"
-        >
+        <ion-button fill="solid" color="warning" class="continuar-boton">
           <ion-icon slot="start" name="logo-google"></ion-icon>
-          <ion-label>Continuar con Google</ion-label>
+          <ion-label>Registrarse con Google</ion-label>
         </ion-button>
       </ion-item>
 
       <ion-item>
         <ion-button fill="solid" color="primary" class="continuar-boton">
           <ion-icon slot="start" name="logo-android"></ion-icon>
-          <ion-label>Acceder con Android</ion-label>
+          <ion-label>Registrarse con Android</ion-label>
         </ion-button>
       </ion-item>
     </div>
