@@ -13,7 +13,9 @@ export enum RolesUsuario {
 export enum TiposAcceso {
   CORREO_CONTRASEÑA = 'CORREO_CONTRASEÑA',
   GOOGLE = 'GOOGLE',
-  CLAVE_ADMIN = 'CLAVE_ADMIN'
+  CLAVE_ADMIN = 'CLAVE_ADMIN',
+  ANDROID = 'ANDROID',
+  IOS = 'IOS'
 }
 
 export interface Usuario {

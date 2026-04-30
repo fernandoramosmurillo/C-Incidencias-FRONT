@@ -1,6 +1,5 @@
 <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
   <ion-list lines="none">
-
     <!-- Campo Nombre -->
     <ion-item>
       <ion-input
@@ -12,7 +11,8 @@
         helperText="Introduce tu nombre"
         [errorText]="obtenerMensajeError('nombre')"
         mode="ios"
-        formControlName="nombre">
+        formControlName="nombre"
+      >
         <div slot="label">Nombre</div>
       </ion-input>
     </ion-item>
@@ -28,7 +28,8 @@
         helperText="Introduce tus apellidos"
         [errorText]="obtenerMensajeError('apellidos')"
         mode="ios"
-        formControlName="apellidos">
+        formControlName="apellidos"
+      >
         <div slot="label">Apellidos</div>
       </ion-input>
     </ion-item>
@@ -44,7 +45,8 @@
         helperText="El email que usarás para acceder"
         [errorText]="obtenerMensajeError('correoElectronico')"
         mode="ios"
-        formControlName="correoElectronico">
+        formControlName="correoElectronico"
+      >
         <div slot="label">Email</div>
       </ion-input>
     </ion-item>
@@ -59,14 +61,30 @@
         helperText="Mínimo 8 caracteres, letras y números"
         [errorText]="obtenerMensajeError('clave')"
         mode="ios"
-        formControlName="clave">
+        formControlName="clave"
+      >
         <div slot="label">Contraseña</div>
       </ion-input>
     </ion-item>
 
+    <ion-datetime
+      presentation="date"
+      formControlName="fechaNacimiento"
+      [preferWheel]="true"
+      [min]="'1900-01-01T00:00:00'"
+      [max]="fechaNacimientoMaxima.toDate().toISOString()"
+      locale="es-ES"
+    >
+      <span slot="title">Selecciona tu fecha de nacimiento</span>
+    </ion-datetime>
+
     <!-- Checkbox de Notificaciones -->
     <ion-item>
-      <ion-checkbox justify="start" labelPlacement="end" formControlName="recibirNotificaciones">
+      <ion-checkbox
+        justify="start"
+        labelPlacement="end"
+        formControlName="recibirNotificaciones"
+      >
         Deseo recibir notificaciones
       </ion-checkbox>
     </ion-item>
@@ -75,7 +93,8 @@
       <ion-button
         expand="block"
         type="submit"
-        style="width: 80%; margin-bottom: 5%">
+        style="width: 80%; margin-bottom: 5%"
+      >
         Crear cuenta
       </ion-button>
 
