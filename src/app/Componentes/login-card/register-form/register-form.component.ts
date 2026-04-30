@@ -4,9 +4,10 @@ import { IonInput, IonGrid, IonItem, IonLabel, IonCol, IonRow, IonList, IonText,
 import { RolesUsuario, TiposAcceso, Usuario } from 'src/app/Interfaces/usuario';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { environment } from '@env/environment';
+import { Ciudadano } from 'src/app/Interfaces/ciudadano';
 
 @Component({
-  selector: 'register-form', // Cambiado a register-form
+  selector: 'register-form',
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss'],
   standalone: true,
@@ -16,12 +17,17 @@ export class RegisterFormComponent {
 
   public env = environment;
 
-  fechaNacimientoMaxima: Timestamp = Timestamp.now()
+  // Fecha máxima (hoy)
+  fechaNacimientoMaxima: Timestamp = Timestamp.now();
 
-  // FormGroup ajustado con todos los campos del registro
+  // FormGroup
   registerForm = new FormGroup({
     nombre: new FormControl('', [Validators.required, Validators.minLength(2)]),
     apellidos: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    dni: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{8}[A-Z]$')]),
+    telefonoContacto: new FormControl<number | null>(null, [Validators.required, Validators.pattern('^[0-9]{9}$')]),
+    direccion: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    fechaNacimiento: new FormControl(this.fechaNacimientoMaxima.toDate().toISOString(), [Validators.required]),
     correoElectronico: new FormControl('', [Validators.required, Validators.email]),
     clave: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[a-zA-Z])(?=.*\\d).{8,}$')]),
     recibirNotificaciones: new FormControl(false)
@@ -31,25 +37,35 @@ export class RegisterFormComponent {
     if (this.registerForm.valid) {
       const datosFormulario = this.registerForm.value;
 
-      // Mapeo a la interfaz Usuario (Partial)
-      const datosUsuario: Partial<Usuario> = {
+      // Convertimos el string ISO del ion-datetime de vuelta a Timestamp para Firebase
+      const fechaSeleccionada: Date = new Date(datosFormulario.fechaNacimiento!);
+      const timestampNacimiento: Timestamp = Timestamp.fromDate(fechaSeleccionada);
+
+      // Mapeo a la interfaz Ciudadano
+      const datosUsuario: Partial<Ciudadano> = {
         nombre: datosFormulario.nombre!,
         apellidos: datosFormulario.apellidos!,
+        dni: datosFormulario.dni!,
+        telefonoContacto: datosFormulario.telefonoContacto!,
+        direccion: datosFormulario.direccion!,
+        fechaNacimiento: timestampNacimiento, // <--- Campo añadido
         correoElectronico: datosFormulario.correoElectronico!,
         clave: datosFormulario.clave!,
         recibirNotificaciones: datosFormulario.recibirNotificaciones || false,
-        // Valores por defecto de tu interfaz
+
         rolUsuario: RolesUsuario.CIUDADANO,
         tipoAcceso: TiposAcceso.CORREO_CONTRASEÑA,
         estado: 'ACTIVO',
         bloqueado: false
       };
 
-      console.log("Registrando Usuario:", datosUsuario);
+      console.log("Registro usuario completo:", datosUsuario);
     } else {
       this.registerForm.markAllAsTouched();
     }
   }
+
+  // No olvides conectar el HTML: añade [formControl]="registerForm.controls.fechaNacimiento" al <ion-datetime>
 
   obtenerMensajeError(nombreControl: string): string {
     const control = this.registerForm.get(nombreControl);
@@ -61,6 +77,8 @@ export class RegisterFormComponent {
         const min = control.errors['minlength'].requiredLength;
         return `Mínimo ${min} caracteres`;
       }
+      if (nombreControl === 'dni' && control.hasError('pattern')) return 'Formato de DNI inválido';
+      if (nombreControl === 'telefonoContacto' && control.hasError('pattern')) return 'Debe tener 9 números';
       if (control.hasError('pattern')) return 'Debe contener al menos 1 número y letras';
     }
     return '';

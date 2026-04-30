@@ -30,7 +30,9 @@
       <ion-row style="margin-top: 6%">
         <ion-col class="ion-text-center">
           @if (router.url.includes("login")) {
-            <a routerLink="/register">¿No tienes cuenta?. Registrate aquí</a>
+            <a routerLink="/auth/register">¿No tienes cuenta?. Registrate aquí</a>
+          } @else if (router.url.includes("register")) {
+            <a routerLink="/auth/login">¿Ya tienes cuenta?. Inicia sesión aqui</a>
           }
         </ion-col>
       </ion-row>
