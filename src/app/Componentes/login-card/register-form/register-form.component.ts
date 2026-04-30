@@ -1,6 +1,6 @@
 import { Timestamp } from '@angular/fire/firestore';
 import { Component } from '@angular/core';
-import { IonInput, IonGrid, IonItem, IonLabel, IonCol, IonRow, IonList, IonText, IonButton, IonCheckbox, IonCard, IonCardContent, IonItemDivider, IonIcon, IonDatetime } from "@ionic/angular/standalone";
+import { IonInput, IonGrid, IonItem, IonLabel, IonCol, IonRow, IonList, IonText, IonButton, IonCheckbox, IonCard, IonCardContent, IonItemDivider, IonIcon, IonDatetime, IonDatetimeButton, IonModal } from "@ionic/angular/standalone";
 import { RolesUsuario, TiposAcceso, Usuario } from 'src/app/Interfaces/usuario';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { environment } from '@env/environment';
@@ -10,7 +10,7 @@ import { environment } from '@env/environment';
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss'],
   standalone: true,
-  imports: [IonDatetime, IonIcon, IonItemDivider, IonCardContent, IonCard, IonCheckbox, IonButton, IonText, IonList, IonRow, IonCol, IonLabel, IonItem, IonGrid, IonInput, FormsModule, ReactiveFormsModule],
+  imports: [IonModal, IonDatetimeButton, IonDatetime, IonIcon, IonItemDivider, IonCardContent, IonCard, IonCheckbox, IonButton, IonText, IonList, IonRow, IonCol, IonLabel, IonItem, IonGrid, IonInput, FormsModule, ReactiveFormsModule],
 })
 export class RegisterFormComponent {
 

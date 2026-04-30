@@ -40,15 +40,13 @@ ion-item .continuar-boton {
   margin-top: 1vw;
 }
 
-ion-datetime {
-  --background: transparent;
-  max-width: 100%;
-  min-width: auto;
-  width: 80%;
-  margin: 0 auto;
-  border: solid 1px rgb(190, 187, 187);
-}
-
 form {
   width: 35vw;
+}
+
+.fechaNacimiento-block {
+  --background-hover: transparent;
+  --background-active: transparent;
+  --background-focused: transparent;
+  --ripple-color: transparent;
 }

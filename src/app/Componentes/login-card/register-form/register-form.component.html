@@ -34,6 +34,57 @@
       </ion-input>
     </ion-item>
 
+    <!-- NUEVO: Campo DNI -->
+    <ion-item>
+      <ion-input
+        color="secondary"
+        type="text"
+        placeholder="12345678X"
+        fill="solid"
+        labelPlacement="floating"
+        helperText="Introduce tu documento de identidad"
+        [errorText]="obtenerMensajeError('dni')"
+        mode="ios"
+        formControlName="dni"
+      >
+        <div slot="label">DNI</div>
+      </ion-input>
+    </ion-item>
+
+    <!-- NUEVO: Campo Teléfono de Contacto -->
+    <ion-item>
+      <ion-input
+        color="secondary"
+        type="tel"
+        placeholder="600000000"
+        fill="solid"
+        labelPlacement="floating"
+        helperText="Tu número de teléfono"
+        [errorText]="obtenerMensajeError('telefonoContacto')"
+        mode="ios"
+        formControlName="telefonoContacto"
+      >
+        <div slot="label">Teléfono de Contacto</div>
+      </ion-input>
+    </ion-item>
+
+    <!-- NUEVO: Campo Dirección -->
+    <ion-item>
+      <ion-input
+        color="secondary"
+        type="text"
+        placeholder="Calle, Número, Piso..."
+        fill="solid"
+        labelPlacement="floating"
+        helperText="Tu dirección de residencia"
+        [errorText]="obtenerMensajeError('direccion')"
+        mode="ios"
+        formControlName="direccion"
+      >
+        <div slot="label">Dirección</div>
+      </ion-input>
+    </ion-item>
+
     <!-- Campo Email -->
     <ion-item>
       <ion-input
@@ -67,16 +118,29 @@
       </ion-input>
     </ion-item>
 
-    <ion-datetime
-      presentation="date"
-      formControlName="fechaNacimiento"
-      [preferWheel]="true"
-      [min]="'1900-01-01T00:00:00'"
-      [max]="fechaNacimientoMaxima.toDate().toISOString()"
-      locale="es-ES"
-    >
-      <span slot="title">Selecciona tu fecha de nacimiento</span>
-    </ion-datetime>
+    <ion-item button="false" class="fechaNacimiento-block">
+      <ion-label position="stacked" style="margin-bottom: 5%; font-size: 1.3rem"
+        >Fecha de Nacimiento</ion-label
+      >
+      <ion-datetime-button datetime="date"></ion-datetime-button>
+
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime
+            id="date"
+            presentation="date"
+            [value]="fechaNacimientoMaxima.toDate().toISOString()"
+            [formatOptions]="{
+              date: {
+                weekday: 'short',
+                month: 'long',
+                day: '2-digit',
+              }
+            }"
+          ></ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
 
     <!-- Checkbox de Notificaciones -->
     <ion-item>
