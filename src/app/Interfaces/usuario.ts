@@ -4,6 +4,14 @@
 
 import { Timestamp } from "firebase/firestore";
 
+export enum Estados {
+  ACTIVO = 'ACTIVO',
+  ELIMINADO = 'ELIMINADO',
+  EN_BORRADOR = 'EN_BORRADOR',
+  BLOQUEADO = 'BLOQUEADO',
+  INACTIVO = 'INACTIVO'
+}
+
 export enum RolesUsuario {
   ADMINISTRADOR = 'ADMINISTRADOR',
   OPERARIO = 'OPERARIO',

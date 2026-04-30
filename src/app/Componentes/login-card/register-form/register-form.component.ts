@@ -1,21 +1,71 @@
-import { Timestamp } from '@angular/fire/firestore';
-import { Component } from '@angular/core';
-import { IonInput, IonGrid, IonItem, IonLabel, IonCol, IonRow, IonList, IonText, IonButton, IonCheckbox, IonCard, IonCardContent, IonItemDivider, IonIcon, IonDatetime, IonDatetimeButton, IonModal } from "@ionic/angular/standalone";
-import { RolesUsuario, TiposAcceso, Usuario } from 'src/app/Interfaces/usuario';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
+import { Router } from '@angular/router';
+import { HttpService } from './../../../Services/http-service';
+import { doc, Firestore, setDoc, Timestamp } from '@angular/fire/firestore';
+import { Component, inject } from '@angular/core';
+import {
+  IonInput,
+  IonGrid,
+  IonItem,
+  IonLabel,
+  IonCol,
+  IonRow,
+  IonList,
+  IonText,
+  IonButton,
+  IonCheckbox,
+  IonCard,
+  IonCardContent,
+  IonItemDivider,
+  IonIcon,
+  IonDatetime,
+  IonDatetimeButton,
+  IonModal,
+} from '@ionic/angular/standalone';
+import { Estados, RolesUsuario, TiposAcceso, Usuario } from 'src/app/Interfaces/usuario';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { environment } from '@env/environment';
 import { Ciudadano } from 'src/app/Interfaces/ciudadano';
+import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 
 @Component({
   selector: 'register-form',
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss'],
   standalone: true,
-  imports: [IonModal, IonDatetimeButton, IonDatetime, IonIcon, IonItemDivider, IonCardContent, IonCard, IonCheckbox, IonButton, IonText, IonList, IonRow, IonCol, IonLabel, IonItem, IonGrid, IonInput, FormsModule, ReactiveFormsModule],
+  imports: [
+    IonModal,
+    IonDatetimeButton,
+    IonDatetime,
+    IonIcon,
+    IonItemDivider,
+    IonCardContent,
+    IonCard,
+    IonCheckbox,
+    IonButton,
+    IonText,
+    IonList,
+    IonRow,
+    IonCol,
+    IonLabel,
+    IonItem,
+    IonGrid,
+    IonInput,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
 })
 export class RegisterFormComponent {
-
   public env = environment;
+  private auth = inject(Auth);
+  private firestore = inject(Firestore);
+  private httpService = inject(HttpService);
+  private Router = inject(Router);
 
   // Fecha máxima (hoy)
   fechaNacimientoMaxima: Timestamp = Timestamp.now();
@@ -23,43 +73,94 @@ export class RegisterFormComponent {
   // FormGroup
   registerForm = new FormGroup({
     nombre: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    apellidos: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    dni: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{8}[A-Z]$')]),
-    telefonoContacto: new FormControl<number | null>(null, [Validators.required, Validators.pattern('^[0-9]{9}$')]),
-    direccion: new FormControl('', [Validators.required, Validators.minLength(5)]),
-    fechaNacimiento: new FormControl(this.fechaNacimientoMaxima.toDate().toISOString(), [Validators.required]),
-    correoElectronico: new FormControl('', [Validators.required, Validators.email]),
-    clave: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[a-zA-Z])(?=.*\\d).{8,}$')]),
-    recibirNotificaciones: new FormControl(false)
+    apellidos: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2),
+    ]),
+    dni: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[0-9]{8}[A-Z]$'),
+    ]),
+    telefonoContacto: new FormControl<number | null>(null, [
+      Validators.required,
+      Validators.pattern('^[0-9]{9}$'),
+    ]),
+    direccion: new FormControl('', [
+      Validators.required,
+      Validators.minLength(5),
+    ]),
+    fechaNacimiento: new FormControl(
+      this.fechaNacimientoMaxima.toDate().toISOString(),
+      [Validators.required],
+    ),
+    correoElectronico: new FormControl('', [
+      Validators.required,
+      Validators.email,
+    ]),
+    clave: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+      Validators.pattern('^(?=.*[a-zA-Z])(?=.*\\d).{8,}$'),
+    ]),
+    recibirNotificaciones: new FormControl(false),
   });
 
-  onRegister() {
+  async asynconRegister() {
     if (this.registerForm.valid) {
       const datosFormulario = this.registerForm.value;
 
-      // Convertimos el string ISO del ion-datetime de vuelta a Timestamp para Firebase
-      const fechaSeleccionada: Date = new Date(datosFormulario.fechaNacimiento!);
-      const timestampNacimiento: Timestamp = Timestamp.fromDate(fechaSeleccionada);
+      try {
+        const credencial = await createUserWithEmailAndPassword(
+          this.auth,
+          datosFormulario.correoElectronico!,
+          datosFormulario.clave!,
+        );
 
-      // Mapeo a la interfaz Ciudadano
-      const datosUsuario: Partial<Ciudadano> = {
-        nombre: datosFormulario.nombre!,
-        apellidos: datosFormulario.apellidos!,
-        dni: datosFormulario.dni!,
-        telefonoContacto: datosFormulario.telefonoContacto!,
-        direccion: datosFormulario.direccion!,
-        fechaNacimiento: timestampNacimiento, // <--- Campo añadido
-        correoElectronico: datosFormulario.correoElectronico!,
-        clave: datosFormulario.clave!,
-        recibirNotificaciones: datosFormulario.recibirNotificaciones || false,
+        // Convertimos el string ISO del ion-datetime de vuelta a Timestamp para Firebase
+        const fechaSeleccionada: Date = new Date(
+          datosFormulario.fechaNacimiento!,
+        );
+        const timestampNacimiento: Timestamp =
+          Timestamp.fromDate(fechaSeleccionada);
 
-        rolUsuario: RolesUsuario.CIUDADANO,
-        tipoAcceso: TiposAcceso.CORREO_CONTRASEÑA,
-        estado: 'ACTIVO',
-        bloqueado: false
-      };
+        // Mapeo a la interfaz Ciudadano
+        const datosUsuario: Ciudadano = {
+          idUsuario: credencial.user.uid,
+          nombre: datosFormulario.nombre!,
+          apellidos: datosFormulario.apellidos!,
+          dni: datosFormulario.dni!,
+          telefonoContacto: datosFormulario.telefonoContacto!,
+          direccion: datosFormulario.direccion!,
+          fechaNacimiento: timestampNacimiento,
+          correoElectronico: datosFormulario.correoElectronico!,
+          clave: datosFormulario.clave!,
+          recibirNotificaciones: datosFormulario.recibirNotificaciones || false,
 
-      console.log("Registro usuario completo:", datosUsuario);
+          rolUsuario: RolesUsuario.CIUDADANO,
+          tipoAcceso: TiposAcceso.CORREO_CONTRASEÑA,
+          estado: Estados.EN_BORRADOR,
+          bloqueado: false,
+          incidenciasSolicitadas: [],
+          incidenciasCalificadas: [],
+
+          fechaCreacion: Timestamp.now(),
+          fechaEliminacion: null,
+          fotoPerfilUrl: null,
+          notificacionesRecibidas: [],
+        };
+
+        //Guardar la ficha en Firestore usando el UID como nombre del documento
+        await this.httpService.añadirDato("/usuarios", datosUsuario)
+
+        console.log('Registro usuario completo:', datosUsuario);
+      } catch (error: any) {
+        // Manejo de errores rápido
+        if (error.code === 'auth/email-already-in-use') {
+          alert('Este correo ya está registrado.');
+        } else {
+          alert('Error: ' + error.message);
+        }
+      }
     } else {
       this.registerForm.markAllAsTouched();
     }
@@ -77,9 +178,12 @@ export class RegisterFormComponent {
         const min = control.errors['minlength'].requiredLength;
         return `Mínimo ${min} caracteres`;
       }
-      if (nombreControl === 'dni' && control.hasError('pattern')) return 'Formato de DNI inválido';
-      if (nombreControl === 'telefonoContacto' && control.hasError('pattern')) return 'Debe tener 9 números';
-      if (control.hasError('pattern')) return 'Debe contener al menos 1 número y letras';
+      if (nombreControl === 'dni' && control.hasError('pattern'))
+        return 'Formato de DNI inválido';
+      if (nombreControl === 'telefonoContacto' && control.hasError('pattern'))
+        return 'Debe tener 9 números';
+      if (control.hasError('pattern'))
+        return 'Debe contener al menos 1 número y letras';
     }
     return '';
   }
