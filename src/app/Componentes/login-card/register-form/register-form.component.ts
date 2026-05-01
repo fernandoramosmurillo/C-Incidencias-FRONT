@@ -1,3 +1,4 @@
+import { LocalStorageService } from './../../../Services/local-storage-service';
 import { Router } from '@angular/router';
 import { HttpService } from './../../../Services/http-service';
 import { doc, Firestore, setDoc, Timestamp } from '@angular/fire/firestore';
@@ -21,7 +22,12 @@ import {
   IonDatetimeButton,
   IonModal,
 } from '@ionic/angular/standalone';
-import { Estados, RolesUsuario, TiposAcceso, Usuario } from 'src/app/Interfaces/usuario';
+import {
+  Estados,
+  RolesUsuario,
+  TiposAcceso,
+  Usuario,
+} from 'src/app/Interfaces/usuario';
 import {
   FormControl,
   FormGroup,
@@ -65,7 +71,8 @@ export class RegisterFormComponent {
   private auth = inject(Auth);
   private firestore = inject(Firestore);
   private httpService = inject(HttpService);
-  private Router = inject(Router);
+  private router = inject(Router);
+  private localStorageService = inject(LocalStorageService);
 
   // Fecha máxima (hoy)
   fechaNacimientoMaxima: Timestamp = Timestamp.now();
@@ -105,7 +112,7 @@ export class RegisterFormComponent {
     recibirNotificaciones: new FormControl(false),
   });
 
-  async asynconRegister() {
+  async onRegister() {
     if (this.registerForm.valid) {
       const datosFormulario = this.registerForm.value;
 
@@ -150,7 +157,18 @@ export class RegisterFormComponent {
         };
 
         //Guardar la ficha en Firestore usando el UID como nombre del documento
-        await this.httpService.añadirDato("/usuarios", datosUsuario)
+        await this.httpService.añadirDato('/usuarios', datosUsuario);
+
+        //Guardamos en local storage
+        this.localStorageService.guardarEnLocal(
+          'usuario',
+          datosUsuario,
+        );
+
+        // Dentro de tu try en RegisterFormComponent, al final:
+        this.router.navigate(['/auth/verification-pending'], {
+          state: { email: datosUsuario.correoElectronico },
+        });
 
         console.log('Registro usuario completo:', datosUsuario);
       } catch (error: any) {

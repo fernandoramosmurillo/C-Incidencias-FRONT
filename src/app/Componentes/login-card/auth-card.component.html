@@ -7,6 +7,8 @@
           <h1 class="titulo-form">Registrarse</h1>
         } @else if (router.url.includes("login")) {
           <h1 class="titulo-form">Iniciar sesión</h1>
+        } @else if (router.url.includes("verification-pending")) {
+          <h1 class="titulo-form">Verificación</h1>
         }
       </ion-label>
     </ion-card-title>
@@ -22,7 +24,11 @@
           @if (router.url.includes("register")) {
             <h2 style="margin-top: 2% !important">Registrate para continuar</h2>
           } @else if (router.url.includes("login")) {
-            <h2 style="margin-top: 2% !important">Inicia sesión para continuar</h2>
+            <h2 style="margin-top: 2% !important">
+              Inicia sesión para continuar
+            </h2>
+          } @else if (router.url.includes("verification-pending")) {
+            <h2 style="margin-top: 2% !important">Confirma tu identidad</h2>
           }
           <router-outlet />
         </ion-col>
@@ -30,9 +36,13 @@
       <ion-row style="margin-top: 6%">
         <ion-col class="ion-text-center">
           @if (router.url.includes("login")) {
-            <a routerLink="/auth/register">¿No tienes cuenta?. Registrate aquí</a>
+            <a routerLink="/auth/register"
+              >¿No tienes cuenta?. Registrate aquí</a
+            >
           } @else if (router.url.includes("register")) {
-            <a routerLink="/auth/login">¿Ya tienes cuenta?. Inicia sesión aqui</a>
+            <a routerLink="/auth/login"
+              >¿Ya tienes cuenta?. Inicia sesión aqui</a
+            >
           }
         </ion-col>
       </ion-row>
