@@ -38,9 +38,9 @@ export interface Usuario {
   clave: string;
 
   // Fechas (Timestamp de Firestore)
-  fechaNacimiento: Timestamp | null;
-  fechaCreacion: Timestamp | null;
-  fechaEliminacion: Timestamp | null;
+  fechaNacimiento: string;
+  fechaCreacion: string;
+  fechaEliminacion: string | null;
 
   // Perfil y Permisos
   rolUsuario: RolesUsuario;

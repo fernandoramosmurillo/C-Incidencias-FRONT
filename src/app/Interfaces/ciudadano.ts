@@ -6,7 +6,7 @@ import { Incidencia } from './incidencia';
 export interface Ciudadano extends Usuario {
 
   dni: string;
-  telefonoContacto: number; // En JS/TS todo es 'number'
+  telefonoContacto: string;
   direccion: string;
 
   // Lista de sus incidencias (ya transformadas a objeto)

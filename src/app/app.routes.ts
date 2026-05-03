@@ -18,6 +18,10 @@ export const routes: Routes = [
       {
         path: 'login',
         loadComponent: () => import('./Componentes/login-card/login-form/login-form.component').then(m => m.LoginFormComponent)
+      },
+      {
+        path: 'verification-pending',
+        loadComponent: () => import('./Componentes/login-card/verification-pending/verification-pending.component').then(m => m.VerificationPendingComponent)
       }
     ]
   },

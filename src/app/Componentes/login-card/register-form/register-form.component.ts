@@ -2,7 +2,7 @@ import { AuthService } from './../../../Services/auth-service';
 import { LocalStorageService } from './../../../Services/local-storage-service';
 import { Router } from '@angular/router';
 import { HttpService } from './../../../Services/http-service';
-import { Firestore, Timestamp } from '@angular/fire/firestore';
+import { Firestore, Timestamp } from '@angular/fire/firestore'; // Eliminamos Timestamp de aquí
 import { Component, inject } from '@angular/core';
 import {
   IonInput,
@@ -16,11 +16,7 @@ import {
   IonDatetimeButton,
   IonModal,
 } from '@ionic/angular/standalone';
-import {
-  Estados,
-  RolesUsuario,
-  TiposAcceso,
-} from 'src/app/Interfaces/usuario';
+import { Estados, RolesUsuario, TiposAcceso } from 'src/app/Interfaces/usuario';
 import {
   FormControl,
   FormGroup,
@@ -35,6 +31,7 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from '@angular/fire/auth';
+import { deleteUser } from 'firebase/auth';
 
 @Component({
   selector: 'register-form',
@@ -53,8 +50,8 @@ import {
     IonItem,
     IonInput,
     FormsModule,
-    ReactiveFormsModule
-],
+    ReactiveFormsModule,
+  ],
 })
 export class RegisterFormComponent {
   public env = environment;
@@ -79,7 +76,7 @@ export class RegisterFormComponent {
       Validators.required,
       Validators.pattern('^[0-9]{8}[A-Z]$'),
     ]),
-    telefonoContacto: new FormControl<number | null>(null, [
+    telefonoContacto: new FormControl<string | null>(null, [
       Validators.required,
       Validators.pattern('^[0-9]{9}$'),
     ]),
@@ -88,7 +85,7 @@ export class RegisterFormComponent {
       Validators.minLength(5),
     ]),
     fechaNacimiento: new FormControl(
-      this.fechaNacimientoMaxima.toDate().toISOString(),
+      new Date().toISOString(), // Usamos ISO String nativo
       [Validators.required],
     ),
     correoElectronico: new FormControl('', [
@@ -114,13 +111,6 @@ export class RegisterFormComponent {
           datosFormulario.clave!,
         );
 
-        // Convertimos el string ISO del ion-datetime de vuelta a Timestamp para Firebase
-        const fechaSeleccionada: Date = new Date(
-          datosFormulario.fechaNacimiento!,
-        );
-        const timestampNacimiento: Timestamp =
-          Timestamp.fromDate(fechaSeleccionada);
-
         // Mapeo a la interfaz Ciudadano
         const datosUsuario: Ciudadano = {
           idUsuario: credencial.user.uid,
@@ -129,7 +119,8 @@ export class RegisterFormComponent {
           dni: datosFormulario.dni!,
           telefonoContacto: datosFormulario.telefonoContacto!,
           direccion: datosFormulario.direccion!,
-          fechaNacimiento: timestampNacimiento,
+          // Enviamos la fecha como string ISO
+          fechaNacimiento: new Date(datosFormulario.fechaNacimiento!).toISOString(),
           correoElectronico: datosFormulario.correoElectronico!,
           clave: datosFormulario.clave!,
           recibirNotificaciones: datosFormulario.recibirNotificaciones || false,
@@ -141,33 +132,25 @@ export class RegisterFormComponent {
           incidenciasSolicitadas: [],
           incidenciasCalificadas: [],
 
-          fechaCreacion: Timestamp.now(),
+          // Fecha de creación en formato ISO string
+          fechaCreacion: new Date().toISOString(),
           fechaEliminacion: null,
           fotoPerfilUrl: null,
           notificacionesRecibidas: [],
         };
 
-        //Guardar la ficha en Firestore usando el UID como nombre del documento
-        await this.httpService.añadirDato('/usuarios', datosUsuario);
-
-        const token = await credencial.user.getIdToken();
+        const token = `Bearer ${await credencial.user.getIdToken()}`;
         this.authService.guardarToken(token);
         this.authService.usuarioAutenticado = true;
 
-        //Guardamos en local storage
-        this.localStorageService.guardarEnLocal('usuario', {
-          nombre: datosUsuario.nombre,
-          rol: datosUsuario.rolUsuario
-        });
+        this.localStorageService.guardarEnLocal('usuario', datosUsuario);
 
-        // Enviar correo de verificación
         await sendEmailVerification(credencial.user);
+        await this.httpService.añadirDato('usuarios', datosUsuario);
 
-        // Redirigir a la pantalla de verificación
         this.router.navigate(['/auth/verification-pending']);
-
-        console.log('Registro usuario completo:', datosUsuario);
       } catch (error: any) {
+        deleteUser(this.auth.currentUser!)
         if (error.code === 'auth/email-already-in-use') {
           alert('Este correo ya está registrado.');
         } else {
@@ -181,7 +164,6 @@ export class RegisterFormComponent {
 
   obtenerMensajeError(nombreControl: string): string {
     const control = this.registerForm.get(nombreControl);
-
     if (control && control.touched && control.errors) {
       if (control.hasError('required')) return 'Este campo es obligatorio';
       if (control.hasError('email')) return 'El formato del email no es válido';

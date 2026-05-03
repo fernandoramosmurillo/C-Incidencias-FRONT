@@ -12,6 +12,7 @@
         [errorText]="obtenerMensajeError('nombre')"
         mode="ios"
         formControlName="nombre"
+        maxlength="30"
       >
         <div slot="label">Nombre</div>
       </ion-input>
@@ -29,6 +30,7 @@
         [errorText]="obtenerMensajeError('apellidos')"
         mode="ios"
         formControlName="apellidos"
+        maxlength="30"
       >
         <div slot="label">Apellidos</div>
       </ion-input>
@@ -46,6 +48,7 @@
         [errorText]="obtenerMensajeError('dni')"
         mode="ios"
         formControlName="dni"
+        maxlength="9"
       >
         <div slot="label">DNI</div>
       </ion-input>
@@ -63,6 +66,7 @@
         [errorText]="obtenerMensajeError('telefonoContacto')"
         mode="ios"
         formControlName="telefonoContacto"
+        maxlength="9"
       >
         <div slot="label">Teléfono de Contacto</div>
       </ion-input>
@@ -79,6 +83,7 @@
         helperText="Tu dirección de residencia"
         [errorText]="obtenerMensajeError('direccion')"
         mode="ios"
+        maxlength="100"
         formControlName="direccion"
       >
         <div slot="label">Dirección</div>
@@ -97,6 +102,7 @@
         [errorText]="obtenerMensajeError('correoElectronico')"
         mode="ios"
         formControlName="correoElectronico"
+        maxlength="70"
       >
         <div slot="label">Email</div>
       </ion-input>
@@ -113,6 +119,7 @@
         [errorText]="obtenerMensajeError('clave')"
         mode="ios"
         formControlName="clave"
+        maxlength="50"
       >
         <div slot="label">Contraseña</div>
       </ion-input>

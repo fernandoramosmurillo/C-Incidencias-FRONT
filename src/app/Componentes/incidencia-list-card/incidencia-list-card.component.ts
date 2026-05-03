@@ -20,12 +20,6 @@ import { IncidenciaCardComponent } from "./incidencia-card/incidencia-card.compo
     IonRow,
     IonGrid,
     IonCol,
-    IonCardContent,
-    IonCardTitle,
-    IonCardSubtitle,
-    IonCardHeader,
-    IonCard,
-    IonCard,
     IncidenciaCardComponent
 ],
   styleUrls: ['./incidencia-list-card.component.scss'],
