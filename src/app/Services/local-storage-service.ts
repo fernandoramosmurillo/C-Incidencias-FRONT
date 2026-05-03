@@ -22,4 +22,9 @@ export class LocalStorageService {
       return datos; // Si no es un JSON, devuelve el string tal cual
     }
   }
+
+  // Elimina un item específico de LocalStorage
+  eliminarDeLocal(llave: string) {
+    localStorage.removeItem(llave);
+  }
 }

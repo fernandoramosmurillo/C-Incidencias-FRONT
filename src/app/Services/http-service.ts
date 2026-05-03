@@ -84,11 +84,4 @@ export class HttpService {
     const response: HttpResponse = await CapacitorHttp.put(options);
     return response.data as T;
   }
-
-  /**
-   * Método de utilidad por si necesitas el objeto completo en algún componente
-   */
-  obtenerFullUsuario(): FullUsuario | null {
-    return this.localStorageService.obtenerDeLocal('usuario') as FullUsuario;
-  }
 }

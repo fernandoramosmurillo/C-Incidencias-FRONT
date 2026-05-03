@@ -32,6 +32,7 @@ import {
   sendEmailVerification,
 } from '@angular/fire/auth';
 import { deleteUser } from 'firebase/auth';
+import { AuthUsuario } from 'src/app/Interfaces/AuthUsuario';
 
 @Component({
   selector: 'register-form',
@@ -139,11 +140,24 @@ export class RegisterFormComponent {
           notificacionesRecibidas: [],
         };
 
+        const datosAuth: AuthUsuario = {
+          uid: credencial.user.uid,
+          email: credencial.user.email!,
+          verificado: credencial.user.emailVerified,
+          nombre: datosUsuario.nombre,
+          foto: datosUsuario.fotoPerfilUrl || '',
+        };
+
+        const datosFullUsuario = {
+          ...datosUsuario,
+          ...datosAuth,
+        };
+
         const token = `Bearer ${await credencial.user.getIdToken()}`;
         this.authService.guardarToken(token);
         this.authService.usuarioAutenticado = true;
 
-        this.localStorageService.guardarEnLocal('usuario', datosUsuario);
+        this.localStorageService.guardarEnLocal('usuario', datosFullUsuario);
 
         await sendEmailVerification(credencial.user);
         await this.httpService.añadirDato('usuarios', datosUsuario);
