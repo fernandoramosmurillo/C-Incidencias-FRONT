@@ -22,7 +22,7 @@ export const routes: Routes = [
     ]
   },
   {
-    path: 'app', // Es más seguro usar un prefijo para la zona privada
+    path: 'app',
     loadComponent: () => import('./Componentes/app-frame/app-frame.component').then(m => m.AppFrameComponent),
     children: [
       {

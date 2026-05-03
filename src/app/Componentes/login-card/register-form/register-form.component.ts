@@ -1,22 +1,16 @@
+import { AuthService } from './../../../Services/auth-service';
 import { LocalStorageService } from './../../../Services/local-storage-service';
 import { Router } from '@angular/router';
 import { HttpService } from './../../../Services/http-service';
-import { doc, Firestore, setDoc, Timestamp } from '@angular/fire/firestore';
+import { Firestore, Timestamp } from '@angular/fire/firestore';
 import { Component, inject } from '@angular/core';
 import {
   IonInput,
-  IonGrid,
   IonItem,
   IonLabel,
-  IonCol,
-  IonRow,
   IonList,
-  IonText,
   IonButton,
   IonCheckbox,
-  IonCard,
-  IonCardContent,
-  IonItemDivider,
   IonIcon,
   IonDatetime,
   IonDatetimeButton,
@@ -26,7 +20,6 @@ import {
   Estados,
   RolesUsuario,
   TiposAcceso,
-  Usuario,
 } from 'src/app/Interfaces/usuario';
 import {
   FormControl,
@@ -37,7 +30,11 @@ import {
 } from '@angular/forms';
 import { environment } from '@env/environment';
 import { Ciudadano } from 'src/app/Interfaces/ciudadano';
-import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from '@angular/fire/auth';
 
 @Component({
   selector: 'register-form',
@@ -49,22 +46,15 @@ import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
     IonDatetimeButton,
     IonDatetime,
     IonIcon,
-    IonItemDivider,
-    IonCardContent,
-    IonCard,
     IonCheckbox,
     IonButton,
-    IonText,
     IonList,
-    IonRow,
-    IonCol,
     IonLabel,
     IonItem,
-    IonGrid,
     IonInput,
     FormsModule,
-    ReactiveFormsModule,
-  ],
+    ReactiveFormsModule
+],
 })
 export class RegisterFormComponent {
   public env = environment;
@@ -73,6 +63,7 @@ export class RegisterFormComponent {
   private httpService = inject(HttpService);
   private router = inject(Router);
   private localStorageService = inject(LocalStorageService);
+  private authService = inject(AuthService);
 
   // Fecha máxima (hoy)
   fechaNacimientoMaxima: Timestamp = Timestamp.now();
@@ -159,20 +150,24 @@ export class RegisterFormComponent {
         //Guardar la ficha en Firestore usando el UID como nombre del documento
         await this.httpService.añadirDato('/usuarios', datosUsuario);
 
-        //Guardamos en local storage
-        this.localStorageService.guardarEnLocal(
-          'usuario',
-          datosUsuario,
-        );
+        const token = await credencial.user.getIdToken();
+        this.authService.guardarToken(token);
+        this.authService.usuarioAutenticado = true;
 
-        // Dentro de tu try en RegisterFormComponent, al final:
-        this.router.navigate(['/auth/verification-pending'], {
-          state: { email: datosUsuario.correoElectronico },
+        //Guardamos en local storage
+        this.localStorageService.guardarEnLocal('usuario', {
+          nombre: datosUsuario.nombre,
+          rol: datosUsuario.rolUsuario
         });
+
+        // Enviar correo de verificación
+        await sendEmailVerification(credencial.user);
+
+        // Redirigir a la pantalla de verificación
+        this.router.navigate(['/auth/verification-pending']);
 
         console.log('Registro usuario completo:', datosUsuario);
       } catch (error: any) {
-        // Manejo de errores rápido
         if (error.code === 'auth/email-already-in-use') {
           alert('Este correo ya está registrado.');
         } else {
@@ -183,8 +178,6 @@ export class RegisterFormComponent {
       this.registerForm.markAllAsTouched();
     }
   }
-
-  // No olvides conectar el HTML: añade [formControl]="registerForm.controls.fechaNacimiento" al <ion-datetime>
 
   obtenerMensajeError(nombreControl: string): string {
     const control = this.registerForm.get(nombreControl);

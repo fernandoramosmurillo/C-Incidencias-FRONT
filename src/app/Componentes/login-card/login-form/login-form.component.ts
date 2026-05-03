@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   selector: 'login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss'],
-  imports: [IonIcon, IonItemDivider, IonCardContent, IonCard, IonCheckbox, IonButton, IonText, IonList, IonRow, IonCol, IonLabel, IonItem, IonGrid, IonInput, FormsModule, ReactiveFormsModule],
+  imports: [IonIcon, IonCheckbox, IonButton, IonList, IonLabel, IonItem, IonInput, FormsModule, ReactiveFormsModule],
 })
 export class LoginFormComponent {
 
@@ -19,7 +19,6 @@ export class LoginFormComponent {
     correoElectronico: new FormControl('', [Validators.required, Validators.email]),
     clave: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[a-zA-Z])(?=.*\\d).{8,}$')])
   })
-
 
   onLogin() {
     if (this.loginForm.valid) {
