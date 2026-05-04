@@ -10,6 +10,7 @@ import { HttpService } from 'src/app/Services/http-service';
 import { AuthService } from 'src/app/Services/auth-service';
 import { LocalStorageService } from 'src/app/Services/local-storage-service'; // Lo mantenemos solo para limpiar
 import { environment } from '@env/environment';
+import { Usuario } from 'src/app/Interfaces/usuario';
 
 @Component({
   selector: 'login-form',
@@ -52,9 +53,10 @@ export class LoginFormComponent {
       }
 
       //Si hay un usuario en local y no coincide con el que acaba de entrar, borramos todo lo anterior para evitar conflictos de datos
-      const usuarioPrevio = this.localStorageService.obtenerDeLocal('usuario');
-      if (usuarioPrevio && usuarioPrevio.id !== uid) {
-        console.log('Detectado cambio de usuario. Limpiando datos previos...');
+      const usuarioPrevio: FullUsuario = this.localStorageService.obtenerDeLocal('usuario');
+
+      if (usuarioPrevio && usuarioPrevio.datosAuth.uid !== uid) {
+        console.log('Detectado cambio de usuario. Limpiando datos de sesión anterior...');
         this.localStorageService.eliminarDeLocal('usuario');
         // Se podrian colocar mas llaves en un futuro para limpiar
       }

@@ -1,16 +1,21 @@
-import { Component } from '@angular/core';
+import { LocalStorageService } from './Services/local-storage-service';
+import { Component, inject, OnInit } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { create, home, logoAndroid, logoApple, logoGoogle} from 'ionicons/icons'
-import { RouterOutlet } from "@angular/router";
-import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from "@angular/router";
+import { Usuario } from './Interfaces/usuario';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [IonRouterOutlet, IonApp, ReactiveFormsModule],
+  standalone: true,
+  imports: [IonRouterOutlet, IonApp],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  private localstorageService = inject(LocalStorageService);
+  private router = inject(Router);
 
   constructor() {
     addIcons({
@@ -20,5 +25,20 @@ export class AppComponent {
       logoApple,
       logoAndroid
     });
+  }
+
+  ngOnInit() {
+    this.comprobarSesion();
+  }
+
+  private comprobarSesion() {
+    const usuario:Usuario = this.localstorageService.obtenerDeLocal('usuario');
+
+    if (!usuario) {
+      this.router.navigate(['auth/login'], { replaceUrl: true });
+      console.log("No se ha encontrado ningun usuario autenticado, redirigiendo a login...");
+    } else {
+      console.log('Sesión detectada para el usuario:', usuario.idUsuario);
+    }
   }
 }
