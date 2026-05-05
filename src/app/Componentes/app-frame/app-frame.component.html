@@ -1,7 +1,5 @@
-<ion-app>
-  @if (observerService.pantallaEnanaSignal()) {
-    <app-frame-mobile-component/>
-  } @else if (observerService.pantallaGrandeSignal()) {
-    <app-frame-desktop-component/>
-  }
-</ion-app>
+@if (observerService.pantallaEnanaSignal()) {
+  <app-frame-mobile-component />
+} @else if (observerService.pantallaGrandeSignal()) {
+  <app-frame-desktop-component />
+}
