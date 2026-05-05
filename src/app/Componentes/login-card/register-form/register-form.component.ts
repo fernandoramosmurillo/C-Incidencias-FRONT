@@ -1,4 +1,3 @@
-import { AuthService } from './../../../Services/auth-service';
 import { LocalStorageService } from './../../../Services/local-storage-service';
 import { Router } from '@angular/router';
 import { HttpService } from './../../../Services/http-service';
@@ -61,7 +60,6 @@ export class RegisterFormComponent {
   private httpService = inject(HttpService);
   private router = inject(Router);
   private localStorageService = inject(LocalStorageService);
-  private authService = inject(AuthService);
 
   // Fecha máxima (hoy)
   fechaNacimientoMaxima: Timestamp = Timestamp.now();
@@ -154,8 +152,6 @@ export class RegisterFormComponent {
         };
 
         const token = `Bearer ${await credencial.user.getIdToken()}`;
-        this.authService.guardarToken(token);
-        this.authService.usuarioAutenticado = true;
 
         this.localStorageService.guardarEnLocal('usuario', datosFullUsuario);
 

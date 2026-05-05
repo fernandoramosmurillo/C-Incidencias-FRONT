@@ -19,7 +19,7 @@ export class IncidenciaService
   asignarModelos() {
     this.datos.update((lista) => {
 
-      let nuevaLista = this.vincularPropiedad<Incidencia, Usuario>(lista, 'usuarioCiudadano', new Map(this.usuarioService.datos().map((u) => [u.idUsuario, u])));
+      let nuevaLista = this.vincularPropiedad<Incidencia, Usuario>(lista, 'usuarioCiudadano', new Map(this.usuarioService.datos().map?.((u) => [u.idUsuario, u]))) || [];
 
       return nuevaLista;
     });

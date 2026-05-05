@@ -7,7 +7,6 @@ import {
 
 import { FullUsuario } from 'src/app/Interfaces/fullUsuario';
 import { HttpService } from 'src/app/Services/http-service';
-import { AuthService } from 'src/app/Services/auth-service';
 import { LocalStorageService } from 'src/app/Services/local-storage-service'; // Lo mantenemos solo para limpiar
 import { environment } from '@env/environment';
 import { Usuario } from 'src/app/Interfaces/usuario';
@@ -25,7 +24,6 @@ export class LoginFormComponent {
   public env = environment;
   private httpService = inject(HttpService);
   private auth = inject(Auth);
-  private authService = inject(AuthService);
   private localStorageService = inject(LocalStorageService);
   private router = inject(Router);
 
@@ -75,11 +73,8 @@ export class LoginFormComponent {
   }
 
   private async establecerSesion() {
-    const token = await this.credential.user.getIdToken();
-    this.authService.guardarToken(`Bearer ${token}`);
-    this.authService.usuarioAutenticado = true;
-
     this.localStorageService.guardarEnLocal('usuario', this.fullUser);
+
     // Navegación
     this.router.navigate(['app/home']);
   }

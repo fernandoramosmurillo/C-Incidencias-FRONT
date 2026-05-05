@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { CapacitorHttp, HttpResponse } from '@capacitor/core';
 import { LocalStorageService } from './local-storage-service';
 import { FullUsuario } from '../Interfaces/fullUsuario';
-import { AuthService } from './auth-service';
+import { Auth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -10,11 +10,13 @@ import { AuthService } from './auth-service';
 export class HttpService {
   private readonly BASE_URL = 'http://localhost:8080/api';
   private localStorageService = inject(LocalStorageService);
-  private auth = inject(AuthService);
+  private auth = inject(Auth);
 
-  private getHeaders() {
+  private async getHeaders() {
+    await this.auth.authStateReady();
+
     // Obtenemos el token directamente del servicio (AuthService)
-    const token = this.auth.obtenerToken();
+    const token = await this.auth.currentUser?.getIdToken();
 
     // Construimos las cabeceras
     const headers: { [key: string]: string } = {
@@ -32,7 +34,7 @@ export class HttpService {
   async obtenerDatos<T>(endpoint: string): Promise<T[]> {
     const options = {
       url: `${this.BASE_URL}/${endpoint}`,
-      headers: this.getHeaders()
+      headers: await this.getHeaders()
     };
     const response: HttpResponse = await CapacitorHttp.get(options);
     return response.data as T[];
@@ -41,7 +43,7 @@ export class HttpService {
   async obtenerDato<T>(endpoint: string, id: string): Promise<T> {
     const options = {
       url: `${this.BASE_URL}/${endpoint}/${id}`,
-      headers: this.getHeaders()
+      headers: await this.getHeaders()
     };
     const response: HttpResponse = await CapacitorHttp.get(options);
     return response.data as T;
@@ -51,7 +53,7 @@ export class HttpService {
     const options = {
       url: `${this.BASE_URL}/${endpoint}`,
       data: dato,
-      headers: this.getHeaders()
+      headers: await this.getHeaders()
     };
     const response: HttpResponse = await CapacitorHttp.post(options);
     return response.data as T;
@@ -61,7 +63,7 @@ export class HttpService {
     const options = {
       url: `${this.BASE_URL}/${endpoint}/${id}`,
       data: dato,
-      headers: this.getHeaders()
+      headers: await this.getHeaders()
     };
     const response: HttpResponse = await CapacitorHttp.put(options);
     return response.data as T;
@@ -70,7 +72,7 @@ export class HttpService {
   async eliminarDato(endpoint: string, id: string): Promise<any> {
     const options = {
       url: `${this.BASE_URL}/${endpoint}/${id}`,
-      headers: this.getHeaders()
+      headers: await this.getHeaders()
     };
     const response: HttpResponse = await CapacitorHttp.delete(options);
     return response.data;
@@ -79,7 +81,7 @@ export class HttpService {
   async cambiarEstado<T>(endpoint: string, id: string, nuevoEstado: string): Promise<T> {
     const options = {
       url: `${this.BASE_URL}/${endpoint}/${id}/estado/${nuevoEstado}`,
-      headers: this.getHeaders()
+      headers: await this.getHeaders()
     };
     const response: HttpResponse = await CapacitorHttp.put(options);
     return response.data as T;

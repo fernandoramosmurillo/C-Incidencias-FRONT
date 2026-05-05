@@ -61,6 +61,8 @@ bootstrapApplication(AppComponent, {
     provideAnalytics(() => getAnalytics()),
     ScreenTrackingService,
     UserTrackingService,
+
+    /* No lo vamosa a usar por ahora, pero lo dejamos aquí para cuando queramos implementarlo
     provideAppCheck(() => {
       // TODO get a reCAPTCHA Enterprise here https://console.cloud.google.com/security/recaptcha?project=_
       const provider = new ReCaptchaEnterpriseProvider(
@@ -71,6 +73,8 @@ bootstrapApplication(AppComponent, {
         isTokenAutoRefreshEnabled: true,
       });
     }),
+    */
+
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
     provideDataConnect(() =>
