@@ -1,7 +1,7 @@
 <ion-grid>
   <ion-row>
     @for (item of incidenciaService.datos(); track $index) {
-      <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="3">
+      <ion-col size="12" size-sm="6" size-md="6" size-lg="6" size-xl="3">
         <incidencia-card [incidencia]="item"></incidencia-card>
       </ion-col>
     }

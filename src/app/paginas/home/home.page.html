@@ -1,28 +1,34 @@
 <ion-content [fullscreen]="true">
-  <ion-img
-    id="home-banner"
-    src="assets/images/Banner Cantillana.avif"
-  />
+  <ion-img id="home-banner" src="assets/images/Banner Cantillana.avif" />
 
   <!-- Contenedor de Bienvenida Centrado -->
-  <div class="ion-text-center ion-padding-horizontal" style="margin-top: 24px;">
-    <h1 style="margin-bottom: 24px !important;">
+  <div
+    class="ion-text-center ion-padding-horizontal ion-display-flex ion-flex-column ion-align-items-center"
+    style="margin-top: 24px; width: 100%"
+  >
+    <ion-label  style="margin-bottom: 24px !important; font-size: clamp(0.8rem, 2vw, 4rem);">
       ¡Hola, {{ usuario().datosUsuario.nombre }}!
-    </h1>
+    </ion-label>
 
     <!-- Texto de bienvenida -->
-    <p style="color: var(--ion-color-step-600); max-width: 600px; margin: 0 auto 24px auto; font-size: 1.1rem; line-height: 1.4;">
-      Bienvenido a tu panel de control. Desde aquí puedes "gestionar, supervisar y dar seguimiento" a todas tus incidencias en tiempo real para asegurar nuestra eficiencia y compromiso con la comunidad.
-    </p>
+    <div style="width: 50vw">
+      <p>
+        Bienvenido a la aplicación de incidencias de Cantillana. Aquí podrás
+        reportar cualquier problema que encuentres en tu comunidad, desde baches
+        en las calles hasta problemas con el alumbrado público.
+      </p>
+      <p>
+        Tu participación es fundamental para mejorar nuestro entorno y hacer de
+        Cantillana un lugar mejor para todos. ¡Gracias por ser parte del cambio!
+      </p>
+    </div>
   </div>
 
   <ion-grid>
     <ion-row class="ion-justify-content-center">
-      <ion-col size="12" size-md="10" size-lg="8" size-xl="7">
-
+      <ion-col size="7">
         <!-- lista de incidencias -->
         <incidencia-list-card></incidencia-list-card>
-
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -3,5 +3,29 @@ ion-card{
 }
 
 ion-card-title{
-  font-size: clamp(0.8rem, 1vw, 2rem) !important;
+  background-color: var(--color-app-bar) !important;
 }
+
+ion-img {
+  margin-top: 6%;
+}
+
+ion-avatar {
+  width: 2vw;
+  height: 2vw;
+}
+
+p {
+  text-align: none;
+  text-justify: none;
+  text-align-last: none;
+  font-size: clamp(0.8rem, 0.5vw, 2rem) !important;
+  margin: 0px;
+  line-height: 1.4;
+
+}
+
+ion-label {
+  font-size: clamp(0.5rem, 1vw, 4rem) !important;
+}
+

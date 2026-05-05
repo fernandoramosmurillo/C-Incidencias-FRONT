@@ -1,11 +1,44 @@
 <ion-card>
   <ion-card-header>
-    <ion-card-title>{{ incidencia.titulo }}</ion-card-title>
-    <ion-card-subtitle>{{ incidencia.usuarioCiudadano.nombre }}</ion-card-subtitle>
+    <ion-card-title class="ion-display-flex flex-row">
+      <ion-item style="width: 100%" lines="none">
+        <ion-avatar slot="start">
+          <img
+            alt="Silhouette of a person's head"
+            src="https://ionicframework.com/docs/img/demos/avatar.svg"
+          />
+        </ion-avatar>
+        <ion-label>{{ incidencia().titulo }}</ion-label>
+      </ion-item>
+    </ion-card-title>
+    <ion-card-subtitle>
+      <ion-label>
+        <p>
+          Solicitante:
+          @if (incidencia().usuarioCiudadano?.nombre?.trim()) {
+            {{ incidencia().usuarioCiudadano.nombre }} {{ incidencia().usuarioCiudadano.apellidos }}
+          } @else {
+            Anónimo
+          }
+        </p>
+        <p>
+          Fecha:
+          {{ incidencia().fechaCreacion.toString() | date: "dd/MM/yyyy" }}
+        </p>
+      </ion-label>
+    </ion-card-subtitle>
   </ion-card-header>
 
   <ion-card-content>
-    Here's a small text description for the card content. Nothing more, nothing
-    less.
+    <p>{{ incidencia().descripcion }}</p>
+    @if (fotoCargada() && incidencia().imagenUrl) {
+      <ion-img
+        [src]="incidencia().imagenUrl"
+        (ionError)="fotoCargada.set(false)"
+      >
+      </ion-img>
+    } @else {
+      <ion-img src="assets/images/no-image.png" />
+    }
   </ion-card-content>
 </ion-card>

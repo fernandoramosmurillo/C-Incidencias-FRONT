@@ -53,7 +53,11 @@ h1 {
 p {
   text-align: justify;       /* Hace que todas las líneas midan lo mismo */
   text-justify: inter-word;  /* Mejora el espaciado entre palabras */
-
-  /* Esto evita que la última línea también se estire (que queda fatal) */
   text-align-last: start;
+  font-size: clamp(1rem, 0.9vw, 3rem);
+  line-height: 1.4;
+}
+
+ion-label {
+  font-size: clamp(0.8rem, 1vw, 4rem);
 }
