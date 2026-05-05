@@ -46,3 +46,14 @@ ion-col, ion-grid {
 }
 
 
+h1 {
+  font-size: clamp(1rem, 2vw, 2rem);
+}
+
+p {
+  text-align: justify;       /* Hace que todas las líneas midan lo mismo */
+  text-justify: inter-word;  /* Mejora el espaciado entre palabras */
+
+  /* Esto evita que la última línea también se estire (que queda fatal) */
+  text-align-last: start;
+}
