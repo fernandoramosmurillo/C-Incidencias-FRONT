@@ -1,16 +1,19 @@
 <ion-card>
   <ion-card-header>
-    <ion-card-title class="ion-display-flex ion-align-items-center">
-      <img class="logo" [src]="environment.logoUrl" alt="Logo" />
-      <ion-label>
-        @if (router.url.includes("register")) {
-          <h1 class="titulo-form">Registrarse</h1>
-        } @else if (router.url.includes("login")) {
-          <h1 class="titulo-form">Iniciar sesión</h1>
-        } @else if (router.url.includes("verification-pending")) {
-          <h1 class="titulo-form">Verificación</h1>
-        }
-      </ion-label>
+    <ion-card-title class="ion-display-flex flex-row ion-justify-content-between">
+      <div class="ion-display-flex ion-align-items-center">
+        <img class="logo" [src]="environment.logoUrl" alt="Logo" />
+        <ion-label>
+          @if (router.url.includes("register")) {
+            <h1 class="titulo-form">Registrarse</h1>
+          } @else if (router.url.includes("login")) {
+            <h1 class="titulo-form">Iniciar sesión</h1>
+          } @else if (router.url.includes("verification-pending")) {
+            <h1 class="titulo-form">Verificación</h1>
+          }
+        </ion-label>
+      </div>
+      <img src="../../../../assets/images/escudoCantillana.png" alt="Escudo de Cantillana" style="height: 80px;">
     </ion-card-title>
   </ion-card-header>
 

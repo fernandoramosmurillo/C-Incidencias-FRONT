@@ -53,7 +53,7 @@ export class LoginFormComponent {
       //Si hay un usuario en local y no coincide con el que acaba de entrar, borramos todo lo anterior para evitar conflictos de datos
       const usuarioPrevio: FullUsuario = this.localStorageService.obtenerDeLocal('usuario');
 
-      if (usuarioPrevio && usuarioPrevio.datosAuth.uid !== uid) {
+      if (usuarioPrevio && usuarioPrevio.datosAuth?.uid !== uid) {
         console.log('Detectado cambio de usuario. Limpiando datos de sesión anterior...');
         this.localStorageService.eliminarDeLocal('usuario');
         // Se podrian colocar mas llaves en un futuro para limpiar
