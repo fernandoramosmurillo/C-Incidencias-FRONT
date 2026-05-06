@@ -81,7 +81,7 @@ export class RegisterFormComponent {
 
       try {
         // CAMBIO: Obtenemos datos una sola vez
-        const usuarios: Ciudadano[] = await this.httpService.obtenerDatos('usuarios');
+        const usuarios: Ciudadano[] = await this.httpService.obtenerDatosEndpointPublico<Ciudadano>('usuarios');
 
         // CAMBIO: Validación unificada más eficiente (usamos find para obtener el motivo exacto)
         const dniExistente = usuarios.find(u => u.dni === datosFormulario.dni);

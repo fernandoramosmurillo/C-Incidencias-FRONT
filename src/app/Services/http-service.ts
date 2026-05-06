@@ -3,6 +3,7 @@ import { CapacitorHttp, HttpResponse } from '@capacitor/core';
 import { LocalStorageService } from './local-storage-service';
 import { FullUsuario } from '../Interfaces/fullUsuario';
 import { Auth } from '@angular/fire/auth';
+import { environment } from '@env/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,7 @@ export class HttpService {
 
     // Construimos las cabeceras
     const headers: { [key: string]: string } = {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     };
 
     // Solo si hay token, añadimos el Authorization
@@ -34,7 +35,7 @@ export class HttpService {
   async obtenerDatos<T>(endpoint: string): Promise<T[]> {
     const options = {
       url: `${this.BASE_URL}/${endpoint}`,
-      headers: await this.getHeaders()
+      headers: await this.getHeaders(),
     };
     const response: HttpResponse = await CapacitorHttp.get(options);
     return response.data as T[];
@@ -43,7 +44,7 @@ export class HttpService {
   async obtenerDato<T>(endpoint: string, id: string): Promise<T> {
     const options = {
       url: `${this.BASE_URL}/${endpoint}/${id}`,
-      headers: await this.getHeaders()
+      headers: await this.getHeaders(),
     };
     const response: HttpResponse = await CapacitorHttp.get(options);
     return response.data as T;
@@ -53,7 +54,7 @@ export class HttpService {
     const options = {
       url: `${this.BASE_URL}/${endpoint}`,
       data: dato,
-      headers: await this.getHeaders()
+      headers: await this.getHeaders(),
     };
     const response: HttpResponse = await CapacitorHttp.post(options);
     return response.data as T;
@@ -63,7 +64,7 @@ export class HttpService {
     const options = {
       url: `${this.BASE_URL}/${endpoint}/${id}`,
       data: dato,
-      headers: await this.getHeaders()
+      headers: await this.getHeaders(),
     };
     const response: HttpResponse = await CapacitorHttp.put(options);
     return response.data as T;
@@ -72,18 +73,35 @@ export class HttpService {
   async eliminarDato(endpoint: string, id: string): Promise<any> {
     const options = {
       url: `${this.BASE_URL}/${endpoint}/${id}`,
-      headers: await this.getHeaders()
+      headers: await this.getHeaders(),
     };
     const response: HttpResponse = await CapacitorHttp.delete(options);
     return response.data;
   }
 
-  async cambiarEstado<T>(endpoint: string, id: string, nuevoEstado: string): Promise<T> {
+  async cambiarEstado<T>(
+    endpoint: string,
+    id: string,
+    nuevoEstado: string,
+  ): Promise<T> {
     const options = {
       url: `${this.BASE_URL}/${endpoint}/${id}/estado/${nuevoEstado}`,
-      headers: await this.getHeaders()
+      headers: await this.getHeaders(),
     };
     const response: HttpResponse = await CapacitorHttp.put(options);
     return response.data as T;
+  }
+
+  async obtenerDatosEndpointPublico<T>(endpoint: string): Promise<T[]> {
+    const options = {
+      url: `${this.BASE_URL}/${endpoint}/publico`,
+      headers: {
+        'Content-Type': 'application/json',
+        'X-App-Config': environment.publicGamesId,
+      },
+    };
+    const response: HttpResponse = await CapacitorHttp.get(options);
+
+    return response.data as T[];
   }
 }

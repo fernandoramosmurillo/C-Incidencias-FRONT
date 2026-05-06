@@ -8,6 +8,7 @@ export const environment = {
   logoUrl : '/assets/images/LogoPrincipal-removebg-preview.png',
 
   reCAPTCHA_SITE_KEY: '6LcNzrssAAAAAIzBMOXnfSEYe1QHHEIglxeri67p',
+  publicGamesId: 'f47ac10b-58cc-4372-a567-0e02b2c3d479',
 };
 /*
  * For easier debugging in development mode, you can import the following file
