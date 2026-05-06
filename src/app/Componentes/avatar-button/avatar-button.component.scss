@@ -3,6 +3,8 @@ ion-avatar {
   height: 2vw;
   display: block;
   margin: 0 auto;
+  min-width: 32px;
+  min-height: 32px;
 }
 
 ion-button {
@@ -10,6 +12,7 @@ ion-button {
   height: 100% !important;
   display: block;
   margin: 0 auto;
+  padding: 0px !important;
 }
 
 img {
