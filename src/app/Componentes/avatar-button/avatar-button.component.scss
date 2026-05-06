@@ -1,18 +1,23 @@
 ion-avatar {
-  width: auto;
-  height: auto;
   width: 2vw;
   height: 2vw;
+  display: block;
+  margin: 0 auto;
 }
 
 ion-button {
-  width: 32px;
-  height: 32px;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  margin: 0 auto;
 }
 
 img {
   /* La imagen SIEMPRE debe llenar el avatar al 100% */
   width: 100% !important;
   height: 100% !important;
-  object-fit: cover; /* Para que no se deforme la cara */
+  display: block;
+  margin: 0 auto;
 }
+
+
