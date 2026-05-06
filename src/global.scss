@@ -30,24 +30,27 @@ body {
 
 /* 3. ESTILOS GLOBALES PERSONALIZADOS */
 .logo {
+  min-width: 100px;
   width: 8vw;
   height: auto;
+}
+
+img {
+  width: 7vw;
+  height: auto;
+  min-width: 90px;
 }
 
 h1, h2 {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0 !important;
+  font-size: clamp(1rem, 2vw, 4rem);
 }
 
 /* Reseteo de espaciado para rejilla Ionic */
 ion-col, ion-grid {
   padding: 0 !important;
   margin: 0 !important;
-}
-
-
-h1 {
-  font-size: clamp(1rem, 2vw, 2rem);
 }
 
 p {

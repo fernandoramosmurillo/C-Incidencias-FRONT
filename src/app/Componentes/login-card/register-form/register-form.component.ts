@@ -61,41 +61,17 @@ export class RegisterFormComponent {
   private router = inject(Router);
   private localStorageService = inject(LocalStorageService);
 
-  // Fecha máxima (hoy)
   fechaNacimientoMaxima: Timestamp = Timestamp.now();
 
-  // FormGroup
   registerForm = new FormGroup({
     nombre: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    apellidos: new FormControl('', [
-      Validators.required,
-      Validators.minLength(2),
-    ]),
-    dni: new FormControl('', [
-      Validators.required,
-      Validators.pattern('^[0-9]{8}[A-Z]$'),
-    ]),
-    telefonoContacto: new FormControl<string | null>(null, [
-      Validators.required,
-      Validators.pattern('^[0-9]{9}$'),
-    ]),
-    direccion: new FormControl('', [
-      Validators.required,
-      Validators.minLength(5),
-    ]),
-    fechaNacimiento: new FormControl(
-      new Date().toISOString(), // Usamos ISO String nativo
-      [Validators.required],
-    ),
-    correoElectronico: new FormControl('', [
-      Validators.required,
-      Validators.email,
-    ]),
-    clave: new FormControl('', [
-      Validators.required,
-      Validators.minLength(8),
-      Validators.pattern('^(?=.*[a-zA-Z])(?=.*\\d).{8,}$'),
-    ]),
+    apellidos: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    dni: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{8}[A-Z]$')]),
+    telefonoContacto: new FormControl<string | null>(null, [Validators.required, Validators.pattern('^[0-9]{9}$')]),
+    direccion: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    fechaNacimiento: new FormControl(new Date().toISOString(), [Validators.required]),
+    correoElectronico: new FormControl('', [Validators.required, Validators.email]),
+    clave: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[a-zA-Z])(?=.*\\d).{8,}$')]),
     recibirNotificaciones: new FormControl(false),
   });
 
@@ -104,13 +80,31 @@ export class RegisterFormComponent {
       const datosFormulario = this.registerForm.value;
 
       try {
+        // CAMBIO: Obtenemos datos una sola vez
+        const usuarios: Ciudadano[] = await this.httpService.obtenerDatos('usuarios');
+
+        // CAMBIO: Validación unificada más eficiente (usamos find para obtener el motivo exacto)
+        const dniExistente = usuarios.find(u => u.dni === datosFormulario.dni);
+        const emailExistente = usuarios.find(u =>
+          u.correoElectronico?.toLowerCase() === datosFormulario.correoElectronico?.toLowerCase()
+        );
+
+        if (dniExistente) {
+          alert('El DNI ya se encuentra registrado.');
+          return;
+        }
+
+        if (emailExistente) {
+          alert('El correo electrónico ya está en uso.');
+          return;
+        }
+
         const credencial = await createUserWithEmailAndPassword(
           this.auth,
           datosFormulario.correoElectronico!,
           datosFormulario.clave!,
         );
 
-        // Mapeo a la interfaz Ciudadano
         const datosUsuario: Ciudadano = {
           idUsuario: credencial.user.uid,
           nombre: datosFormulario.nombre!,
@@ -118,20 +112,16 @@ export class RegisterFormComponent {
           dni: datosFormulario.dni!,
           telefonoContacto: datosFormulario.telefonoContacto!,
           direccion: datosFormulario.direccion!,
-          // Enviamos la fecha como string ISO
           fechaNacimiento: new Date(datosFormulario.fechaNacimiento!).toISOString(),
           correoElectronico: datosFormulario.correoElectronico!,
           clave: datosFormulario.clave!,
           recibirNotificaciones: datosFormulario.recibirNotificaciones || false,
-
           rolUsuario: RolesUsuario.CIUDADANO,
           tipoAcceso: TiposAcceso.CORREO_CONTRASEÑA,
           estado: Estados.EN_BORRADOR,
           bloqueado: false,
           incidenciasSolicitadas: [],
           incidenciasCalificadas: [],
-
-          // Fecha de creación en formato ISO string
           fechaCreacion: new Date().toISOString(),
           fechaEliminacion: null,
           fotoPerfilUrl: null,
@@ -146,12 +136,9 @@ export class RegisterFormComponent {
           foto: datosUsuario.fotoPerfilUrl || '',
         };
 
-        const datosFullUsuario = {
-          ...datosUsuario,
-          ...datosAuth,
-        };
 
-        const token = `Bearer ${await credencial.user.getIdToken()}`;
+        //Guardado de datos
+        const datosFullUsuario = { ...datosUsuario, ...datosAuth };
 
         this.localStorageService.guardarEnLocal('usuario', datosFullUsuario);
 
@@ -159,12 +146,17 @@ export class RegisterFormComponent {
         await this.httpService.añadirDato('usuarios', datosUsuario);
 
         this.router.navigate(['/auth/verification-pending']);
+
       } catch (error: any) {
-        deleteUser(this.auth.currentUser!)
+        //Verificación de currentUser antes de intentar borrar para evitar errores en cascada
+        if (this.auth.currentUser) {
+          await deleteUser(this.auth.currentUser);
+        }
+
         if (error.code === 'auth/email-already-in-use') {
           alert('Este correo ya está registrado.');
         } else {
-          alert('Error: ' + error.message);
+          alert('Error: ' + (error.error?.mensaje || error.message));
         }
       }
     } else {
@@ -177,16 +169,10 @@ export class RegisterFormComponent {
     if (control && control.touched && control.errors) {
       if (control.hasError('required')) return 'Este campo es obligatorio';
       if (control.hasError('email')) return 'El formato del email no es válido';
-      if (control.hasError('minlength')) {
-        const min = control.errors['minlength'].requiredLength;
-        return `Mínimo ${min} caracteres`;
-      }
-      if (nombreControl === 'dni' && control.hasError('pattern'))
-        return 'Formato de DNI inválido';
-      if (nombreControl === 'telefonoContacto' && control.hasError('pattern'))
-        return 'Debe tener 9 números';
-      if (control.hasError('pattern'))
-        return 'Debe contener al menos 1 número y letras';
+      if (control.hasError('minlength')) return `Mínimo ${control.errors['minlength'].requiredLength} caracteres`;
+      if (nombreControl === 'dni' && control.hasError('pattern')) return 'Formato de DNI inválido';
+      if (nombreControl === 'telefonoContacto' && control.hasError('pattern')) return 'Debe tener 9 números';
+      if (control.hasError('pattern')) return 'Debe contener al menos 1 número y letras';
     }
     return '';
   }
