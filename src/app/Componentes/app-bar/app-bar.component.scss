@@ -18,7 +18,7 @@ ion-button{
 
 ion-label{
   font-size: clamp(0.5rem, 0.6vw, 4rem);
-  padding-left: 4%;
+  padding-left: 7px;
   width: auto;
   white-space: nowrap
 }
@@ -27,6 +27,11 @@ ion-icon {
   font-size: clamp(0.9rem, 1vw, 5.2rem);
 }
 
-ion-icon[name="create"] {
-  transform: scale(1.7);
+ion-icon[name="create"],
+ion-icon[name="list-outline"] {
+  transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -o-transform: scale(1.2);
 }
