@@ -2,8 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Auth, signInWithEmailAndPassword, UserCredential } from '@angular/fire/auth';
-import {
-  IonInput, IonItem, IonLabel, IonList, IonButton, IonIcon, IonCheckbox } from '@ionic/angular/standalone';
+import { IonInput, IonItem, IonLabel, IonList, IonButton, IonIcon, IonCheckbox, IonInputPasswordToggle } from '@ionic/angular/standalone';
 
 import { FullUsuario } from 'src/app/Interfaces/fullUsuario';
 import { HttpService } from 'src/app/Services/http-service';
@@ -18,7 +17,9 @@ import { Usuario } from 'src/app/Interfaces/usuario';
   standalone: true,
   imports: [
     IonIcon, IonButton, IonList, IonLabel, IonItem, IonInput,
-    FormsModule, ReactiveFormsModule],
+    FormsModule, ReactiveFormsModule,
+    IonInputPasswordToggle
+],
 })
 export class LoginFormComponent {
   public env = environment;
@@ -76,7 +77,7 @@ export class LoginFormComponent {
     this.localStorageService.guardarEnLocal('usuario', this.fullUser);
 
     // Navegación
-    this.router.navigate(['app/home']);
+    this.router.navigate(['app/inicio']);
   }
 
   private async obtenerDatosUsuario(uid: string) {

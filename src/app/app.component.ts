@@ -2,7 +2,7 @@ import { LocalStorageService } from './Services/local-storage-service';
 import { Component, inject, OnInit } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { create, home, listOutline, logoAndroid, logoApple, logoGoogle, search} from 'ionicons/icons'
+import { caretDownCircle, caretDownSharp, create, home, listOutline, logoAndroid, logoApple, logoGoogle, search} from 'ionicons/icons'
 import { Router } from "@angular/router";
 import { Usuario } from './Interfaces/usuario';
 
@@ -24,7 +24,8 @@ export class AppComponent implements OnInit {
       listOutline,
       logoGoogle,
       logoApple,
-      logoAndroid
+      logoAndroid,
+      caretDownSharp
     });
   }
 

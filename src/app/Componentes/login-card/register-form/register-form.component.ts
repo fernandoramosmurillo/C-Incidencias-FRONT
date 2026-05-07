@@ -3,18 +3,7 @@ import { Router } from '@angular/router';
 import { HttpService } from './../../../Services/http-service';
 import { Firestore, Timestamp } from '@angular/fire/firestore'; // Eliminamos Timestamp de aquí
 import { Component, inject } from '@angular/core';
-import {
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonButton,
-  IonCheckbox,
-  IonIcon,
-  IonDatetime,
-  IonDatetimeButton,
-  IonModal,
-} from '@ionic/angular/standalone';
+import { IonInput, IonItem, IonLabel, IonList, IonButton, IonCheckbox, IonIcon, IonDatetime, IonDatetimeButton, IonModal, IonInputPasswordToggle } from '@ionic/angular/standalone';
 import { Estados, RolesUsuario, TiposAcceso } from 'src/app/Interfaces/usuario';
 import {
   FormControl,
@@ -51,7 +40,8 @@ import { AuthUsuario } from 'src/app/Interfaces/AuthUsuario';
     IonInput,
     FormsModule,
     ReactiveFormsModule,
-  ],
+    IonInputPasswordToggle
+],
 })
 export class RegisterFormComponent {
   public env = environment;

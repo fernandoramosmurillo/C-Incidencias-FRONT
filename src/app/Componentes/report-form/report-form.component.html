@@ -1,0 +1,51 @@
+<form>
+  <ion-list lines="none">
+    <ion-item>
+      <ion-input
+        color="secondary"
+        type="text"
+        placeholder="Ej: Se ha roto una farola"
+        fill="solid"
+        labelPlacement="floating"
+        helperText="Escribe el motivo de tu incidencia"
+        [errorText]=""
+        mode="ios"
+        formControlName="correoElectronico"
+        ><div slot="label">Título</div></ion-input
+      >
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea
+        [counter]="true"
+        maxlength="600"
+        placeholder="Escribe aqui tu descripción"
+        color="secondary"
+        type="text"
+        [autoGrow]="true"
+        fill="solid"
+        labelPlacement="floating"
+        helperText="Cuentanos a detalle tu incidencia"
+        [errorText]=""
+        mode="ios"
+        formControlName="correoElectronico"
+        ><div slot="label">Descripción</div></ion-textarea
+      >
+    </ion-item>
+
+    <ion-item>
+      <ion-select
+        label="Categoria"
+        labelPlacement="floating"
+        class="always-flip"
+        toggleIcon="caret-down-sharp"
+        interface="popover"
+        helperText="Seleciona una categoria"
+      >
+        <ion-select-option value="apples">Apples</ion-select-option>
+        <ion-select-option value="oranges">Oranges</ion-select-option>
+        <ion-select-option value="bananas">Bananas</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+</form>

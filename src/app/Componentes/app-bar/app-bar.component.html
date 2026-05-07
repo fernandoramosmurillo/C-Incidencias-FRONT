@@ -4,11 +4,11 @@
       <img class="logo" [src]="environment.logoUrl" alt="Logo"/>
     </ion-buttons>
     <ion-buttons slot="">
-      <ion-button>
+      <ion-button (click)="router.navigate(['app/inicio'])">
         <ion-icon name="home"></ion-icon>
         <ion-label>Inicio</ion-label>
       </ion-button>
-      <ion-button>
+      <ion-button (click)="router.navigate(['app/reportar-incidencia'])">
         <ion-icon name="create"></ion-icon>
         <ion-label>Reportar nueva incidencia</ion-label>
       </ion-button>
