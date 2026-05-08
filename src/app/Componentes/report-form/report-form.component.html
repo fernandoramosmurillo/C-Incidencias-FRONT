@@ -1,6 +1,7 @@
 <form>
   <ion-list lines="none">
-    <ion-item>
+
+    <ion-item class="ion-margin-bottom">
       <ion-input
         color="secondary"
         type="text"
@@ -8,56 +9,72 @@
         fill="solid"
         labelPlacement="floating"
         helperText="Escribe el motivo de tu incidencia"
-        [errorText]=""
         mode="ios"
-        formControlName="correoElectronico"
-        ><div slot="label">Título</div></ion-input
+        formControlName="titulo"
       >
+        <div slot="label">Título</div>
+      </ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="ion-margin-bottom">
       <ion-textarea
         [counter]="true"
         maxlength="600"
-        placeholder="Escribe aqui tu descripción"
+        placeholder="Cuéntanos con detalle..."
         color="secondary"
-        type="text"
         [autoGrow]="true"
         fill="solid"
         labelPlacement="floating"
-        helperText="Cuentanos a detalle tu incidencia"
-        [errorText]=""
+        helperText="Detalla lo que sucede"
         mode="ios"
-        formControlName="correoElectronico"
-        ><div slot="label">Descripción</div></ion-textarea
+        formControlName="descripcion"
       >
+        <div slot="label">Descripción</div>
+      </ion-textarea>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="ion-margin-bottom">
       <ion-select
-        label="Categoria"
+        label="Categoría"
         labelPlacement="floating"
-        class="always-flip"
         toggleIcon="caret-down-sharp"
         interface="popover"
-        helperText="Seleciona una categoria"
+        fill="solid"
+        mode="ios"
+        formControlName="categoria"
       >
-        <ion-select-option value="apples">Apples</ion-select-option>
-        <ion-select-option value="oranges">Oranges</ion-select-option>
-        <ion-select-option value="bananas">Bananas</ion-select-option>
+        <ion-select-option value="alumbrado">Alumbrado Público</ion-select-option>
+        <ion-select-option value="limpieza">Limpieza y Residuos</ion-select-option>
+        <ion-select-option value="pavimento">Pavimento y Aceras</ion-select-option>
       </ion-select>
     </ion-item>
 
-    <ion-item>
-      <div class="map-container">
-        <ion-label style="margin-top: 5%;">Ubicación exacta</ion-label>
-
+    <ion-item class="map-item">
+      <div class="map-wrapper">
+        <ion-label class="label-custom">Ubicación exacta</ion-label>
         <div id="map"></div>
-
-        <ion-label style="margin-top: 5%;">
-          Mueve el marcador azul para señalar el lugar de la incidencia.
-        </ion-label>
+        <ion-note color="medium" class="ion-margin-top">
+          Mueve el marcador azul para señalar el lugar exacto.
+        </ion-note>
       </div>
     </ion-item>
+
+    <ion-card class="capturas-card">
+      <ion-card-header>
+        <ion-card-title>Evidencias</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <image-picker></image-picker>
+        <p class="instrucciones">
+          Las capturas nos ayudan a identificar el problema de forma efectiva.
+          Por favor, intenta que sean claras y con buena luz. 🙂
+        </p>
+      </ion-card-content>
+    </ion-card>
+
   </ion-list>
+
+  <ion-button expand="block" type="submit" class="ion-margin" color="primary">
+    Enviar Incidencia
+  </ion-button>
 </form>

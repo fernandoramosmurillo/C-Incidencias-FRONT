@@ -1,0 +1,17 @@
+<div class="gallery-container">
+  <div class="image-grid">
+    @for (foto of fotos(); track $index) {
+      <div class="image-card">
+        <ion-img [src]="foto" class="thumbnail"></ion-img>
+        <ion-button (click)="removePhoto($index)" color="danger" fill="clear" class="delete-button">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      </div>
+    }
+  </div>
+
+  <ion-button expand="block" (click)="takePhoto()" fill="outline">
+    <ion-icon slot="start" name="camera-outline"></ion-icon>
+    {{ fotos().length > 0 ? 'Añadir otra foto' : 'Añadir foto / Hacer captura' }}
+  </ion-button>
+</div>
