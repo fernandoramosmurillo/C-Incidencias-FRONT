@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { IonList, IonItem, IonInput, IonButton, IonLabel, IonIcon, IonText, IonTextarea, IonSelect, IonSelectOption } from "@ionic/angular/standalone";
+import { Component, inject, OnInit } from '@angular/core';
+import { IonList, IonItem, IonInput, IonTextarea, IonSelect, IonSelectOption, IonLabel } from "@ionic/angular/standalone";
+import { MapService } from 'src/app/Services/map-service';
 
 @Component({
   selector: 'report-form',
   templateUrl: './report-form.component.html',
   styleUrls: ['./report-form.component.scss'],
-  imports: [IonTextarea, IonText, IonIcon, IonLabel, IonInput, IonItem, IonButton, IonList, IonSelect, IonSelectOption],
+  imports: [IonTextarea, IonInput, IonItem, IonList, IonSelect, IonSelectOption, IonLabel],
 })
-export class ReportFormComponent  implements OnInit {
+export class ReportFormComponent {
 
-  constructor() { }
+  mapService = inject(MapService);
 
-  ngOnInit() {}
-
+  ngAfterViewInit() {
+    console.log("Iniciando mapa...");
+    this.mapService.crearMapa('map');
+  }
 }

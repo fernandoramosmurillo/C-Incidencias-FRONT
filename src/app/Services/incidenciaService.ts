@@ -2,7 +2,7 @@ import { Incidencia } from '../Interfaces/incidencia';
 import { inject, Injectable } from '@angular/core';
 import { UsuarioService } from './usuarioService';
 import { Vinculable } from '../Interfaces/vinculable';
-import { BaseService } from './BaseService';
+import { BaseService } from './baseService';
 import { Usuario } from '../Interfaces/usuario';
 
 @Injectable({

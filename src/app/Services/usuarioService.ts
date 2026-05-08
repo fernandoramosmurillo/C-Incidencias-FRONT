@@ -1,6 +1,6 @@
 import { computed, Injectable } from "@angular/core";
 import { Usuario } from "../Interfaces/usuario";
-import { BaseService } from "./BaseService";
+import { BaseService } from "./baseService";
 
 @Injectable({
   providedIn: 'root',

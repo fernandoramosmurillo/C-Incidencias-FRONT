@@ -4,6 +4,7 @@
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
+@import "leaflet/dist/leaflet.css";
 
 /* Utilidades opcionales */
 @import "@ionic/angular/css/padding.css";
@@ -17,7 +18,8 @@
   --color-app-bar: #0e1e38;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
 }
@@ -35,21 +37,23 @@ body {
   height: auto;
 }
 
-h1, h2 {
+h1,
+h2 {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0 !important;
   font-size: clamp(1rem, 2vw, 4rem);
 }
 
 /* Reseteo de espaciado para rejilla Ionic */
-ion-col, ion-grid {
+ion-col,
+ion-grid {
   padding: 0 !important;
   margin: 0 !important;
 }
 
 p {
-  text-align: justify;       /* Hace que todas las líneas midan lo mismo */
-  text-justify: inter-word;  /* Mejora el espaciado entre palabras */
+  text-align: justify; /* Hace que todas las líneas midan lo mismo */
+  text-justify: inter-word; /* Mejora el espaciado entre palabras */
   text-align-last: start;
   font-size: clamp(1rem, 0.9vw, 3rem);
   line-height: 1.4;
@@ -57,4 +61,5 @@ p {
 
 ion-label {
   font-size: clamp(0.8rem, 1vw, 4rem);
+  font-family: Arial, Helvetica, sans-serif;
 }
