@@ -32,7 +32,8 @@ import {
   Incidencia,
   Prioridades,
 } from 'src/app/Interfaces/incidencia';
-import { Timestamp, GeoPoint } from 'firebase/firestore';
+import { Timestamp, GeoPoint } from 'firebase/firestore'; // Los tipos de datos se quedan igual
+import { Firestore, collection, doc } from '@angular/fire/firestore'; // La funcionalidad de Angular
 import { FullUsuario } from 'src/app/Interfaces/fullUsuario';
 
 @Component({
@@ -63,6 +64,7 @@ export class ReportFormComponent implements AfterViewInit, OnInit {
   private httpService = inject(HttpService);
   private localStorageService = inject(LocalStorageService);
   private router = inject(Router);
+  private firestore = inject(Firestore);
 
   fullUser!: FullUsuario
   usuario!: Ciudadano
@@ -86,6 +88,8 @@ export class ReportFormComponent implements AfterViewInit, OnInit {
   async onSubmit() {
     if (this.incidenciaForm.invalid) return;
 
+    const nuevoId = doc(collection(this.firestore, 'incidencias')).id;
+
     const incidenciaEnviar: Incidencia = {
       titulo: this.incidenciaForm.get('titulo')!.value!,
       descripcion: this.incidenciaForm.get('descripcion')!.value!,
@@ -96,7 +100,7 @@ export class ReportFormComponent implements AfterViewInit, OnInit {
       usuarioCiudadano: this.usuario,
       prioridad: Prioridades.MEDIA,
       estadoIncidencia: EstadosIncidencia.ABIERTA,
-      idIncidencia: '',
+      idIncidencia: nuevoId,
 
       ubicacion: this.mapService.devolverCordenadas(),
       listaOperarios: [],
