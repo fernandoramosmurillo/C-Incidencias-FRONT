@@ -67,3 +67,17 @@ ion-label {
 ion-card {
   box-shadow: 0 10px 30px rgba(103, 101, 101, 0.3);
 }
+
+ion-input {
+  --highlight-color-valid: var(--color-app-bar) !important;
+}
+
+ion-checkbox {
+  --checkbox-background-checked: var(--color-app-bar) !important;
+  --border-color-checked: var(--color-app-bar) !important;
+}
+
+ion-button {
+  --background: var(--color-app-bar);
+  --background-activated: #081226; /* Un tono un pelín más oscuro al pulsar */
+}

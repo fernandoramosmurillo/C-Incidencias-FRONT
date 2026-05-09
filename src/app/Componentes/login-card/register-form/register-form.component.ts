@@ -20,7 +20,7 @@ import {
   sendEmailVerification,
 } from '@angular/fire/auth';
 import { deleteUser } from 'firebase/auth';
-import { AuthUsuario } from 'src/app/Interfaces/AuthUsuario';
+import { AuthUsuario } from 'src/app/Interfaces/authUsuario';
 
 @Component({
   selector: 'register-form',

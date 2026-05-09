@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, EventEmitter, Output, signal, computed } from '@angular/core';
 import { Camera, CameraDirection } from '@capacitor/camera';
 import { IonButton, IonImg, IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
@@ -12,6 +12,7 @@ import { cameraOutline, imagesOutline, trashOutline } from 'ionicons/icons';
 })
 export class ImagePickerComponent {
   // Inicializamos un signal con un array vacío
+  @Output() fotosEnviar = new EventEmitter<string[]>();
   fotos = signal<string[]>([]);
 
   constructor() {
@@ -39,6 +40,7 @@ export class ImagePickerComponent {
       if (result.webPath) {
         // Actualizamos el signal añadiendo la nueva foto al array
         this.fotos.update(actuales => [...actuales, result.webPath!]);
+        this.sendAllPhotos();
       }
 
     } catch (e: any) {
@@ -50,5 +52,9 @@ export class ImagePickerComponent {
 
   removePhoto(index: number) {
     this.fotos.update(actuales => actuales.filter((_, i) => i !== index));
+  }
+
+  sendAllPhotos() {
+    this.fotosEnviar.emit(this.fotos());
   }
 }

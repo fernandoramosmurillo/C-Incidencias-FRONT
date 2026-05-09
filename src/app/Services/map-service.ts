@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { GeoPoint } from 'firebase/firestore';
 import * as L from 'leaflet';
 
 @Injectable({
@@ -65,5 +66,10 @@ export class MapService {
         this.coordenadas = { lat: position.lat, lng: position.lng };
       }
     });
+  }
+
+  devolverCordenadas() {
+    const elemento = L.latLng(this.coordenadas);
+    return new GeoPoint(elemento.lat, elemento.lng);
   }
 }

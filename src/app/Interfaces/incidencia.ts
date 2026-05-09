@@ -26,9 +26,10 @@ export interface Incidencia {
   idIncidencia: string;
   titulo: string;
   descripcion: string;
+  categorias: string[];
 
   ubicacion: GeoPoint;      // Coordenadas del mapa (GPS)
-  imagenUrl: string;       // Link a la foto de la incidencia
+  imagenesUrl: string[];       // Link a las fotos de la incidencia
 
   fechaCreacion: Timestamp; // Cuándo se creó
   fechaCierre?: Timestamp;  // Cuándo se arregló (puede estar vacío)

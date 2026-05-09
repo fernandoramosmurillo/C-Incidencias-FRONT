@@ -39,6 +39,9 @@ import {
 import { getVertexAI, provideVertexAI } from '@angular/fire/vertexai';
 import { environment } from '@env/environment';
 import { provideHttpClient } from '@angular/common/http';
+import { defineCustomElements } from '@ionic/pwa-elements/loader'; // <--- Añade esto
+
+defineCustomElements(window);
 
 bootstrapApplication(AppComponent, {
   providers: [

@@ -31,9 +31,9 @@
 
   <ion-card-content>
     <p>{{ incidencia().descripcion }}</p>
-    @if (fotoCargada() && incidencia().imagenUrl) {
+    @if (fotoCargada() && incidencia().imagenesUrl.length > 0) {
       <ion-img
-        [src]="incidencia().imagenUrl"
+        [src]="incidencia().imagenesUrl[0]"
         (ionError)="fotoCargada.set(false)"
       >
       </ion-img>

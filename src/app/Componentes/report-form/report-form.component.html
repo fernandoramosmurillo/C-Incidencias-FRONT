@@ -1,4 +1,4 @@
-<form>
+<form [formGroup]="incidenciaForm" (ngSubmit)="onSubmit()">
   <ion-list lines="none">
 
     <ion-item class="ion-margin-bottom">
@@ -11,6 +11,7 @@
         helperText="Escribe el motivo de tu incidencia"
         mode="ios"
         formControlName="titulo"
+        [errorText]="obtenerMensajeError('titulo')"
       >
         <div slot="label">Título</div>
       </ion-input>
@@ -28,6 +29,7 @@
         helperText="Detalla lo que sucede"
         mode="ios"
         formControlName="descripcion"
+        [errorText]="obtenerMensajeError('descripcion')"
       >
         <div slot="label">Descripción</div>
       </ion-textarea>
@@ -42,6 +44,8 @@
         fill="solid"
         mode="ios"
         formControlName="categoria"
+        multiple="true"
+        [errorText]="obtenerMensajeError('categoria')"
       >
         <ion-select-option value="alumbrado">Alumbrado Público</ion-select-option>
         <ion-select-option value="limpieza">Limpieza y Residuos</ion-select-option>
@@ -54,19 +58,19 @@
         <ion-label class="label-custom">Ubicación exacta</ion-label>
         <div id="map" style="margin-bottom: 5%;"></div>
         <ion-note color="medium">
-          Mueve el marcador azul para señalar el lugar exacto.
+          Mueve el marcador para señalar el lugar exacto.
         </ion-note>
       </div>
     </ion-item>
 
     <hr style="border-bottom: solid 1px rgb(198, 196, 196); margin: 6% 2%;"/>
 
-    <ion-card class="capturas-card">
+    <ion-card style="box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: solid 1px rgb(113, 110, 110, 0.4);">
       <ion-card-header>
         <ion-card-title>Evidencias</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <image-picker></image-picker>
+        <image-picker (fotosEnviar)="recibirFotos($event)"></image-picker>
         <p class="instrucciones">
           Las capturas nos ayudan a identificar el problema de forma efectiva.
           Por favor, intenta que sean claras y con buena luz. 🙂
@@ -76,7 +80,7 @@
 
   </ion-list>
 
-  <ion-button expand="block" type="submit" class="ion-margin" color="primary">
+  <ion-button expand="block" type="submit" class="ion-margin" color="primary" [disabled]="incidenciaForm.invalid">
     Enviar Incidencia
   </ion-button>
 </form>
