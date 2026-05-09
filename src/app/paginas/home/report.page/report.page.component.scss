@@ -1,0 +1,20 @@
+ion-card {
+  --background: #ffffff;
+  border-radius: 24px;
+  padding: 2%;
+  border: none;
+
+  /* Sombra de alta calidad: una muy suave y otra más definida */
+  box-shadow:
+    0 4px 6px -1px rgb(65, 64, 64);
+
+  margin: 0;
+}
+
+ion-content::part(background) {
+  background-image: url("../../../../assets/images/Background-Web.jpg");
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 1; // <--- AQUÍ está la clave del minimalismo. Que casi ni se vea.
+}
