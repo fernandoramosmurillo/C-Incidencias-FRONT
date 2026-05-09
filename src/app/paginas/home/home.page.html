@@ -1,35 +1,45 @@
 <ion-content [fullscreen]="true">
   <ion-img id="home-banner" src="assets/images/Banner Cantillana.avif" />
 
-  <!-- Contenedor de Bienvenida Centrado -->
-  <div
-    class="ion-text-center ion-padding-horizontal ion-display-flex ion-flex-column ion-align-items-center"
-    style="margin-top: 24px; width: 100%"
-  >
-    <h3  style="margin-bottom: 24px !important; font-size: clamp(0.8rem, 2vw, 4rem);">
-      ¡Hola, {{ usuario().datosUsuario.nombre }}!
-    </h3>
+  <!-- Contenedor de la app para el centrado -->
+  <div class="ion-display-flex ion-flex-column ion-align-items-center">
+    <main>
+      <div
+        class="ion-text-center ion-padding-horizontal ion-display-flex ion-flex-column ion-align-items-center"
+        style="width: 100%; padding-top: 3%"
+      >
+        <h3
+          style="
+            margin-bottom: 24px !important;
+            font-size: clamp(0.8rem, 2vw, 4rem);
+          "
+        >
+          ¡Hola, {{ usuario().datosUsuario.nombre }}!
+        </h3>
 
-    <!-- Texto de bienvenida -->
-    <div style="width: 50vw">
-      <p>
-        Bienvenido a la aplicación de incidencias de Cantillana. Aquí podrás
-        reportar cualquier problema que encuentres en tu comunidad, desde baches
-        en las calles hasta problemas con el alumbrado público.
-      </p>
-      <p>
-        Tu participación es fundamental para mejorar nuestro entorno y hacer de
-        Cantillana un lugar mejor para todos. ¡Gracias por ser parte del cambio!
-      </p>
-    </div>
+        <!-- Texto de bienvenida -->
+        <div style="width: 50vw">
+          <p>
+            Bienvenido a la aplicación de incidencias de Cantillana. Aquí podrás
+            reportar cualquier problema que encuentres en tu comunidad, desde
+            baches en las calles hasta problemas con el alumbrado público.
+          </p>
+          <p>
+            Tu participación es fundamental para mejorar nuestro entorno y hacer
+            de Cantillana un lugar mejor para todos. ¡Gracias por ser parte del
+            cambio!
+          </p>
+        </div>
+      </div>
+
+      <ion-grid>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="7">
+            <!-- lista de incidencias -->
+            <incidencia-list-card></incidencia-list-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </main>
   </div>
-
-  <ion-grid>
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="7">
-        <!-- lista de incidencias -->
-        <incidencia-list-card></incidencia-list-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
 </ion-content>
