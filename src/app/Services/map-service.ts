@@ -70,6 +70,6 @@ export class MapService {
 
   devolverCordenadas() {
     const elemento = L.latLng(this.coordenadas);
-    return new GeoPoint(elemento.lat, elemento.lng);
+    return new GeoPoint(elemento.lat, elemento.lng).toJSON();
   }
 }

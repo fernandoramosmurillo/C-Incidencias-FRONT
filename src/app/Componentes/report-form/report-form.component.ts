@@ -32,7 +32,7 @@ import {
   Incidencia,
   Prioridades,
 } from 'src/app/Interfaces/incidencia';
-import { Timestamp, GeoPoint } from 'firebase/firestore'; // Los tipos de datos se quedan igual
+import { Timestamp, GeoPoint, DocumentReference } from 'firebase/firestore'; // Los tipos de datos se quedan igual
 import { Firestore, collection, doc } from '@angular/fire/firestore'; // La funcionalidad de Angular
 import { FullUsuario } from 'src/app/Interfaces/fullUsuario';
 
@@ -90,14 +90,14 @@ export class ReportFormComponent implements AfterViewInit, OnInit {
 
     const nuevoId = doc(collection(this.firestore, 'incidencias')).id;
 
-    const incidenciaEnviar: Incidencia = {
+    const incidenciaEnviar: any = {
       titulo: this.incidenciaForm.get('titulo')!.value!,
       descripcion: this.incidenciaForm.get('descripcion')!.value!,
       categorias: this.incidenciaForm.get('categoria')?.value as string[],
       comentarios: [],
-      imagenesUrl: this.fotosTomadas,
-      fechaCreacion: Timestamp.now(),
-      usuarioCiudadano: this.usuario,
+      imagenesUrl: [],
+      fechaCreacion: Timestamp.now().toDate().toISOString(),
+      usuarioCiudadano: `usuarios/${this.usuario.idUsuario}`,
       prioridad: Prioridades.MEDIA,
       estadoIncidencia: EstadosIncidencia.ABIERTA,
       idIncidencia: nuevoId,
@@ -114,9 +114,10 @@ export class ReportFormComponent implements AfterViewInit, OnInit {
         return;
       }
 
+      incidenciaEnviar.imagenesUrl = this.fotosTomadas;
+
       const res = await this.httpService.añadirDato(
-        'incidencias',
-        incidenciaEnviar,
+        'incidencias',incidenciaEnviar
       );
 
       if (res) {

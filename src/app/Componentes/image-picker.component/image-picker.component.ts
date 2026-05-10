@@ -1,5 +1,11 @@
-import { Component, EventEmitter, Output, signal, computed } from '@angular/core';
-import { Camera, CameraDirection } from '@capacitor/camera';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  signal,
+  computed,
+} from '@angular/core';
+import { Camera, CameraDirection, CameraResultType } from '@capacitor/camera';
 import { IonButton, IonImg, IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { cameraOutline, imagesOutline, trashOutline } from 'ionicons/icons';
@@ -23,13 +29,13 @@ export class ImagePickerComponent {
   async takePhoto() {
     try {
       const result = await Camera.takePhoto({
-        quality: 90,
+        quality: 70,
         width: 1024,
         includeMetadata: true,
-        resultType: 'uri',
+        resultType: CameraResultType.DataUrl,
         direction: CameraDirection.Rear,
         promptLabelHeader: 'Muestranos el problema',
-        correctOrientation: true,  // ¡Fundamental para que no salgan tumbadas!
+        correctOrientation: true, // ¡Fundamental para que no salgan tumbadas!
         promptLabelPhoto: 'Elegir de mis fotos',
         promptLabelPicture: 'Hacer foto al problema ahora',
         allowEditing: false,
@@ -39,10 +45,9 @@ export class ImagePickerComponent {
 
       if (result.webPath) {
         // Actualizamos el signal añadiendo la nueva foto al array
-        this.fotos.update(actuales => [...actuales, result.webPath!]);
+        this.fotos.update((actuales) => [...actuales, result.webPath!]);
         this.sendAllPhotos();
       }
-
     } catch (e: any) {
       if (e.message !== 'User cancelled photos app') {
         console.error('Error al tomar la foto:', e.message);
@@ -51,7 +56,7 @@ export class ImagePickerComponent {
   }
 
   removePhoto(index: number) {
-    this.fotos.update(actuales => actuales.filter((_, i) => i !== index));
+    this.fotos.update((actuales) => actuales.filter((_, i) => i !== index));
   }
 
   sendAllPhotos() {
