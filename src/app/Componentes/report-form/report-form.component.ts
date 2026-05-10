@@ -86,7 +86,10 @@ export class ReportFormComponent implements AfterViewInit, OnInit {
   });
 
   async onSubmit() {
-    if (this.incidenciaForm.invalid) return;
+    if (this.incidenciaForm.invalid || this.fotosTomadas.length === 0) {
+      alert('Por favor, completa todos los campos y añade al menos una foto.');
+      return;
+    }
 
     const nuevoId = doc(collection(this.firestore, 'incidencias')).id;
 
@@ -137,7 +140,7 @@ export class ReportFormComponent implements AfterViewInit, OnInit {
         this.fullUser.datosUsuario = this.usuario;
         this.localStorageService.guardarEnLocal('usuario', this.fullUser);
 
-        this.router.navigate(['/inicio']);
+        this.router.navigate(['/app/inicio']);
       }
     } catch (error: any) {
       alert('Error al enviar la incidencia');

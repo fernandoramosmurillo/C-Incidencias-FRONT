@@ -35,10 +35,11 @@
       <ion-img
         [src]="incidencia().imagenesUrl[0]"
         (ionError)="fotoCargada.set(false)"
+        oncontextmenu="return false;"
       >
       </ion-img>
     } @else {
-      <ion-img src="assets/images/no-image.png" />
+      <ion-img src="assets/images/no-image.png" oncontextmenu="return false;"/>
     }
   </ion-card-content>
 </ion-card>

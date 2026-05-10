@@ -32,7 +32,6 @@ export class ImagePickerComponent {
         quality: 70,
         width: 1024,
         includeMetadata: true,
-        resultType: CameraResultType.DataUrl,
         direction: CameraDirection.Rear,
         promptLabelHeader: 'Muestranos el problema',
         correctOrientation: true, // ¡Fundamental para que no salgan tumbadas!
@@ -43,9 +42,10 @@ export class ImagePickerComponent {
         //webUseInput: true
       } as any);
 
-      if (result.webPath) {
-        // Actualizamos el signal añadiendo la nueva foto al array
-        this.fotos.update((actuales) => [...actuales, result.webPath!]);
+      if (result) {
+        const dataUrl = `data:image/${result.metadata!.format};base64,${result.thumbnail}`;
+
+        this.fotos.update((actuales) => [...actuales, dataUrl]);
         this.sendAllPhotos();
       }
     } catch (e: any) {
