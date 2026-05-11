@@ -40,6 +40,7 @@ export class IncidenciaListCardComponent implements OnInit {
     if (this.incidenciaService.datos().length == 0) {
       this.noHayIncidencias.emit(true);
     } else {
+      this.noHayIncidencias.emit(false);
       this.incidenciaService.asignarModelos();
     }
   }

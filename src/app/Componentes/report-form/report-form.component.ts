@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, inject, OnInit, ɵɵNgOnChangesFeature } from '@angular/core';
+import { Categorias } from './../../Interfaces/incidencia';
+import { AfterViewInit, Component, inject, OnInit, ɵɵNgOnChangesFeature, signal } from '@angular/core';
 import {
   IonList,
   IonItem,
@@ -43,12 +44,6 @@ import { FullUsuario } from 'src/app/Interfaces/fullUsuario';
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    IonNote,
-    IonButton,
-    IonCardTitle,
-    IonCardContent,
-    IonCardHeader,
-    IonCard,
     IonTextarea,
     IonInput,
     IonItem,
@@ -56,8 +51,14 @@ import { FullUsuario } from 'src/app/Interfaces/fullUsuario';
     IonSelect,
     IonSelectOption,
     IonLabel,
+    IonNote,
+    IonCard,
+    IonCardHeader,
+    IonCardContent,
     ImagePickerComponent,
-  ],
+    IonCardTitle,
+    IonButton
+],
 })
 export class ReportFormComponent implements AfterViewInit, OnInit {
   public env = environment;
@@ -65,6 +66,12 @@ export class ReportFormComponent implements AfterViewInit, OnInit {
   private localStorageService = inject(LocalStorageService);
   private router = inject(Router);
   private firestore = inject(Firestore);
+
+  //Esto no se usa, es solo para recoger las categorias
+  public categorias = signal(
+    Object.entries(Categorias).map(([key, value]) => ({ key, value }))
+  );
+
 
   fullUser!: FullUsuario
   usuario!: Ciudadano
