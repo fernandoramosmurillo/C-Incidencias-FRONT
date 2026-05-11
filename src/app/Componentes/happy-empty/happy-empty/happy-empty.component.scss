@@ -1,0 +1,12 @@
+.bloque-happy-empty {
+  margin: 10% 0px 30%;
+}
+
+ion-button {
+  --background: var(--color-app-bar);
+  --background-activated: #081226; /* Un tono un pelín más oscuro al pulsar */
+}
+
+ion-icon[name="create"] {
+  transform: scale(1.4);
+}

@@ -36,7 +36,10 @@
         <ion-row class="ion-justify-content-center">
           <ion-col size="7">
             <!-- lista de incidencias -->
-            <incidencia-list-card></incidencia-list-card>
+             @if (noHayIncidencias()) {
+              <happy-empty></happy-empty>
+             }
+            <incidencia-list-card (noHayIncidencias)="setNoHayIncidencias($event)"></incidencia-list-card>
           </ion-col>
         </ion-row>
       </ion-grid>

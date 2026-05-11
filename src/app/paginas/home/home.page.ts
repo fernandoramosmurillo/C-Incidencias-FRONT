@@ -7,16 +7,23 @@ import { IncidenciaListCardComponent } from 'src/app/Componentes/incidencia-list
 import { LocalStorageService } from 'src/app/Services/local-storage-service';
 import { FullUsuario } from 'src/app/Interfaces/fullUsuario';
 import { FooterComponent } from "src/app/Componentes/footer/footer.component";
+import { HappyEmptyComponent } from "src/app/Componentes/happy-empty/happy-empty/happy-empty.component";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonLabel, IonHeader, IonImg, IonRow, IonGrid, IonCol, IonContent, CommonModule, FormsModule, IncidenciaListCardComponent, FooterComponent]
+  imports: [IonLabel, IonHeader, IonImg, IonRow, IonGrid, IonCol, IonContent, CommonModule, FormsModule, IncidenciaListCardComponent, FooterComponent, HappyEmptyComponent]
 })
 export class HomePage {
   localStorageService = inject(LocalStorageService);
 
+  noHayIncidencias = signal(true);
+
   usuario = signal(this.localStorageService.obtenerDeLocal('usuario') as FullUsuario);
+
+  setNoHayIncidencias($event: boolean) {
+    this.noHayIncidencias.set($event);
+  }
 }

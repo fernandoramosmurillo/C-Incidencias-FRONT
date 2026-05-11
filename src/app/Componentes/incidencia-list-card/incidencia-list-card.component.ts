@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { IncidenciaService } from 'src/app/Services/incidenciaService';
 import {
   IonCard,
@@ -25,6 +25,9 @@ import { IncidenciaCardComponent } from "./incidencia-card/incidencia-card.compo
   styleUrls: ['./incidencia-list-card.component.scss'],
 })
 export class IncidenciaListCardComponent implements OnInit {
+
+  @Output() noHayIncidencias = new EventEmitter<boolean>();
+
   incidenciaService: IncidenciaService = inject(IncidenciaService);
   usuarioService: UsuarioService = inject(UsuarioService);
 
@@ -33,6 +36,11 @@ export class IncidenciaListCardComponent implements OnInit {
       this.incidenciaService.cargarDatos(),
       this.usuarioService.cargarDatos(),
     ]);
-    this.incidenciaService.asignarModelos();
+
+    if (this.incidenciaService.datos().length == 0) {
+      this.noHayIncidencias.emit(true);
+    } else {
+      this.incidenciaService.asignarModelos();
+    }
   }
 }
