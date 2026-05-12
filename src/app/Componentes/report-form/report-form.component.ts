@@ -78,6 +78,7 @@ export class ReportFormComponent implements AfterViewInit, OnInit {
   fotosTomadas!: string[]
 
   ngOnInit() {
+    this.localStorageService.comprobarSesion();
     this.fullUser = this.localStorageService.obtenerDeLocal('usuario') || {};
     this.usuario = this.fullUser?.datosUsuario as Ciudadano;
     this.fotosTomadas = [];

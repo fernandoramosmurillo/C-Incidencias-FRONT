@@ -2,7 +2,7 @@ import { LocalStorageService } from './Services/local-storage-service';
 import { Component, inject, OnInit } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { caretDownCircle, caretDownSharp, create, home, listOutline, logoAndroid, logoApple, logoGoogle, search} from 'ionicons/icons'
+import { caretDownSharp, create, home, listOutline, logoAndroid, logoApple, logoGoogle} from 'ionicons/icons'
 import { Router } from "@angular/router";
 import { Usuario } from './Interfaces/usuario';
 
@@ -30,17 +30,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.comprobarSesion();
-  }
-
-  private comprobarSesion() {
-    const usuario:Usuario = this.localstorageService.obtenerDeLocal('usuario');
-
-    if (!usuario) {
-      this.router.navigate(['auth/login'], { replaceUrl: true });
-      console.log("No se ha encontrado ningun usuario autenticado, redirigiendo a login...");
-    } else {
-      console.log('Sesión detectada para el usuario:', usuario.idUsuario);
-    }
+    this.localstorageService.comprobarSesion();
   }
 }
