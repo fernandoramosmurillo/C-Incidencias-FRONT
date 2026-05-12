@@ -1,6 +1,5 @@
 <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
   <ion-list lines="none">
-    <!-- Campo Nombre -->
     <ion-item>
       <ion-input
         color="secondary"
@@ -18,7 +17,6 @@
       </ion-input>
     </ion-item>
 
-    <!-- Campo Apellidos -->
     <ion-item>
       <ion-input
         color="secondary"
@@ -36,7 +34,6 @@
       </ion-input>
     </ion-item>
 
-    <!-- NUEVO: Campo DNI -->
     <ion-item>
       <ion-input
         color="secondary"
@@ -54,7 +51,6 @@
       </ion-input>
     </ion-item>
 
-    <!-- NUEVO: Campo Teléfono de Contacto -->
     <ion-item>
       <ion-input
         color="secondary"
@@ -72,7 +68,6 @@
       </ion-input>
     </ion-item>
 
-    <!-- NUEVO: Campo Dirección -->
     <ion-item>
       <ion-input
         color="secondary"
@@ -90,7 +85,6 @@
       </ion-input>
     </ion-item>
 
-    <!-- Campo Email -->
     <ion-item>
       <ion-input
         color="secondary"
@@ -108,7 +102,6 @@
       </ion-input>
     </ion-item>
 
-    <!-- Campo Contraseña -->
     <ion-item>
       <ion-input
         color="secondary"
@@ -120,17 +113,32 @@
         mode="ios"
         formControlName="clave"
         maxlength="50"
-      ><ion-input-password-toggle slot="end"/>
+      >
+        <ion-input-password-toggle slot="end"></ion-input-password-toggle>
         <div slot="label">Contraseña</div>
       </ion-input>
     </ion-item>
 
-    <ion-item button="false" class="fechaNacimiento-block">
-      <ion-label position="stacked" style="margin-bottom: 5%; font-size: 1.3rem"
-        >Fecha de Nacimiento</ion-label
+    <ion-item>
+      <ion-input
+        color="secondary"
+        type="password"
+        fill="solid"
+        labelPlacement="floating"
+        helperText="Repite la contraseña"
+        [errorText]="obtenerMensajeError('confirmarClave')"
+        mode="ios"
+        formControlName="confirmarClave"
+        maxlength="50"
       >
-      <ion-datetime-button datetime="date"></ion-datetime-button>
+        <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+        <div slot="label">Confirmar Contraseña</div>
+      </ion-input>
+    </ion-item>
 
+    <ion-item button="false" class="fechaNacimiento-block">
+      <ion-label position="stacked" style="margin-bottom: 5%; font-size: 1.3rem">Fecha de Nacimiento</ion-label>
+      <ion-datetime-button datetime="date"></ion-datetime-button>
       <ion-modal [keepContentsMounted]="true">
         <ng-template>
           <ion-datetime
@@ -142,6 +150,7 @@
                 weekday: 'short',
                 month: 'long',
                 day: '2-digit',
+                year: 'numeric'
               }
             }"
             formControlName="fechaNacimiento"
@@ -150,7 +159,6 @@
       </ion-modal>
     </ion-item>
 
-    <!-- Checkbox de Notificaciones -->
     <ion-item>
       <ion-checkbox
         justify="start"
@@ -177,7 +185,6 @@
       </div>
     </div>
 
-    <!-- Opciones Sociales -->
     <div class="bloque-continuar-o">
       <ion-item>
         <ion-button fill="solid" color="success" class="continuar-boton">

@@ -1,7 +1,7 @@
 import { LocalStorageService } from './../../../Services/local-storage-service';
 import { Router } from '@angular/router';
 import { HttpService } from './../../../Services/http-service';
-import { Firestore, Timestamp } from '@angular/fire/firestore'; // Eliminamos Timestamp de aquí
+import { Firestore, Timestamp } from '@angular/fire/firestore';
 import { Component, inject } from '@angular/core';
 import { IonInput, IonItem, IonLabel, IonList, IonButton, IonCheckbox, IonIcon, IonDatetime, IonDatetimeButton, IonModal, IonInputPasswordToggle } from '@ionic/angular/standalone';
 import { Estados, RolesUsuario, TiposAcceso } from 'src/app/Interfaces/usuario';
@@ -41,7 +41,7 @@ import { AuthUsuario } from 'src/app/Interfaces/authUsuario';
     FormsModule,
     ReactiveFormsModule,
     IonInputPasswordToggle
-],
+  ],
 })
 export class RegisterFormComponent {
   public env = environment;
@@ -53,6 +53,21 @@ export class RegisterFormComponent {
 
   fechaNacimientoMaxima: Timestamp = Timestamp.now();
 
+  contraseñasNoCoinciden = (control: any) => {
+    const clave = control.get('clave');
+    const confirmarClave = control.get('confirmarClave');
+
+
+    if (clave && confirmarClave && clave.value !== confirmarClave.value) {
+      confirmarClave.setErrors({ noCoinciden: true });
+      return { noCoinciden: true };
+    } else if (confirmarClave?.hasError('noCoinciden')){
+      // Si ya coinciden, le quitamos el error
+      confirmarClave.setErrors(null);
+    }
+    return null;
+  };
+
   registerForm = new FormGroup({
     nombre: new FormControl('', [Validators.required, Validators.minLength(2)]),
     apellidos: new FormControl('', [Validators.required, Validators.minLength(2)]),
@@ -62,18 +77,19 @@ export class RegisterFormComponent {
     fechaNacimiento: new FormControl(new Date().toISOString(), [Validators.required]),
     correoElectronico: new FormControl('', [Validators.required, Validators.email]),
     clave: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[a-zA-Z])(?=.*\\d).{8,}$')]),
+    confirmarClave: new FormControl('', [Validators.required]),
     recibirNotificaciones: new FormControl(false),
-  });
+  }, { validators: this.contraseñasNoCoinciden });
 
   async onRegister() {
+    this.localStorageService.eliminarDeLocal('usuario');
+
     if (this.registerForm.valid) {
       const datosFormulario = this.registerForm.value;
 
       try {
-        // Obtenemos datos del usuario
         const usuarios: Ciudadano[] = await this.httpService.obtenerDatosEndpointPublico<Ciudadano>('usuarios');
 
-        //Validación
         const dniExistente = usuarios.find(u => u.dni === datosFormulario.dni);
         const emailExistente = usuarios.find(u =>
           u.correoElectronico?.toLowerCase() === datosFormulario.correoElectronico?.toLowerCase()
@@ -125,8 +141,6 @@ export class RegisterFormComponent {
           foto: datosUsuario.fotoPerfilUrl || '',
         };
 
-
-        //Guardado de datos
         const datosFullUsuario = { ...datosUsuario, ...datosAuth };
 
         this.localStorageService.guardarEnLocal('usuario', datosFullUsuario);
@@ -137,7 +151,6 @@ export class RegisterFormComponent {
         this.router.navigate(['/auth/verification-pending']);
 
       } catch (error: any) {
-        //Verificación de currentUser antes de intentar borrar para evitar errores en cascada
         if (this.auth.currentUser) {
           await deleteUser(this.auth.currentUser);
         }
@@ -155,7 +168,9 @@ export class RegisterFormComponent {
 
   obtenerMensajeError(nombreControl: string): string {
     const control = this.registerForm.get(nombreControl);
+
     if (control && control.touched && control.errors) {
+      if (control.hasError('noCoinciden')) return 'Las contraseñas no coinciden';
       if (control.hasError('required')) return 'Este campo es obligatorio';
       if (control.hasError('email')) return 'El formato del email no es válido';
       if (control.hasError('minlength')) return `Mínimo ${control.errors['minlength'].requiredLength} caracteres`;
