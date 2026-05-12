@@ -70,10 +70,10 @@ export class RegisterFormComponent {
       const datosFormulario = this.registerForm.value;
 
       try {
-        // CAMBIO: Obtenemos datos una sola vez
+        // Obtenemos datos del usuario
         const usuarios: Ciudadano[] = await this.httpService.obtenerDatosEndpointPublico<Ciudadano>('usuarios');
 
-        // CAMBIO: Validación unificada más eficiente (usamos find para obtener el motivo exacto)
+        //Validación
         const dniExistente = usuarios.find(u => u.dni === datosFormulario.dni);
         const emailExistente = usuarios.find(u =>
           u.correoElectronico?.toLowerCase() === datosFormulario.correoElectronico?.toLowerCase()
@@ -104,7 +104,6 @@ export class RegisterFormComponent {
           direccion: datosFormulario.direccion!,
           fechaNacimiento: new Date(datosFormulario.fechaNacimiento!).toISOString(),
           correoElectronico: datosFormulario.correoElectronico!,
-          clave: datosFormulario.clave!,
           recibirNotificaciones: datosFormulario.recibirNotificaciones || false,
           rolUsuario: RolesUsuario.CIUDADANO,
           tipoAcceso: TiposAcceso.CORREO_CONTRASEÑA,

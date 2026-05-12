@@ -35,7 +35,6 @@ export interface Usuario {
   nombre: string;
   apellidos: string;
   correoElectronico: string;
-  clave: string;
 
   // Fechas (Timestamp de Firestore)
   fechaNacimiento: string;

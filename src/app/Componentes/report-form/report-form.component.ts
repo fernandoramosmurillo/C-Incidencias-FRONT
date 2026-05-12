@@ -81,6 +81,7 @@ export class ReportFormComponent implements AfterViewInit, OnInit {
     this.fullUser = this.localStorageService.obtenerDeLocal('usuario') || {};
     this.usuario = this.fullUser?.datosUsuario as Ciudadano;
     this.fotosTomadas = [];
+    console.log(this.usuario.incidenciasSolicitadas);
   }
 
   incidenciaForm = new FormGroup({
@@ -136,17 +137,21 @@ export class ReportFormComponent implements AfterViewInit, OnInit {
         this.incidenciaForm.reset();
         this.fotosTomadas = []; // limpia las fotos
 
+
         console.log(incidenciaEnviar);
         alert('Se ha añadido una nueva incidencia');
 
+        // Guarda la incidencia en el usuario
         if (!this.usuario.incidenciasSolicitadas) {
           this.usuario.incidenciasSolicitadas = [];
         }
-        this.usuario.incidenciasSolicitadas.push(incidenciaEnviar as any);
-
+        this.usuario.incidenciasSolicitadas.push(`incidencias/${incidenciaEnviar.idIncidencia}` as any);
         this.fullUser.datosUsuario = this.usuario;
+
+        console.log(await this.httpService.modificarDato('usuarios', this.fullUser.datosUsuario.idUsuario, this.fullUser.datosUsuario));
         this.localStorageService.guardarEnLocal('usuario', this.fullUser);
 
+        //Redireccion del usuario
         this.router.navigate(['/app/inicio']);
       }
     } catch (error: any) {

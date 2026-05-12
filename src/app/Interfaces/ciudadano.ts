@@ -1,4 +1,4 @@
-import { Timestamp } from '@angular/fire/firestore';
+import { DocumentReference, Timestamp } from '@angular/fire/firestore';
 import { Usuario } from './usuario';
 import { Incidencia } from './incidencia';
 

@@ -1,3 +1,4 @@
+import { Ciudadano } from 'src/app/Interfaces/ciudadano';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -86,7 +87,7 @@ export class LoginFormComponent {
       .catch(() => null);
 
     if (res) {
-      this.fullUser = res;
+      this.fullUser = {...res, datosUsuario: res.datosUsuario as Ciudadano};
     }
   }
 
