@@ -1,5 +1,5 @@
 import { Categorias } from './../../Interfaces/incidencia';
-import { AfterViewInit, Component, inject, OnInit, ɵɵNgOnChangesFeature, signal } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, signal } from '@angular/core';
 import {
   IonList,
   IonItem,
@@ -30,10 +30,9 @@ import {
 import { Ciudadano } from 'src/app/Interfaces/ciudadano';
 import {
   EstadosIncidencia,
-  Incidencia,
   Prioridades,
 } from 'src/app/Interfaces/incidencia';
-import { Timestamp, GeoPoint, DocumentReference } from 'firebase/firestore'; // Los tipos de datos se quedan igual
+import { Timestamp } from 'firebase/firestore'; // Los tipos de datos se quedan igual
 import { Firestore, collection, doc } from '@angular/fire/firestore'; // La funcionalidad de Angular
 import { FullUsuario } from 'src/app/Interfaces/fullUsuario';
 
@@ -71,7 +70,6 @@ export class ReportFormComponent implements AfterViewInit, OnInit {
   public categorias = signal(
     Object.entries(Categorias).map(([key, value]) => ({ key, value }))
   );
-
 
   fullUser!: FullUsuario
   usuario!: Ciudadano

@@ -7,7 +7,6 @@ export interface Ciudadano extends Usuario {
 
   dni: string;
   telefonoContacto: string;
-  direccion: string;
 
   // Lista de sus incidencias (ya transformadas a objeto)
   incidenciasSolicitadas: Incidencia[];
