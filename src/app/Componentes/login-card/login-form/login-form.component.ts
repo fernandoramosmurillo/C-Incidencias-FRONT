@@ -1,5 +1,5 @@
 import { Ciudadano } from 'src/app/Interfaces/ciudadano';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Auth, signInWithEmailAndPassword, UserCredential } from '@angular/fire/auth';
@@ -9,7 +9,7 @@ import { FullUsuario } from 'src/app/Interfaces/fullUsuario';
 import { HttpService } from 'src/app/Services/http-service';
 import { LocalStorageService } from 'src/app/Services/local-storage-service'; // Lo mantenemos solo para limpiar
 import { environment } from '@env/environment';
-import { Usuario } from 'src/app/Interfaces/usuario';
+import { RolesUsuario, Usuario } from 'src/app/Interfaces/usuario';
 
 @Component({
   selector: 'login-form',
@@ -64,6 +64,10 @@ export class LoginFormComponent {
       //Obtener datos de Java
       await this.obtenerDatosUsuario(uid);
 
+      if (this.fullUser.datosUsuario.rolUsuario === RolesUsuario.ADMINISTRADOR || this.fullUser.datosUsuario.rolUsuario === RolesUsuario.OPERARIO) {
+        await esperarPush();
+      }
+
       //Iniciar sesión
       if (this.fullUser) {
         await this.establecerSesion();
@@ -100,3 +104,6 @@ export class LoginFormComponent {
     return '';
   }
 }
+
+
+
