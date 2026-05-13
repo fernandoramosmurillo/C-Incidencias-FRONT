@@ -2,28 +2,27 @@
  * Estructura simple para tipado de datos.
  */
 
-import { Timestamp } from "firebase/firestore";
+import { Timestamp } from 'firebase/firestore';
 
 export enum Estados {
   ACTIVO = 'ACTIVO',
   ELIMINADO = 'ELIMINADO',
   EN_BORRADOR = 'EN_BORRADOR',
   BLOQUEADO = 'BLOQUEADO',
-  INACTIVO = 'INACTIVO'
+  INACTIVO = 'INACTIVO',
 }
 
 export enum RolesUsuario {
   ADMINISTRADOR = 'ADMINISTRADOR',
   OPERARIO = 'OPERARIO',
-  CIUDADANO = 'CIUDADANO'
+  CIUDADANO = 'CIUDADANO',
 }
 
 export enum TiposAcceso {
   CORREO_CONTRASEÑA = 'CORREO_CONTRASEÑA',
-  GOOGLE = 'GOOGLE',
+  EXTERNO = 'EXTERNO',
   CLAVE_ADMIN = 'CLAVE_ADMIN',
-  ANDROID = 'ANDROID',
-  IOS = 'IOS'
+  CODIGO = 'CODIGO',
 }
 
 export interface Usuario {
