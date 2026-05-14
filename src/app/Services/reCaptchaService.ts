@@ -1,47 +1,48 @@
 import { Injectable, inject } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import {
-  getAuth,
   RecaptchaVerifier,
   signInWithPhoneNumber,
-  ConfirmationResult
+  ConfirmationResult,
 } from 'firebase/auth';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class reCaptchaService {
-  private auth = getAuth();
-  private confirmationResult: ConfirmationResult | undefined;
-  private recaptchaVerifier: RecaptchaVerifier | undefined;
+  private auth = inject(Auth);
+  private confirmationResult?: ConfirmationResult;
+  private recaptchaVerifier?: RecaptchaVerifier;
 
-  public inicializarRecaptcha(telefono: string) {
-    // Ponemos el idioma en español para el SMS y el captcha
+  public inicializarRecaptcha(idElemento: string) {
     this.auth.languageCode = 'es';
 
-    // Creamos el verificador vinculado al ID del botón 'boton-enviar'
-    this.recaptchaVerifier = new RecaptchaVerifier(this.auth, 'boton-enviar', {
+    this.recaptchaVerifier = new RecaptchaVerifier(this.auth, idElemento, {
       size: 'invisible',
-      callback: (response: any) => {
-      }
+      callback: () => {},
     });
   }
 
   public async enviarSms(telefono: string) {
-    if (!this.recaptchaVerifier) return;
+    if (!this.recaptchaVerifier) {
+      throw new Error('reCAPTCHA no inicializado');
+    }
 
     try {
       this.confirmationResult = await signInWithPhoneNumber(
         this.auth,
         telefono,
-        this.recaptchaVerifier
+        this.recaptchaVerifier,
       );
+
       console.log('SMS enviado con éxito');
     } catch (error) {
       console.error('Error enviando SMS:', error);
-      // Si hay error, reseteamos el captcha para poder pulsar otra vez
-      this.recaptchaVerifier.render().then(id => {
-        (window as any).grecaptcha.reset(id);
-      });
+      // Alternativa limpia nativa de Firebase si el widget se queda bloqueado:
+      if (this.recaptchaVerifier) {
+        this.recaptchaVerifier.clear();
+        this.inicializarRecaptcha('recaptcha-container');
+      }
     }
   }
 
@@ -50,7 +51,7 @@ export class reCaptchaService {
 
     try {
       const result = await this.confirmationResult.confirm(codigo);
-      return !!result.user; // Si devuelve usuario, la firma es válida
+      return !!result.user;
     } catch (error) {
       console.error('Código inválido:', error);
       return false;
