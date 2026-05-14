@@ -1,38 +1,34 @@
 <ion-list lines="none">
-  <!-- Input de Teléfono -->
-  <ion-item>
-    <ion-label position="stacked">Número de Teléfono</ion-label>
-    <ion-input type="tel" [(ngModel)]="telefono" placeholder="+34 600 000 000">
-    </ion-input>
-  </ion-item>
+  @if (this.seccionSms()) {
+    <h5>Se va a enviar un SMS al numero + {{telefono}}</h5>
 
-  <!-- BOTÓN DE ENVÍO: Aquí ponemos el ID -->
-  <ion-button
-    expand="block"
-    id="boton-enviar"
-    (click)="solicitarSms()"
-    class="ion-margin-top"
-  >
-    Enviar SMS de verificación
-  </ion-button>
+    <ion-button
+      expand="block"
+      (click)="solicitarSms()"
+      class="ion-margin-top"
+      fill="outline"
+    >
+      Enviar SMS de verificación
+    </ion-button>
 
-  <div class="ion-margin-vertical">
-    <hr />
-  </div>
+    <div id="boton-enviar">
 
-  <!-- Input de Código -->
-  <ion-item>
-    <ion-label position="stacked">Código recibido</ion-label>
-    <ion-input type="number" [(ngModel)]="codigoSms" placeholder="123456">
-    </ion-input>
-  </ion-item>
+    </div>
+  } @else if (this.seccionValidar()) {
+    <ion-item>
+      <ion-label position="stacked">Código recibido</ion-label>
+      <ion-input type="number" [(ngModel)]="codigoSms" placeholder="123456">
+      </ion-input>
+    </ion-item>
 
-  <ion-button
-    expand="block"
-    fill="outline"
-    (click)="verificarCodigo()"
-    [disabled]="!codigoSms"
-  >
-    Confirmar Código
-  </ion-button>
+    <ion-button
+      expand="block"
+      fill="outline"
+      (click)="verificarCodigo()"
+      [disabled]="!codigoSms"
+    >
+      Confirmar Código
+    </ion-button>
+  }
+  <hr />
 </ion-list>

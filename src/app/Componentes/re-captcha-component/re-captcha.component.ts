@@ -1,27 +1,35 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
 import { reCaptchaService } from 'src/app/Services/reCaptchaService';
-import { IonInput, IonContent, IonList, IonItem, IonLabel, IonButton } from "@ionic/angular/standalone";
+import { IonInput, IonContent, IonList, IonItem, IonLabel, IonButton} from "@ionic/angular/standalone";
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-re-captcha',
+  selector: 're-captcha',
   templateUrl: './re-captcha.component.html',
-  styleUrls: ['./re-captcha.component.css'],
-  imports: [IonButton, IonLabel, IonItem, IonList, IonContent, IonInput]
+  styleUrls: ['./re-captcha.component.scss'],
+  imports: [IonButton, IonLabel, IonItem, IonList, IonInput, FormsModule]
 })
-export class AuthComponent implements OnInit {
-  telefono = signal("");
-  codigoSms = signal("");
+export class reCaptchaComponent implements AfterViewInit {
+  @Input() telefono = "";
+  codigoSms = "";
 
-  constructor(private authService: reCaptchaService) {}
+  @Output() pushValidado = new EventEmitter<boolean>()
 
-  ngOnInit() {
+  seccionSms = signal(true)
+  seccionValidar = signal(false)
+
+  private recaptcha: reCaptchaService = inject(reCaptchaService)
+
+  ngAfterViewInit() {
     // Inicializamos el captcha apuntando al ID del botón
-    this.authService.inicializarRecaptcha('boton-enviar');
+    this.recaptcha.inicializarRecaptcha('boton-enviar');
   }
 
   async solicitarSms() {
     try {
-      await this.authService.enviarSms(this.telefono());
+      await this.recaptcha.enviarSms(this.telefono);
+      this.seccionSms.set(false)
+      this.seccionValidar.set(true)
       alert('¡SMS enviado!');
     } catch (error) {
       console.error(error);
@@ -29,8 +37,9 @@ export class AuthComponent implements OnInit {
   }
 
   async verificarCodigo() {
-    const exito = await this.authService.validarCodigo(this.codigoSms());
+    const exito = await this.recaptcha.validarCodigo(this.codigoSms);
     if (exito) {
+      this.pushValidado.emit()
       alert('¡Logueado correctamente!');
     } else {
       alert('Código incorrecto');

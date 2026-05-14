@@ -46,27 +46,19 @@
       </div>
     </div>
 
-    <div class="bloque-continuar-o">
+    <div class="bloque-continuar-o ion-display-flex ion-flex-column ion-align-items-center">
       <ion-item>
-        <ion-button fill="solid" color="success" class="continuar-boton">
-          <ion-icon slot="start" name="logo-apple"></ion-icon>
-          <ion-label>Continuar con Apple</ion-label>
-        </ion-button>
-      </ion-item>
-
-      <ion-item>
-        <ion-button fill="solid" color="warning" class="continuar-boton">
+        <ion-button expand="block" fill="solid" color="warning" class="continuar-boton">
           <ion-icon slot="start" name="logo-google"></ion-icon>
           <ion-label>Continuar con Google</ion-label>
         </ion-button>
       </ion-item>
 
-      <ion-item>
-        <ion-button fill="solid" color="primary" class="continuar-boton">
-          <ion-icon slot="start" name="logo-android"></ion-icon>
-          <ion-label>Acceder con Android</ion-label>
-        </ion-button>
-      </ion-item>
+      @if (mostrarReCaptcha()){
+        <ion-item style="display: block;">
+          <re-captcha (pushValidado)="validarPush()" [telefono]="$any(fullUser).datosUsuario.telefonoContacto"/>
+        </ion-item>
+      }
     </div>
   </ion-list>
 </form>
