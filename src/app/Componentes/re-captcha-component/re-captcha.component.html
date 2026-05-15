@@ -10,15 +10,19 @@
     >
       Enviar SMS de verificación
     </ion-button>
-
-    <div id="recaptcha-container"></div>
   </div>
 } @else if (this.seccionValidar()) {
   <div>
     <ion-list>
       <ion-item>
         <ion-label position="stacked">Inserta el codigo recibido</ion-label>
-        <ion-input type="text" [(ngModel)]="codigoSms" placeholder="000000">
+        <ion-input
+          type="number"
+          [(ngModel)]="codigoSms"
+          placeholder="000000"
+          maxlength="6"
+          minlength="6"
+        >
         </ion-input>
       </ion-item>
     </ion-list>
@@ -27,9 +31,10 @@
       expand="block"
       fill="outline"
       (click)="verificarCodigo()"
-      [disabled]="!codigoSms"
+      [disabled]="codigoSms?.toString()?.length !== 6"
     >
       Confirmar Código
     </ion-button>
   </div>
 }
+<div id="recaptcha-container"></div>

@@ -1,10 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth } from '@angular/fire/auth';
+// Importa TODO desde @angular/fire/auth
 import {
+  Auth,
   RecaptchaVerifier,
   signInWithPhoneNumber,
-  ConfirmationResult,
-} from 'firebase/auth';
+  ConfirmationResult
+} from '@angular/fire/auth'; 'firebase/auth';
 
 @Injectable({
   providedIn: 'root',
