@@ -57,6 +57,13 @@ export const routes: Routes = [
             (m) => m.ReportPageComponent,
           ),
       },
+      {
+        path: 'incidencias/:idIncidencia',
+        loadComponent: () =>
+          import('./paginas/incidencia-pagina/incidencia-pagina.component').then(
+          (m) => m.IncidenciaPaginaComponent,
+        )
+      },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
     ],
   },

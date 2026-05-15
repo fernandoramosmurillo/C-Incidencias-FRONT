@@ -16,7 +16,8 @@
         <p>
           Solicitante:
           @if (incidencia().usuarioCiudadano?.nombre?.trim()) {
-            {{ incidencia().usuarioCiudadano.nombre }} {{ incidencia().usuarioCiudadano.apellidos }}
+            {{ incidencia().usuarioCiudadano.nombre }}
+            {{ incidencia().usuarioCiudadano.apellidos }}
           } @else {
             Anónimo
           }
@@ -31,15 +32,20 @@
 
   <ion-card-content>
     <p>{{ incidencia().descripcion }}</p>
-    @if (fotoCargada() && incidencia().imagenesUrl.length > 0) {
-      <ion-img
-        [src]="incidencia().imagenesUrl[0]"
-        (ionError)="fotoCargada.set(false)"
-        oncontextmenu="return false;"
-      >
-      </ion-img>
-    } @else {
-      <ion-img src="assets/images/no-image.png" oncontextmenu="return false;"/>
-    }
+    <button type="button" (click)="router.navigate(['app/incidencias', incidencia().idIncidencia])">
+      @if (fotoCargada() && incidencia().imagenesUrl.length > 0) {
+        <ion-img
+          [src]="incidencia().imagenesUrl[0]"
+          (ionError)="fotoCargada.set(false)"
+          oncontextmenu="return false;"
+        >
+        </ion-img>
+      } @else {
+        <ion-img
+          src="assets/images/no-image.png"
+          oncontextmenu="return false;"
+        />
+      }
+    </button>
   </ion-card-content>
 </ion-card>

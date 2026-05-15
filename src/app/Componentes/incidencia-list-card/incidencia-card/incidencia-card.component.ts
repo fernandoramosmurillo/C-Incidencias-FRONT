@@ -1,8 +1,9 @@
-import { Component, input, Input, OnInit, signal } from '@angular/core';
+import { Component, inject, input, Input, OnInit, signal } from '@angular/core';
 import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonImg, IonIcon, IonAvatar, IonItem, IonLabel, IonThumbnail } from "@ionic/angular/standalone";
 import { Incidencia } from 'src/app/Interfaces/incidencia';
 import { AvatarButtonComponent } from "../../avatar-button/avatar-button.component";
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'incidencia-card',
@@ -14,5 +15,7 @@ export class IncidenciaCardComponent {
 
   incidencia = input.required<Incidencia>();
   fotoCargada = signal(true);
+
+  router = inject(Router);
 
 }
