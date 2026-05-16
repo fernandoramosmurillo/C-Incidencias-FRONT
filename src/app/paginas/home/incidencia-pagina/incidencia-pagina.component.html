@@ -87,18 +87,28 @@
               <hr style="opacity: 0.2; margin: 15px 0" />
 
               @if (datos.imagenesUrl && datos.imagenesUrl.length > 0) {
-                <swiper-container>
+                <swiper-container
+                  style="width: 40%; margin: 0%"
+                  slides-per-view="1"
+                  space-between="10"
+                  navigation="true"
+                  pagination="true"
+                  >
                   @for (foto of datos.imagenesUrl; track foto) {
                     <swiper-slide>
                       <div class="tarjeta-imagen">
-                        <img [src]="foto" alt="Evidencia del problema" />
+                        <img
+                          [src]="foto"
+                          alt="Evidencia del problema"
+                          class="imagenIncidencia"
+                        />
                       </div>
                     </swiper-slide>
                   }
                 </swiper-container>
               }
 
-              <div class="ion-margin-bottom">
+              <div class="ion-margin-bottom" style="margin-top: 4%">
                 <ion-text color="dark">
                   <h2 style="font-weight: bold; margin-bottom: 8px !important">
                     Descripción del problema
