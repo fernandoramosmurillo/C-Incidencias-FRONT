@@ -19,38 +19,49 @@ export abstract class BaseService<T> {
       this.datos.set(respuesta);
     });
   }
+protected extraerIds(referencias: any[]): string[] {
+  if (!referencias || !Array.isArray(referencias)) return [];
+  return referencias.map(ref => this.extraerId(ref));
+}
 
-  protected extraerId(referencia: any): string {
-    if (typeof referencia === 'string')
-      return referencia.split('/').pop() || '';
-    return referencia?.idUsuario || '';
-  }
+protected extraerId(referencia: any): string {
+  if (!referencia) return '';
+  return referencia.split('/').pop() || '';
+}
 
   protected vincularPropiedad<T, R>(
-    lista: T[],
-    propiedad: keyof T,
-    mapa: Map<string, R>,
-  ): T[] {
-    return lista.map((item) => {
-      // 1. Obtenemos lo que hay ahora (el path de Java o el objeto parcial)
-      const referencia = item[propiedad];
+  lista: T[],
+  propiedad: keyof T,
+  mapa: Map<string, R | R[]>,
+): T[] {
+  return lista.map((item) => {
+    const referencia = item[propiedad];
 
-      // 2. Extraemos el ID limpio (usando tu método extraerId)
-      const idLimpio = this.extraerId(referencia);
+    if (!referencia) return item;
 
-      // 3. Buscamos en el mapa que pasamos por parámetro
-      const objetoVinculado = mapa.get(idLimpio);
+    if (Array.isArray(referencia)) {
+      const idsLimpios = this.extraerIds(referencia);
+      const vinculados = idsLimpios
+        .map(id => mapa.get(id))
+        .filter(val => val !== undefined) as R[];
 
-      // 4. Si lo encontramos, inyectamos el objeto completo
-      if (objetoVinculado) {
-        return {
-          ...item,
-          [propiedad]: objetoVinculado,
-        };
-      }
+      return {
+        ...item,
+        [propiedad]: vinculados,
+      };
+    }
 
-      // Si no, devolvemos el item original
-      return item;
-    });
-  }
+    const idLimpio = this.extraerId(referencia);
+    const vinculado = mapa.get(idLimpio);
+
+    if (vinculado) {
+      return {
+        ...item,
+        [propiedad]: vinculado,
+      };
+    }
+
+    return item;
+  });
+}
 }

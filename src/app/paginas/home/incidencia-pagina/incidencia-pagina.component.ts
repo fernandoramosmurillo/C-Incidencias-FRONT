@@ -22,6 +22,7 @@ import {
 } from '@ionic/angular/standalone';
 import { DatePipe } from '@angular/common';
 import { register } from 'swiper/element/bundle';
+import { ComentaryZoneComponent } from 'src/app/Componentes/comentary-zone/comentary-zone.component';
 
 register();
 
@@ -38,7 +39,7 @@ register();
     IonChip,
     IonBadge,
     IonIcon,
-    IonLabel,
+    ComentaryZoneComponent,
     IonItem,
     IonCardContent,
     IonCardSubtitle,

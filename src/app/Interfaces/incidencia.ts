@@ -4,6 +4,7 @@ import {
   Timestamp,
 } from '@angular/fire/firestore';
 import { Ciudadano } from './ciudadano';
+import { Comentario } from './comentario';
 
 // Opciones fijas para el estado (así no te equivocas al escribir)
 export enum EstadosIncidencia {
@@ -58,7 +59,7 @@ export interface Incidencia {
   listaOperarios: any;
 
   // Lista de enlaces a los mensajes del chat
-  comentarios: any;
+  comentarios: Comentario[];
 
   prioridad: Prioridades;
   estadoIncidencia: EstadosIncidencia;
