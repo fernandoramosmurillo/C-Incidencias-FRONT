@@ -3,11 +3,7 @@
     <ion-toolbar class="collapsed-header-menu-bar">
       <ion-title>
         <div class="ion-display-flex align-content-between">
-          <img
-            class="logo"
-            [src]="env.logoUrl"
-            alt="Imagen logo"
-          />
+          <img class="logo" [src]="env.logoUrl" alt="Imagen logo" />
           <img
             src="../../../../assets/images/escudoCantillana.png"
             alt="Escudo de Cantillana"
@@ -17,7 +13,28 @@
       </ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content class="ion-padding"></ion-content>
+  <ion-content class="ion-padding">
+    <ion-list>
+      <ion-item (click)="router.navigate(['app/inicio'])">
+        <ion-button>
+          <ion-icon name="home"></ion-icon>
+          <ion-label>Inicio</ion-label>
+        </ion-button>
+      </ion-item>
+      <ion-item (click)="router.navigate(['app/reportar-incidencia'])">
+        <ion-button>
+          <ion-icon name="create"></ion-icon>
+          <ion-label>Reportar nueva incidencia</ion-label>
+        </ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-button>
+          <ion-icon name="list-outline"></ion-icon>
+          <ion-label>Mis incidencias</ion-label>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
 </ion-menu>
 <div class="ion-page" id="main-content">
   <ion-header>
@@ -26,7 +43,7 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-buttons slot="end">
-        <avatar-button/>
+        <avatar-button />
       </ion-buttons>
       <ion-title>Menu</ion-title>
     </ion-toolbar>

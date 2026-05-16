@@ -7,11 +7,3 @@
 .bloqueBienvenida {
   width: 100%;
 }
-
-ion-content::part(background) {
-  background-image: url("../../../assets/images/Background-Web.jpg");
-  background-position: bottom;
-  background-repeat: no-repeat;
-  background-size: cover;
-  opacity: 1; // <--- AQUÍ está la clave del minimalismo. Que casi ni se vea.
-}

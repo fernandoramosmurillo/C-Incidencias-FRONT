@@ -60,7 +60,7 @@ export const routes: Routes = [
       {
         path: 'incidencias/:idIncidencia',
         loadComponent: () =>
-          import('./paginas/incidencia-pagina/incidencia-pagina.component').then(
+          import('./paginas/home/incidencia-pagina/incidencia-pagina.component').then(
           (m) => m.IncidenciaPaginaComponent,
         )
       },
