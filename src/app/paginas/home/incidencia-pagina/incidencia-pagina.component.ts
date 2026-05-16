@@ -1,26 +1,65 @@
-import { Incidencia } from 'src/app/Interfaces/incidencia';
 import { IncidenciaService } from 'src/app/Services/incidenciaService';
-import { Component, Input, OnInit, inject, input, signal } from '@angular/core';
-import { IonContent, IonGrid, IonRow, IonCol, IonCardHeader, IonCard, IonCardTitle, IonCardSubtitle, IonCardContent } from "@ionic/angular/standalone";
+import { Component, inject, input, computed, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
+import {
+  IonContent,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonCardHeader,
+  IonCard,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonCardContent,
+  IonItem,
+  IonLabel,
+  IonIcon,
+  IonBadge,
+  IonChip,
+  IonText,
+  IonList,
+  IonAvatar,
+} from '@ionic/angular/standalone';
+import { DatePipe } from '@angular/common';
+import { register } from 'swiper/element/bundle';
+
+register();
 
 @Component({
   selector: 'incidencia-pagina',
   templateUrl: './incidencia-pagina.component.html',
   styleUrls: ['./incidencia-pagina.component.scss'],
-  imports: [IonCardContent, IonCardSubtitle, IonCardTitle, IonCard, IonCardHeader, IonCol, IonRow, IonContent, IonGrid],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    DatePipe,
+    IonAvatar,
+    IonList,
+    IonText,
+    IonChip,
+    IonBadge,
+    IonIcon,
+    IonLabel,
+    IonItem,
+    IonCardContent,
+    IonCardSubtitle,
+    IonCardTitle,
+    IonCard,
+    IonCardHeader,
+    IonCol,
+    IonRow,
+    IonContent,
+    IonGrid
+],
 })
-export class IncidenciaPaginaComponent implements OnInit {
-  incidencia = signal<Incidencia | undefined>(undefined);
-
-  ngOnInit(): void {
-    this.incidencia.set(
-      this.incidenciaService
-        .datos()
-        .find((incidencia) => incidencia.idIncidencia == this.idIncidencia),
-    );
-  }
-
-  @Input() idIncidencia!: string;
+export class IncidenciaPaginaComponent {
   incidenciaService = inject(IncidenciaService);
 
+  idIncidencia = input.required<string>();
+
+  incidencia = computed(() => {
+    const id = this.idIncidencia();
+    return this.incidenciaService
+      .datos()
+      .find((inc) => inc.idIncidencia === id);
+  });
 }

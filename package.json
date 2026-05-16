@@ -32,7 +32,7 @@
     "@capacitor/preferences": "^8.0.1",
     "@capacitor/status-bar": "8.0.1",
     "@dataconnect/generated": "file:src/dataconnect-generated",
-    "@ionic/angular": "^8.0.0",
+    "@ionic/angular": "^8.8.7",
     "@ionic/pwa-elements": "^3.4.0",
     "@tanstack-query-firebase/angular": "^1.0.0",
     "@tanstack/angular-query-experimental": "5.66.4",
@@ -41,6 +41,7 @@
     "ionicons": "^7.0.0",
     "leaflet": "^1.9.4",
     "rxjs": "~7.8.0",
+    "swiper": "^12.1.4",
     "tslib": "^2.8.1",
     "zone.js": "~0.15.0"
   },
