@@ -7,6 +7,9 @@
   ion-row {
     padding: 12px;
     border-bottom: 1px solid #e0e0e0;
+    display: flex !important;
+    justify-content: space-between; // Reparte las columnas equitativamente
+    gap: 16px; // Genera separación limpia entre las columnas encogidas
 
     &:last-child {
       border-bottom: none;
@@ -44,5 +47,6 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    max-width: 250px; // Evita que descripciones gigantescas estiren la columna
   }
 }

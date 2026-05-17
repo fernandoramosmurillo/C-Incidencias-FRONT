@@ -7,55 +7,55 @@
 
     @if (esCiudadano()) {
       <ion-row class="cabecera">
-        <ion-col size="6" size-md="2">Asunto / ID</ion-col>
-        <ion-col size="6" size-md="3">Detalles</ion-col>
-        <ion-col size="4" size-md="2.5">Prioridad</ion-col>
-        <ion-col size="4" size-md="2.5">Estado</ion-col>
-        <ion-col size="4" size-md="2">Afectado</ion-col>
+        <ion-col size="auto">Asunto / ID</ion-col>
+        <ion-col size="auto">Detalles</ion-col>
+        <ion-col size="auto">Prioridad</ion-col>
+        <ion-col size="auto">Estado</ion-col>
+        <ion-col size="auto">Afectado</ion-col>
       </ion-row>
     } @else {
       <ion-row class="cabecera">
-        <ion-col size="6" size-md="2">Asunto / ID</ion-col>
-        <ion-col size="6" size-md="3">Detalles</ion-col>
-        <ion-col size="4" size-md="2">Prioridad</ion-col>
-        <ion-col size="4" size-md="2">Estado</ion-col>
-        <ion-col size="4" size-md="2">Afectado</ion-col>
-        <ion-col size="12" size-md="1" class="ion-text-center">Acción</ion-col>
+        <ion-col size="auto">Asunto / ID</ion-col>
+        <ion-col size="auto">Detalles</ion-col>
+        <ion-col size="auto">Prioridad</ion-col>
+        <ion-col size="auto">Estado</ion-col>
+        <ion-col size="auto">Afectado</ion-col>
+        <ion-col size="auto" class="ion-text-center">Acción</ion-col>
       </ion-row>
     }
 
     @for (incidencia of incidencias(); track incidencia.idIncidencia) {
       <ion-row class="fila ion-align-items-center">
 
-        <ion-col size="6" size-md="2">
+        <ion-col size="auto">
           <div class="meta">
             <span class="txt-principal">{{ incidencia.titulo }}</span>
             <small>#{{ incidencia.idIncidencia?.slice(0, 6) }}</small>
           </div>
         </ion-col>
 
-        <ion-col size="6" size-md="3">
+        <ion-col size="auto">
           <p class="txt-recortado">{{ incidencia.descripcion }}</p>
         </ion-col>
 
         @if (esCiudadano()) {
-          <ion-col size="4" size-md="2.5">
+          <ion-col size="auto">
             <ion-badge [color]="getPrioridadColor(incidencia.prioridad)">
               {{ incidencia.prioridad }}
             </ion-badge>
           </ion-col>
 
-          <ion-col size="4" size-md="2.5">
+          <ion-col size="auto">
             <ion-badge [color]="getBadgeColor(incidencia.estadoIncidencia)">
               {{ incidencia.estadoIncidencia }}
             </ion-badge>
           </ion-col>
 
-          <ion-col size="4" size-md="2">
+          <ion-col size="auto">
             <span>{{ incidencia.usuarioCiudadano?.nombre || "Sin asignar" }}</span>
           </ion-col>
         } @else {
-          <ion-col size="4" size-md="2">
+          <ion-col size="auto">
             <div style="position: relative; display: inline-block;">
               <ion-badge [color]="getPrioridadColor(incidencia.prioridad)">
                 {{ incidencia.prioridad }}
@@ -75,7 +75,7 @@
             </div>
           </ion-col>
 
-          <ion-col size="4" size-md="2">
+          <ion-col size="auto">
             <div style="position: relative; display: inline-block;">
               <ion-badge [color]="getBadgeColor(incidencia.estadoIncidencia)">
                 {{ incidencia.estadoIncidencia }}
@@ -93,11 +93,11 @@
             </div>
           </ion-col>
 
-          <ion-col size="4" size-md="2">
+          <ion-col size="auto">
             <span>{{ incidencia.usuarioCiudadano?.nombre || "Sin asignar" }}</span>
           </ion-col>
 
-          <ion-col size="12" size-md="1" class="ion-text-center">
+          <ion-col size="auto" class="ion-text-center">
             <ion-button
               color="danger"
               fill="clear"
