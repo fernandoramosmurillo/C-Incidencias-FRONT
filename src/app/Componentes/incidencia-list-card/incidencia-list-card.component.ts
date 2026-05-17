@@ -1,3 +1,4 @@
+import { ComentarioService } from './../../Services/comentarioServicio';
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { IncidenciaService } from 'src/app/Services/incidenciaService';
 import {
@@ -30,11 +31,13 @@ export class IncidenciaListCardComponent implements OnInit {
 
   incidenciaService: IncidenciaService = inject(IncidenciaService);
   usuarioService: UsuarioService = inject(UsuarioService);
+  comentarioService: ComentarioService = inject(ComentarioService);
 
   async ngOnInit() {
     await Promise.all([
       this.incidenciaService.cargarDatos(),
       this.usuarioService.cargarDatos(),
+      this.comentarioService.cargarDatos(),
     ]);
 
     if (this.incidenciaService.datos().length == 0) {

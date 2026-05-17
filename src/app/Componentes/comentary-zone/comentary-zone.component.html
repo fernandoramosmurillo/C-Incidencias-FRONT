@@ -1,40 +1,39 @@
-<div style="padding: 12px; background: #ffffff; border-top: 1px solid #e0e0e0;">
+<div class="contenedor-comentarios">
 
-  <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-weight: bold;">
+  <div class="cabecera-comentarios">
     <ion-icon name="chatbubble-ellipses-outline" style="font-size: 20px;"></ion-icon>
     <span>{{ comentariosPublicos().length }} Comentarios</span>
   </div>
 
-  <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">
+  <div class="lista-comentarios">
     @for (comentario of comentariosPublicos(); track comentario.idComentario) {
-      <div style="display: flex; gap: 10px; padding: 8px; background: #f8f9fa; border-radius: 6px;">
+      <div class="tarjeta-comentario">
 
-        <ion-avatar style="width: 32px; height: 32px;">
+        <ion-avatar class="avatar-comentario">
           <img src="https://ionicframework.com/docs/img/demos/avatar.svg" alt="Avatar" />
         </ion-avatar>
 
-        <div style="flex: 1;">
-          <div style="display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.85rem;">
-            <span style="font-weight: 600;">
+        <div class="cuerpo-comentario">
+          <div class="info-comentario">
+            <span class="nombre-autor">
               {{ comentario.usuarioAutor?.nombre || 'Usuario' }} {{ comentario.usuarioAutor?.apellidos || '' }}
             </span>
-            <span style="color: #737373;">
-              {{ comentario.fechaPublicacion?.toDate() | date: "dd/MM HH:mm" }}
+            <span class="fecha-comentario">
+              {{ comentario.fechaPublicacion + '' | date: "dd/MM/yyyy HH:mm" }}
             </span>
           </div>
-          <p style="margin: 0; font-size: 0.9rem; color: #333333;">{{ comentario.texto }}</p>
+          <p class="texto-comentario">{{ comentario.texto }}</p>
         </div>
 
       </div>
     } @empty {
-      <div style="text-align: center; padding: 20px; color: #737373;">
-        <ion-icon name="chatbox-outline" style="font-size: 32px;"></ion-icon>
+      <div class="comentarios-vacios">
         <p style="margin: 0; font-size: 0.9rem;">Sé el primero en comentar esta incidencia...</p>
       </div>
     }
   </div>
 
-  <div [formGroup]="comentarioForm" style="display: flex; align-items: center; gap: 8px; padding: 8px; background: #f1f3f5; border-radius: 8px;">
+  <div [formGroup]="comentarioForm" class="formulario-comentario">
     <div style="flex: 1;">
       <ion-textarea
         formControlName="texto"
@@ -46,7 +45,10 @@
       </ion-textarea>
 
       <div style="margin-top: 4px; font-size: 0.8rem;">
-        <ion-checkbox (ionChange)="comentarioForm.get('esPrivado')?.setValue($event.detail.checked)" mode="md" style="color: #737373;">
+        <ion-checkbox
+          (ionChange)="comentarioForm.get('esPrivado')?.setValue($event.detail.checked)"
+          mode="md"
+          style="color: #737373;">
           <span>Hacer interno</span>
         </ion-checkbox>
       </div>

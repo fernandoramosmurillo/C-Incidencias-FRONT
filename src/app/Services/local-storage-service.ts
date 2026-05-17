@@ -40,7 +40,6 @@ export class LocalStorageService {
       return false;
       console.log("No se ha encontrado ningun usuario autenticado, redirigiendo a login...");
     } else {
-      console.log('Sesión detectada para el usuario:', usuario.idUsuario);
       return false;
     }
   }

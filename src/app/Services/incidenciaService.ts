@@ -24,6 +24,7 @@ export class IncidenciaService
 
       let nuevaLista = this.vincularPropiedad<Incidencia, Usuario>(lista, 'usuarioCiudadano', new Map(this.usuarioService.datos().map?.((u) => [u.idUsuario, u]))) || [];
       nuevaLista = this.vincularPropiedad<Incidencia, Comentario>(nuevaLista, 'comentarios', new Map(this.comentarioService.datos().map?.((c) => [c.idComentario, c]))) || [];
+      console.log(new Map(this.comentarioService.datos().map?.((c) => [c.idComentario, c])));
 
       return nuevaLista;
     });
