@@ -19,10 +19,11 @@ export class IncidenciaService
   usuarioService: UsuarioService = inject(UsuarioService);
   comentarioService : ComentarioService = inject(ComentarioService);
 
-  asignarModelos() {
+  override asignarModelos() {
     this.datos.update((lista) => {
 
       let nuevaLista = this.vincularPropiedad<Incidencia, Usuario>(lista, 'usuarioCiudadano', new Map(this.usuarioService.datos().map?.((u) => [u.idUsuario, u]))) || [];
+      console.log(this.comentarioService.datos());
       nuevaLista = this.vincularPropiedad<Incidencia, Comentario>(nuevaLista, 'comentarios', new Map(this.comentarioService.datos().map?.((c) => [c.idComentario, c]))) || [];
 
       return nuevaLista;

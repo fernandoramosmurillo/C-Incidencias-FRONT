@@ -2,17 +2,13 @@ import { ComentarioService } from './../../Services/comentarioServicio';
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { IncidenciaService } from 'src/app/Services/incidenciaService';
 import {
-  IonCard,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonCardContent,
   IonCol,
   IonGrid,
   IonRow,
 } from '@ionic/angular/standalone';
 import { UsuarioService } from 'src/app/Services/usuarioService';
 import { IncidenciaCardComponent } from "./incidencia-card/incidencia-card.component";
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'incidencia-list-card',
@@ -44,6 +40,7 @@ export class IncidenciaListCardComponent implements OnInit {
       this.noHayIncidencias.emit(true);
     } else {
       this.noHayIncidencias.emit(false);
+      this.comentarioService.asignarModelos();
       this.incidenciaService.asignarModelos();
     }
   }

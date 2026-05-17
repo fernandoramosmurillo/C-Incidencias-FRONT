@@ -6,6 +6,8 @@ import { BaseService } from "./BaseService";
   providedIn: 'root',
 })
 export class UsuarioService extends BaseService<Usuario> {
+  override asignarModelos(): void {
+  }
   protected override endpoint = 'usuarios';
 
   filtrarCiudadanos(usuarios: Usuario[]): Usuario[] {

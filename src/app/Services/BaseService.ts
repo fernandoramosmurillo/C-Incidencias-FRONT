@@ -19,49 +19,51 @@ export abstract class BaseService<T> {
       this.datos.set(respuesta);
     });
   }
-protected extraerIds(referencias: any[]): string[] {
-  if (!referencias || !Array.isArray(referencias)) return [];
-  return referencias.map(ref => this.extraerId(ref));
-}
+  protected extraerIds(referencias: any[]): string[] {
+    if (!referencias || !Array.isArray(referencias)) return [];
+    return referencias.map((ref) => this.extraerId(ref));
+  }
 
-protected extraerId(referencia: any): string {
-  if (!referencia) return '';
-  return referencia.split('/').pop() || '';
-}
+  protected extraerId(referencia: any): string {
+    if (!referencia) return '';
+    return referencia.split('/').pop() || '';
+  }
 
   protected vincularPropiedad<T, R>(
-  lista: T[],
-  propiedad: keyof T,
-  mapa: Map<string, R | R[]>,
-): T[] {
-  return lista.map((item) => {
-    const referencia = item[propiedad];
+    lista: T[],
+    propiedad: keyof T,
+    mapa: Map<string, R | R[]>,
+  ): T[] {
+    return lista.map((item) => {
+      const referencia = item[propiedad];
 
-    if (!referencia) return item;
+      if (!referencia) return item;
 
-    if (Array.isArray(referencia)) {
-      const idsLimpios = this.extraerIds(referencia);
-      const vinculados = idsLimpios
-        .map(id => mapa.get(id))
-        .filter(val => val !== undefined) as R[];
+      if (Array.isArray(referencia)) {
+        const idsLimpios = this.extraerIds(referencia);
+        const vinculados = idsLimpios
+          .map((id) => mapa.get(id))
+          .filter((val) => val !== undefined) as R[];
 
-      return {
-        ...item,
-        [propiedad]: vinculados,
-      };
-    }
+        return {
+          ...item,
+          [propiedad]: vinculados,
+        };
+      }
 
-    const idLimpio = this.extraerId(referencia);
-    const vinculado = mapa.get(idLimpio);
+      const idLimpio = this.extraerId(referencia);
+      const vinculado = mapa.get(idLimpio);
 
-    if (vinculado) {
-      return {
-        ...item,
-        [propiedad]: vinculado,
-      };
-    }
+      if (vinculado) {
+        return {
+          ...item,
+          [propiedad]: vinculado,
+        };
+      }
 
-    return item;
-  });
-}
+      return item;
+    });
+  }
+
+  abstract asignarModelos(): void;
 }
