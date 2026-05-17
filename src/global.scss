@@ -102,3 +102,12 @@ ion-button {
   --background: var(--color-app-bar);
   --background-activated: #081226;
 }
+
+ion-avatar {
+  width: 2vw;
+  height: 2vw;
+  display: block;
+  margin: 0 auto;
+  min-width: 32px;
+  min-height: 32px;
+}
