@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { CapacitorHttp, HttpResponse } from '@capacitor/core';
 import { LocalStorageService } from './local-storage-service';
-import { FullUsuario } from '../Interfaces/fullUsuario';
 import { Auth } from '@angular/fire/auth';
 import { environment } from '@env/environment';
 

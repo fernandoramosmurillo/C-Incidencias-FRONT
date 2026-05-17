@@ -58,6 +58,12 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'lista-incidencias', loadComponent: () =>
+          import('./paginas/home/incidencia-lista-pagina/incidencia-lista-pagina.component').then(
+            (m) => m.IncidenciaListaComponent,
+          ),
+      },
+      {
         path: 'incidencias/:idIncidencia',
         loadComponent: () =>
           import('./paginas/home/incidencia-pagina/incidencia-pagina.component').then(

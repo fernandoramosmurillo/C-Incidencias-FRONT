@@ -1,50 +1,69 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Control de Incidencias</ion-title>
-  </ion-toolbar>
-</ion-header>
+@if (incidencias().length === 0) {
+  <div class="ion-text-center ion-padding">
+    <h3>Historial limpio. No hay incidencias.</h3>
+  </div>
+} @else {
+  <ion-grid class="tabla-gestion ion-padding">
 
-<ion-content class="ion-padding">
-  @if (incidencias().length === 0) {
-    <div class="ion-text-center">
-      <h3>Historial limpio. No hay incidencias.</h3>
-    </div>
-  } @else {
-    <ion-grid class="tabla-compacta">
-      <ion-row class="cabecera ion-hide-md-down">
-        <ion-col size="2">Asunto / ID</ion-col>
-        <ion-col size="3">Detalles</ion-col>
-        <ion-col size="2">Prioridad</ion-col>
-        <ion-col size="2">Estado de la Tarea</ion-col>
-        <ion-col size="2">Afectado</ion-col>
-        <ion-col size="1" class="ion-text-center">Acción</ion-col>
+    @if (esCiudadano()) {
+      <ion-row class="cabecera">
+        <ion-col size="6" size-md="2">Asunto / ID</ion-col>
+        <ion-col size="6" size-md="3">Detalles</ion-col>
+        <ion-col size="4" size-md="2.5">Prioridad</ion-col>
+        <ion-col size="4" size-md="2.5">Estado</ion-col>
+        <ion-col size="4" size-md="2">Afectado</ion-col>
       </ion-row>
+    } @else {
+      <ion-row class="cabecera">
+        <ion-col size="6" size-md="2">Asunto / ID</ion-col>
+        <ion-col size="6" size-md="3">Detalles</ion-col>
+        <ion-col size="4" size-md="2">Prioridad</ion-col>
+        <ion-col size="4" size-md="2">Estado</ion-col>
+        <ion-col size="4" size-md="2">Afectado</ion-col>
+        <ion-col size="12" size-md="1" class="ion-text-center">Acción</ion-col>
+      </ion-row>
+    }
 
-      @for (incidencia of incidencias(); track incidencia.idIncidencia) {
-        <ion-row class="fila ion-align-items-center">
+    @for (incidencia of incidencias(); track incidencia.idIncidencia) {
+      <ion-row class="fila ion-align-items-center">
 
-          <ion-col size="12" size-md="2">
-            <span class="tag-movil">Incidencia: </span>
-            <div class="meta">
-              <span class="txt-principal">{{ incidencia.titulo }}</span>
-              <small>#{{ incidencia.idIncidencia?.slice(0,6) }}</small>
-            </div>
+        <ion-col size="6" size-md="2">
+          <div class="meta">
+            <span class="txt-principal">{{ incidencia.titulo }}</span>
+            <small>#{{ incidencia.idIncidencia?.slice(0, 6) }}</small>
+          </div>
+        </ion-col>
+
+        <ion-col size="6" size-md="3">
+          <p class="txt-recortado">{{ incidencia.descripcion }}</p>
+        </ion-col>
+
+        @if (esCiudadano()) {
+          <ion-col size="4" size-md="2.5">
+            <ion-badge [color]="getPrioridadColor(incidencia.prioridad)">
+              {{ incidencia.prioridad }}
+            </ion-badge>
           </ion-col>
 
-          <ion-col size="12" size-md="3">
-            <span class="tag-movil">Detalles: </span>
-            <p class="txt-recortado">{{ incidencia.descripcion }}</p>
+          <ion-col size="4" size-md="2.5">
+            <ion-badge [color]="getBadgeColor(incidencia.estadoIncidencia)">
+              {{ incidencia.estadoIncidencia }}
+            </ion-badge>
           </ion-col>
 
-          <ion-col size="12" size-md="2">
-            <span class="tag-movil">Prioridad: </span>
-            <div class="gestion-selector">
+          <ion-col size="4" size-md="2">
+            <span>{{ incidencia.usuarioCiudadano?.nombre || "Sin asignar" }}</span>
+          </ion-col>
+        } @else {
+          <ion-col size="4" size-md="2">
+            <div style="position: relative; display: inline-block;">
               <ion-badge [color]="getPrioridadColor(incidencia.prioridad)">
                 {{ incidencia.prioridad }}
               </ion-badge>
               <ion-select
                 interface="popover"
                 [value]="incidencia.prioridad"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;"
                 (ionChange)="cambiarPrioridad(incidencia.idIncidencia, $event.detail.value)">
                 <ion-select-option [value]="Prioridades.MINIMO">MINIMO</ion-select-option>
                 <ion-select-option [value]="Prioridades.BAJA">BAJA</ion-select-option>
@@ -56,15 +75,15 @@
             </div>
           </ion-col>
 
-          <ion-col size="12" size-md="2">
-            <span class="tag-movil">Estado: </span>
-            <div class="gestion-selector">
+          <ion-col size="4" size-md="2">
+            <div style="position: relative; display: inline-block;">
               <ion-badge [color]="getBadgeColor(incidencia.estadoIncidencia)">
                 {{ incidencia.estadoIncidencia }}
               </ion-badge>
               <ion-select
                 interface="popover"
                 [value]="incidencia.estadoIncidencia"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;"
                 (ionChange)="cambiarEstado(incidencia.idIncidencia, $event.detail.value)">
                 <ion-select-option [value]="Estados.ABIERTA">ABIERTA</ion-select-option>
                 <ion-select-option [value]="Estados.PENDIENTE">PENDIENTE</ion-select-option>
@@ -74,13 +93,11 @@
             </div>
           </ion-col>
 
-          <ion-col size="12" size-md="2">
-            <span class="tag-movil">Usuario: </span>
-            <span>{{ incidencia.usuarioCiudadano?.nombre || 'Sin asignar' }}</span>
+          <ion-col size="4" size-md="2">
+            <span>{{ incidencia.usuarioCiudadano?.nombre || "Sin asignar" }}</span>
           </ion-col>
 
           <ion-col size="12" size-md="1" class="ion-text-center">
-            <span class="tag-movil">Acciones: </span>
             <ion-button
               color="danger"
               fill="clear"
@@ -90,8 +107,9 @@
               Rechazar
             </ion-button>
           </ion-col>
-        </ion-row>
-      }
-    </ion-grid>
-  }
-</ion-content>
+        }
+
+      </ion-row>
+    }
+  </ion-grid>
+}

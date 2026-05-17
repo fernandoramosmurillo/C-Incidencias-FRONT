@@ -27,10 +27,10 @@
           <ion-label>Reportar nueva incidencia</ion-label>
         </ion-button>
       </ion-item>
-      <ion-item>
+      <ion-item (click)="router.navigate(['app/lista-incidencias'])">
         <ion-button>
           <ion-icon name="list-outline"></ion-icon>
-          <ion-label>Mis incidencias</ion-label>
+          <ion-label>Lista incidencias</ion-label>
         </ion-button>
       </ion-item>
     </ion-list>

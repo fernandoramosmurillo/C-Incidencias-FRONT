@@ -1,0 +1,48 @@
+.tabla-gestion {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+
+  ion-row {
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .cabecera {
+    background-color: #f5f5f5;
+    font-weight: bold;
+    color: #444;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+  }
+
+  .fila {
+    &:hover {
+      background-color: #fafafa;
+    }
+  }
+
+  .meta {
+    display: flex;
+    flex-direction: column;
+
+    .txt-principal {
+      font-weight: 600;
+    }
+    small {
+      color: #777;
+    }
+  }
+
+  .txt-recortado {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
