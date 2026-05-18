@@ -26,21 +26,32 @@ export class IncidenciaListaGestionComponent {
   Estados = EstadosIncidencia;
   Prioridades = Prioridades;
 
+  // Función auxiliar para limpiar y blindar todas las referencias antes de enviarlas al Back
+  private formatearPayloadSeguro(incidencia: Incidencia): any {
+    const idCiudadano = incidencia.usuarioCiudadano?.idUsuario || incidencia.usuarioCiudadano;
+    
+    const idsOperarios = Array.isArray(incidencia.listaOperarios)
+      ? incidencia.listaOperarios.map((op: any) => op?.idUsuario || op)
+      : [];
+
+    return {
+      ...incidencia,
+      usuarioCiudadano: idCiudadano ? `usuarios/${idCiudadano}` : null,
+      listaOperarios: idsOperarios.map(id => `usuarios/${id}`)
+    };
+  }
+
   async cambiarEstado(id: string, nuevoEstado: EstadosIncidencia) {
     if (this.esCiudadano()) return;
 
     const incidenciaOriginal = this.incidencias().find(inc => inc.idIncidencia === id);
     if (!incidenciaOriginal) return;
 
-    const idCiudadanoLimpio = incidenciaOriginal.usuarioCiudadano?.idUsuario || incidenciaOriginal.usuarioCiudadano;
-
     try {
-      // Usamos modificarDato enviando el objeto estructurado igual que en las prioridades
-      await this.httpService.modificarDato('incidencias', id, {
-        ...incidenciaOriginal,
-        estadoIncidencia: nuevoEstado,
-        usuarioCiudadano: `usuarios/${idCiudadanoLimpio}`
-      });
+      const datosActualizados = { ...incidenciaOriginal, estadoIncidencia: nuevoEstado };
+      const bodySeguro = this.formatearPayloadSeguro(datosActualizados);
+
+      await this.httpService.modificarDato('incidencias', id, bodySeguro);
 
       this.incidenciaService.datos.update(lista =>
         lista.map(inc => inc.idIncidencia === id ? { ...inc, estadoIncidencia: nuevoEstado } : inc)
@@ -56,14 +67,11 @@ export class IncidenciaListaGestionComponent {
     const incidenciaOriginal = this.incidencias().find(inc => inc.idIncidencia === id);
     if (!incidenciaOriginal) return;
 
-    const idCiudadanoLimpio = incidenciaOriginal.usuarioCiudadano?.idUsuario || incidenciaOriginal.usuarioCiudadano;
-
     try {
-      await this.httpService.modificarDato('incidencias', id, {
-        ...incidenciaOriginal,
-        prioridad: nuevaPrioridad,
-        usuarioCiudadano: `usuarios/${idCiudadanoLimpio}`
-      });
+      const datosActualizados = { ...incidenciaOriginal, prioridad: nuevaPrioridad };
+      const bodySeguro = this.formatearPayloadSeguro(datosActualizados);
+
+      await this.httpService.modificarDato('incidencias', id, bodySeguro);
 
       this.incidenciaService.datos.update(lista =>
         lista.map(inc => inc.idIncidencia === id ? { ...inc, prioridad: nuevaPrioridad } : inc)
@@ -75,11 +83,23 @@ export class IncidenciaListaGestionComponent {
 
   async rechazar(id: string) {
     if (this.esCiudadano()) return;
+
+    const incidenciaOriginal = this.incidencias().find(inc => inc.idIncidencia === id);
+    if (!incidenciaOriginal) return;
+
     if (confirm('¿Proceder con el rechazo de la incidencia?')) {
-      await this.httpService.cambiarEstado('incidencias', id, EstadosIncidencia.RECHAZADA);
-      this.incidenciaService.datos.update(lista =>
-        lista.map(inc => inc.idIncidencia === id ? { ...inc, estadoIncidencia: EstadosIncidencia.RECHAZADA } : inc)
-      );
+      try {
+        const datosActualizados = { ...incidenciaOriginal, estadoIncidencia: EstadosIncidencia.RECHAZADA };
+        const bodySeguro = this.formatearPayloadSeguro(datosActualizados);
+
+        await this.httpService.modificarDato('incidencias', id, bodySeguro);
+
+        this.incidenciaService.datos.update(lista =>
+          lista.map(inc => inc.idIncidencia === id ? { ...inc, estadoIncidencia: EstadosIncidencia.RECHAZADA } : inc)
+        );
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
 
